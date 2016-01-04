@@ -43,11 +43,11 @@ LIBRARY包含两个工程，其中
 ###VideoWidgetLib工程
 主要包结构
 
-- ***.controller** 对应各场景Demo特有的，Video控件之上，浮层显示信息及控制UI等自定义控件
-- ***.model**  封装的实体类
-- ***.ui**  对应各场景Demo通用及特有的数据及UI
-- ***.util**  对应各工具类
-- ***.videoview**  对应各场景Demo通用的，封装了KsyMediaPlayer对象的VideoView以及TextureView
+- .controller 对应各场景Demo特有的，Video控件之上，浮层显示信息及控制UI等自定义控件
+- .model  封装的实体类
+- .ui  对应各场景Demo通用及特有的数据及UI
+- .util  对应各工具类
+- .videoview  对应各场景Demo通用的，封装了KsyMediaPlayer对象的VideoView以及TextureView
 
 ###关键类说明
 - **MediaPlayerVideoView** 封装了KsyMediaPlayer API的SurfaceView，也包含了播放器状态控制及部分特殊事件回调与处理
@@ -90,7 +90,7 @@ LIBRARY包含两个工程，其中
 
 	playerView = (VideoMediaPlayerView) findViewById(R.id.video_player_view);
 	// setPlayConfig方法的第一个参数为设置是否为直播，
-	// 第二个参数决定Activity离开时（Home键，多任务键，电源键等），Player的状态是暂停还是销毁（对应返回的时候状态为播放还是创建）
+	// 第二个参数决定Activity转变为不可见时（如按下Home键，多任务键，电源键等），播放器的状态是暂停还是销毁（对应返回的时候状态为播放还是创建）
 	playerView.setPlayConfig(false, PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
 
 

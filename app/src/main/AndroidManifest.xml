@@ -25,7 +25,6 @@
         android:theme="@style/AppBaseTheme">
         <activity
             android:name=".main.DemoActivity"
-            android:label="@string/title_activity_main"
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
