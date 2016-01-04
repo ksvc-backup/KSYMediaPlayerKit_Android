@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/controller_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="63dp"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="5dp" >
+
+        <Button
+            android:id="@+id/live_replay_information_switch"
+            android:layout_width="52dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:text="@string/live_info_switch"
+            android:layout_marginLeft="@dimen/small_margin_left" />
+
+        <ImageView
+            android:id="@+id/video_playback_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/live_replay_information_switch"
+            android:layout_marginRight="@dimen/small_margin_left"
+            android:src="@drawable/blue_ksy_pause" />
+
+        <Button
+            android:id="@+id/live_replay_share_bt"
+            android:layout_width="52dp"
+            android:layout_height="55dp"
+            android:layout_marginRight="@dimen/small_margin_left"
+            android:layout_alignParentRight="true"
+            android:text="@string/live_share" />
+
+        <com.ksy.media.widget.ui.common.MediaPlayerVideoSeekBar
+            android:id="@+id/seekbar_video_progress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/live_replay_share_bt"
+            android:layout_toRightOf="@id/video_playback_image_view"
+            android:maxHeight="@dimen/controller_seekbar_margin"
+            android:minHeight="@dimen/controller_seekbar_margin"
+            android:paddingLeft="@dimen/small_margin_left"
+            android:paddingRight="@dimen/small_margin_left"
+            android:thumbOffset="16dp"
+            android:progressDrawable="@drawable/blue_ksy_video_progress_seekbar_style_selector"
+            android:thumb="@drawable/blue_ksy_video_progress_seekbar_thumb_selector"
+            android:indeterminate="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/live_replay_current_time"
+            android:id="@+id/textViewCurrentTime"
+            android:layout_toLeftOf="@+id/textViewLine"
+            android:textColor="@color/white"
+            android:layout_below="@+id/seekbar_video_progress" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/live_replay_line"
+            android:id="@+id/textViewLine"
+            android:textColor="@color/white"
+            android:layout_below="@+id/seekbar_video_progress"
+            android:layout_toLeftOf="@+id/textViewTotalTime" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/live_replay_total_time"
+            android:id="@+id/textViewTotalTime"
+            android:textColor="@color/white"
+            android:layout_below="@+id/seekbar_video_progress"
+            android:layout_toLeftOf="@+id/live_replay_share_bt"
+            android:layout_toStartOf="@+id/live_replay_share_bt" />
+    </RelativeLayout>
+</RelativeLayout>

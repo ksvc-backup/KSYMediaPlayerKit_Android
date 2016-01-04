@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <include layout="@layout/live_replay_top" />
+
+    <ListView
+        android:id="@+id/live_list"
+        android:layout_above="@+id/notice_text"
+        android:scrollbars="none"
+        android:headerDividersEnabled="false"
+        android:stackFromBottom="true"
+        android:dividerHeight="6dp"
+        android:layout_marginLeft="6dp"
+        android:layout_width="220dp"
+        android:layout_height="400dp">
+    </ListView>
+
+    <TextView
+        android:id="@+id/notice_text"
+        android:layout_above="@+id/live_replay_person_list"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/live_replay_notice"
+        android:gravity="center_vertical"
+        android:textColor="@color/black"
+        android:background="@color/white"
+        android:layout_width="110dp"
+        android:layout_height="35dp" />
+
+    <RelativeLayout
+        android:id="@+id/live_replay_person_list"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_above="@+id/controller_bottom_layout"
+        android:layout_width="300dp"
+        android:layout_height="120dp">
+        <ImageView
+            android:id="@+id/live_replay_person_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/live_person_grey"/>
+        <TextView
+            android:id="@+id/person_count_textview"
+            android:textColor="@color/white"
+            android:text="88人"
+            android:layout_centerHorizontal="true"
+            android:layout_marginLeft="12dp"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/live_replay_person_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.ksy.media.widget.ui.common.HorizontalListView
+            android:id="@+id/live_replay_horizon"
+            android:layout_toRightOf="@+id/live_replay_person_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/layout_bottom_heart"
+            android:layout_alignParentBottom="true"
+            android:layout_above="@+id/controller_bottom_layout"
+            android:layout_toRightOf="@+id/live_replay_person_list"
+            android:layout_marginBottom="48dp"
+            android:layout_width="150dp"
+            android:layout_height="350dp">
+
+            <com.ksy.media.widget.ui.common.HeartLayout
+                android:id="@+id/live_replay_image_heart"
+                android:layout_width="150dp"
+                android:layout_height="300dp" />
+
+            <ImageView
+                android:id="@+id/image_heart"
+                android:src="@drawable/heart"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/live_replay_image_heart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/praise_count_text"
+                android:layout_below="@+id/image_heart"
+                android:layout_marginLeft="6dp"
+                android:text="0"
+                android:textColor="@color/white"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+    <include layout="@layout/live_replay_bottom" />
+
+</RelativeLayout>

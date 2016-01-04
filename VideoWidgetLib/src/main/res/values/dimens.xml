@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="small_text_size">15sp</dimen>
+    <dimen name="medium_text_size">20sp</dimen>
+    <dimen name="large_text_size">17sp</dimen>
+    <dimen name="list_item_margin">8dp</dimen>
+    <dimen name="list_item_large_margin">16dp</dimen>
+    <dimen name="list_margin">8dp</dimen>
+    <dimen name="list_small_margin">4dp</dimen>
+    <dimen name="card_height">100dp</dimen>
+    <dimen name="stream_pop_widget">150dp</dimen>
+    <dimen name="stream_pop_width">150dp</dimen>
+    <dimen name="stream_pop_height">120dp</dimen>
+    <dimen name="stream_pop_offset">5dp</dimen>
+    <dimen name="video_comment_distance">48dp</dimen>
+    <dimen name="controller_small_top">48dp</dimen>
+
+    <!-- 800*480  需要做-->
+    <dimen name="buffer_width">60dp</dimen>
+    <dimen name="buffer_height">60dp</dimen>
+    <dimen name="controller_bright_width">31dp</dimen>
+    <dimen name="controller_bright_height">157dp</dimen>
+    <dimen name="controller_large_top">60dp</dimen>
+    <dimen name="controller_large_top_margin">13dp</dimen>
+    <dimen name="controller_large_bottom_bg">67dp</dimen>
+    <dimen name="controller_large_bottom">44dp</dimen>
+    <dimen name="controller_seekbar_margin">1dp</dimen>
+    <dimen name="controller_large_margin">18dp</dimen>
+    <dimen name="controller_large_bottom_seek">8dp</dimen>
+    <dimen name="controller_large_time_margin">9dp</dimen>
+
+    <dimen name="controller_button_width">60dp</dimen>
+    <dimen name="controller_button_height">30dp</dimen>
+    <dimen name="relate_width_bg">190dp</dimen>
+    <dimen name="screen_lock_margin_left">75dp</dimen>
+    <dimen name="bright_margin_left">20dp</dimen>
+    <dimen name="bright_padding">10dp</dimen>
+    <dimen name="screen_tosmall_bottom">15dp</dimen>
+    <dimen name="small_margin_left">10dp</dimen>
+    <dimen name="volume_margin_bottom">4dp</dimen>
+    <dimen name="event_action_padding">20dp</dimen>
+    <dimen name="event_action_padding_left">6dp</dimen>
+    <dimen name="popup_listview">0.4dp</dimen>
+    <dimen name="seek_touch_margin">8dp</dimen>
+    <dimen name="seek_touch_margin_top">2dp</dimen>
+
+    <dimen name="crop_view_width">120dp</dimen>
+    <dimen name="crop_view_height">110dp</dimen>
+    <dimen name="crop_view_margin_top">10dp</dimen>
+    <dimen name="bright_margin_top">12dp</dimen>
+    <dimen name="bright_margin_bottom">6dp</dimen>
+    <dimen name="bright_seek_margin_top">25dp</dimen>
+    <dimen name="bright_seek_margin_bottom">12dp</dimen>
+
+
+    <dimen name="heart_anim_bezier_x_rand">40.0dp</dimen>
+    <dimen name="heart_anim_init_x">15.0dp</dimen> <!--50-->
+    <dimen name="heart_anim_init_y">25.0dp</dimen>
+    <dimen name="heart_anim_length">100.0dp</dimen>
+    <dimen name="heart_anim_length_rand">150.0dp</dimen>
+    <dimen name="heart_anim_x_point_factor">30.0dp</dimen>
+    <dimen name="heart_size_height">27.3dp</dimen>
+    <dimen name="heart_size_width">32.5dp</dimen>
+</resources>

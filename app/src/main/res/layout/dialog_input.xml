@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    android:background="#ffffff">
+
+    <EditText
+        android:id="@+id/input"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:hint="Please Input Video Path or URL..."
+        android:text="http://sfvbook-eflake.bj.bcebos.com/BETA3/RYU/20151220224301.mp4">
+        <requestFocus />
+    </EditText>
+
+    <!--
+    -->
+
+    <!--
+        android:text="rtmp://test.live.ksyun.com/live/test1234567
+    -->
+
+    <!--  <EditText
+         android:id="@+id/input_two"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_below="@+id/input"
+         android:layout_marginTop="18dp"
+         android:hint="Please Input Video Path or URL 2..." >
+         <requestFocus />
+     </EditText> -->
+
+</RelativeLayout>

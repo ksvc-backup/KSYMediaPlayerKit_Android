@@ -1,0 +1,43 @@
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <!--底部菜单字体样式 -->
+    <style name="BottomTextStyle">
+        <!--  <item name="android:textSize">@dimen/word_size</item> -->
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
+    </style>
+
+    <!-- <style name="BottomTextStyle">
+        <item name="android:textSize">@dimen/word_size</item>
+        <item name="android:textColor">@color/balck</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:shadowColor">@color/balck</item>
+    </style> -->
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+    </style>
+
+    <style name="ExitDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/dialog_bg</item>
+        <item name="android:backgroundDimEnabled">true</item>
+    </style>
+
+    <style name="Widget.Demo.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="android:actionModeBackground">@color/gray_primary_dark</item>
+        <item name="theme">@style/Demo.Theme.actionbar</item>
+    </style>
+
+    <style name="Demo.Theme.actionbar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:actionModeBackground">@color/gray_primary_dark</item>
+    </style>
+
+
+</resources>

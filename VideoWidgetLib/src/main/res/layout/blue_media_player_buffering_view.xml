@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <ProgressBar
+        android:id="@+id/pb_buffering"
+        android:layout_width="@dimen/buffer_width"
+        android:layout_height="@dimen/buffer_height"
+        android:layout_centerInParent="true"
+        android:indeterminate="true" />
+
+    <TextView
+        android:id="@+id/tv_buffering"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        android:singleLine="true"
+        android:text="@string/initial_percent"
+        android:textColor="@color/white"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        tools:ignore="HardcodedText" />
+
+</RelativeLayout>

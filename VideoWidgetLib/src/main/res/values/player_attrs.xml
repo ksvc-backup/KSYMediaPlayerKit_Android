@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PlayerView">
+        <attr name="playmode">
+            <enum name="fullscreen" value="0" />
+            <enum name="window" value="1" />
+            <enum name="miniwindow" value="2" />
+        </attr>
+        <attr name="lockmode" format="boolean"></attr>
+    </declare-styleable>
+
+</resources>

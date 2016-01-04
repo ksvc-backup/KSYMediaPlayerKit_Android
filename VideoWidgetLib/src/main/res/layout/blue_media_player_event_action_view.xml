@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/event_action_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent">
+
+    <RelativeLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/controller_large_top"
+        android:layout_alignParentTop="true"
+        android:alpha="0.9"
+        android:background="@color/balck"
+        android:visibility="visible">
+
+        <ImageView
+            android:id="@+id/back_image_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/small_margin_left"
+            android:layout_marginRight="@dimen/small_margin_left"
+            android:src="@drawable/blue_ksy_back" />
+
+        <ImageView
+            android:id="@+id/image_logo"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/small_margin_left"
+            android:layout_toRightOf="@id/back_image_view"
+            android:src="@drawable/ic_movie_white_48dp" />
+
+        <TextView
+            android:id="@+id/title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/image_logo"
+            android:ellipsize="end"
+            android:gravity="left|center_vertical"
+            android:singleLine="true"
+            android:text="@string/video_small_title_tv_default"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+    </RelativeLayout>
+    <!-- Actions Area -->
+
+    <RelativeLayout
+        android:id="@+id/action_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/title_layout">
+
+        <!-- Wait -->
+
+        <RelativeLayout
+            android:id="@+id/wait_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:background="@drawable/player_controller_action_play"></RelativeLayout>
+
+        <!-- Complete -->
+
+        <RelativeLayout
+            android:id="@+id/complete_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="gone">
+
+            <!-- Complete Normal -->
+
+            <LinearLayout
+                android:id="@+id/complete_replay_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.9"
+                android:background="@color/black"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/small_margin_left"
+                android:paddingLeft="@dimen/event_action_padding"
+                android:paddingRight="@dimen/event_action_padding"
+                android:paddingTop="@dimen/small_margin_left"
+                android:visibility="visible">
+
+                <ImageView
+                    android:id="@+id/complete_replay_image_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/player_controller_action_replay" />
+
+                <TextView
+                    android:id="@+id/complete_replay_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/event_action_padding_left"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="@string/replay"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <!-- Error -->
+
+        <LinearLayout
+            android:id="@+id/error_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/error_info_title_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/event_action_padding_left"
+                android:ellipsize="end"
+                android:gravity="center"
+                android:singleLine="true"
+                android:text="@string/player_error"
+                android:textColor="@color/white"
+                android:textSize="14sp" />
+
+            <LinearLayout
+                android:id="@+id/error_replay_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:alpha="0.5"
+                android:background="@color/black"
+                android:clickable="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/small_margin_left"
+                android:paddingLeft="@dimen/event_action_padding"
+                android:paddingRight="@dimen/event_action_padding"
+                android:paddingTop="@dimen/small_margin_left">
+
+                <ImageView
+                    android:id="@+id/error_replay_image_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/player_controller_action_replay" />
+
+                <TextView
+                    android:id="@+id/error_replay_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/event_action_padding_left"
+                    android:gravity="center"
+                    android:singleLine="true"
+                    android:text="@string/connect_failed"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+
+</RelativeLayout>

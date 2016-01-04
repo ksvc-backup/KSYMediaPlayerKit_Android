@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent">
+
+    <include
+        android:id="@+id/controller_top_layout"
+        layout="@layout/stream_blue_media_player_controller_large_top_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/controller_large_top"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout
+        android:id="@+id/video_progress_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/controller_large_bottom_bg"
+        android:layout_alignParentBottom="true"
+        android:alpha="0.6"
+        android:background="@color/balck">
+
+        <RelativeLayout
+            android:id="@+id/video_info_layout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/controller_large_bottom"
+            android:layout_alignParentBottom="true">
+
+            <!-- 暂停 -->
+
+            <ImageView
+                android:id="@+id/video_start_pause_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="@dimen/small_margin_left"
+                android:layout_marginRight="@dimen/list_small_margin"
+                android:src="@drawable/blue_ksy_pause" />
+
+            <ImageView
+                android:id="@+id/stream_watch_img"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/list_small_margin"
+                android:layout_toRightOf="@id/video_start_pause_image_view"
+                android:src="@drawable/ic_person_outline_white_36dp" />
+
+            <TextView
+                android:id="@+id/stream_watch_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/list_small_margin"
+                android:layout_toRightOf="@+id/stream_watch_img"
+                android:text="@string/stream_watch_tv_default"
+                android:textColor="@color/white"
+                android:textSize="@dimen/small_text_size" />
+            <EditText
+                android:id="@+id/stream_controller_comment"
+                android:layout_width="160dp"
+                android:layout_height="32dp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/small_margin_left"
+                android:layout_toRightOf="@+id/stream_watch_tv"
+                android:background="@drawable/stream_edittext_bg"
+                android:hint="@string/stream_comment_default"
+                android:paddingLeft="@dimen/small_margin_left"
+                android:textColor="@color/white"
+                android:textColorHint="@color/white"
+                android:textSize="@dimen/small_text_size" />
+
+            <Button
+                android:id="@+id/steram_controller_send_btn"
+                android:layout_width="48dp"
+                android:layout_height="32dp"
+                android:layout_centerVertical="true"
+                android:layout_toRightOf="@+id/stream_controller_comment"
+                android:background="@drawable/stream_edittext_bg"
+                android:layout_marginLeft="@dimen/small_margin_left"
+                android:text="@string/stream_controller_send"
+                android:textColor="@color/white"
+                android:textSize="@dimen/small_text_size" />
+            <!-- 清晰度 -->
+
+            <LinearLayout
+                android:id="@+id/video_quality_layout"
+                android:layout_width="@dimen/controller_button_width"
+                android:layout_height="@dimen/controller_button_height"
+                android:layout_centerVertical="true"
+                android:layout_toLeftOf="@+id/video_window_screen_image_view"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/tv_definition"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/blue_ksy_bt_style_nomal"
+                    android:gravity="center_vertical|center_horizontal"
+                    android:text="@string/high_definition"
+                    android:textColor="@drawable/blue_ksy_text_style"
+                    android:textSize="14sp" />
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/video_window_screen_image_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginBottom="@dimen/screen_tosmall_bottom"
+                android:layout_marginLeft="@dimen/controller_large_margin"
+                android:layout_marginRight="@dimen/controller_large_margin"
+                android:src="@drawable/blue_ksy_changeover_small" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <com.ksy.media.widget.ui.common.MediaPlayerSeekView
+        android:id="@+id/widget_seek_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:alpha="0.6"
+        android:background="@color/balck"
+        android:padding="@dimen/bright_padding"
+        android:visibility="gone" />
+
+    <!-- 屏幕锁 -->
+
+    <com.ksy.media.widget.ui.common.MediaPlayerLockView
+        android:id="@+id/widget_lock_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/screen_lock_margin_left"
+        android:background="@drawable/lock_bg"
+        android:clickable="true">
+
+        <ImageView
+            android:id="@+id/iv_lock"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:duplicateParentState="true"
+            android:src="@drawable/blue_ksy_lock_selector" />
+    </com.ksy.media.widget.ui.common.MediaPlayerLockView>
+
+    <ListView
+        android:id="@+id/relatedlistview"
+        android:layout_width="@dimen/relate_width_bg"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:alpha="0.8"
+        android:background="@color/balck"
+        android:divider="@null"
+        android:scrollbars="none"
+        android:visibility="gone"></ListView>
+
+</RelativeLayout>

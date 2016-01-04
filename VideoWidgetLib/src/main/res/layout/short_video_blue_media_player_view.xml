@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false" >
+
+    <com.ksy.media.widget.videoview.MediaPlayerTextureVideoView
+        android:id="@+id/ks_camera_video_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.ksy.media.widget.ui.common.MediaPlayerBufferingView
+        android:id="@+id/ks_camera_buffering_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/blue_media_player_buffering_view" />
+    </com.ksy.media.widget.ui.common.MediaPlayerBufferingView>
+
+    <com.ksy.media.widget.ui.common.MediaPlayerLoadingView
+        android:id="@+id/ks_camera_loading_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/blue_media_player_loading_view" />
+    </com.ksy.media.widget.ui.common.MediaPlayerLoadingView>
+
+    <com.ksy.media.widget.ui.common.MediaPlayerEventActionView
+        android:id="@+id/ks_camera_event_action_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/blue_media_player_event_action_view" />
+    </com.ksy.media.widget.ui.common.MediaPlayerEventActionView>
+
+    <com.ksy.media.widget.controller.ShortVideoMediaPlayerControllerView
+        android:id="@+id/media_player_controller_view_small"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/short_video_blue_media_player_controller_small" />
+    </com.ksy.media.widget.controller.ShortVideoMediaPlayerControllerView>
+    
+    <!-- 截图成功layout -->
+    <RelativeLayout
+        android:id="@+id/layoutPop"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:background="@color/balck"
+        android:alpha="0.6"
+        android:visibility="gone"
+        android:layout_width="@dimen/crop_view_width"
+        android:layout_height="@dimen/crop_view_height" >
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/crop_view_margin_top"
+            android:src="@drawable/blue_ksy_screen_shot_sucess"/>
+        <TextView 
+            android:id="@+id/tv"
+            android:layout_below="@+id/image"
+            android:text="@string/cropscreen_success"
+            android:textColor="@color/white"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <!-- net speed -->
+    <TextView
+        android:id="@+id/player_speed"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:text="@string/net_speed"
+        android:textColor="#ffffffff"
+        android:textSize="15sp" />
+    
+    
+     <TextView
+        android:id="@+id/player_total"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:visibility="gone"
+        android:text="@string/consumption_flow"
+        android:layout_below="@+id/player_speed"
+        android:textColor="#ffffffff"
+        android:textSize="15sp" />
+     
+     <TextView 
+        android:id="@+id/player_net"
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:visibility="gone"
+        android:text="@string/play_net"
+        android:layout_below="@+id/player_total"
+        android:textColor="#ffffffff"
+        android:textSize="15sp" />
+
+    <!-- <TextView
+        android:id="@+id/player_demux"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="demux:"
+        android:layout_below="@+id/player_speed"
+        android:textColor="#ffffffff"
+        android:textSize="15sp" />
+    
+    <TextView
+        android:id="@+id/player_decode"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="decode:"
+        android:layout_below="@+id/player_demux"
+        android:textColor="#ffffffff"
+        android:textSize="15sp" />
+    
+    <TextView
+        android:id="@+id/player_time"
+        android:layout_width="wrap_content"
+        android:layout_height="20dp"
+        android:text="time:"
+        android:layout_below="@+id/player_decode"
+        android:textColor="#ffffffff"
+        android:textSize="15sp" /> -->
+    
+</RelativeLayout>
+

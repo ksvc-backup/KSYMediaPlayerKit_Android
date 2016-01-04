@@ -1,0 +1,32 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:player="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.ksy.media.widget.ui.video.VideoMediaPlayerView
+        android:id="@+id/video_player_view"
+        android:layout_width="fill_parent"
+        android:layout_height="230dp"
+        player:playmode="window" />
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/video_player_view"
+        app:tabGravity="center"
+        app:tabIndicatorColor="@color/cyan_500"
+        app:tabMode="scrollable"
+        app:tabMinWidth="100dp"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextColor="@color/gray_primary_dark" />
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tab_layout"></android.support.v4.view.ViewPager>
+
+</RelativeLayout>

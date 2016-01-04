@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!--
+        Base application theme, dependent on API level. This theme is replaced
+        by AppBaseTheme from res/values-vXX/styles.xml on newer devices.
+    -->
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+        <!-- colorPrimary 定义 ActionBar 的背景色 -->
+        <item name="colorPrimary">@color/red</item>
+        <!-- colorPrimaryDark 定义状态栏的背景色 -->
+        <item name="colorPrimaryDark">@color/green</item>
+        <!-- colorAccent 为 colorControlActivated 的默认值，该值用户显示控件的高亮状态 -->
+        <item name="colorAccent">@color/white</item>
+
+    </style>
+
+    <!-- Application theme. -->
+    <style name="AppTheme" parent="AppBaseTheme"></style>
+
+    <style name="FullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar"></style>
+
+
+    <!--ToolBar theme-->
+    <style name="Widget.Demo.Toolbar" parent="Widget.AppCompat.Toolbar">
+        <item name="android:background">?attr/colorPrimary</item>
+        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+        <item name="android:actionModeBackground">@color/gray_primary_dark</item>
+        <item name="theme">@style/Demo.Theme.actionbar</item>
+    </style>
+
+    <style name="Demo.Theme.actionbar" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:actionModeBackground">@color/gray_primary_dark</item>
+    </style>
+
+    <style name="Widget.Demo.Toolbar.Transparent">
+        <item name="android:background">@null</item>
+    </style>
+
+    <style name="AppBaseTheme.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppBaseTheme.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="AppBaseTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+    <style name="popAnimStyle">
+            <item name="android:windowEnterAnimation">@anim/pop_show</item>
+            <item name="android:windowExitAnimation">@anim/pop_hidden</item>
+    </style>
+
+</resources>

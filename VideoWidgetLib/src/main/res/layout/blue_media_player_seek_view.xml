@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/seek_touch_margin_top"
+        android:gravity="center_vertical"
+        android:orientation="horizontal" >
+
+        <!-- 快退 -->
+
+        <ImageView
+            android:id="@+id/image_seek_rewind"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:src="@drawable/blue_ksy_fast_reverse" />
+
+        <TextView
+            android:id="@+id/tv_sign"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/seek_touch_margin"
+            android:layout_marginRight="@dimen/seek_touch_margin_top"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textSize="14sp"
+            android:text="@string/time_plus"
+            android:textColor="@color/white" />
+
+        <!-- 当前时间 -->
+
+        <TextView
+            android:id="@+id/tv_seek_current_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/seek_touch_margin"
+            android:gravity="center"
+            android:singleLine="true"
+            android:text="@string/total_time"
+            android:textColor="@color/white"
+            android:textSize="14sp" />
+
+        <!-- 快进 -->
+
+        <ImageView
+            android:id="@+id/image_seek_speed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:src="@drawable/blue_ksy_speed" />
+    </LinearLayout>
+
+</RelativeLayout>

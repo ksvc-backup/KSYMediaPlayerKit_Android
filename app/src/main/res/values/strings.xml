@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">金山云播放器</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+    <string name="buffering">buffering</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_phone_live">PhoneLiveActivity</string>
+    <string name="title_activity_phone_live_replay">PhoneLiveReplayActivity</string>
+    <string name="title_activity_short_movie">ShortMovieActivity</string>
+    <string name="title_activity_stream_video">StreamVideoActivity</string>
+    <string name="title_activity_stream_replay">StreamReplayActivity</string>
+    <string name="title_activity_online_video">OnlineVideoActivity</string>
+
+
+</resources>

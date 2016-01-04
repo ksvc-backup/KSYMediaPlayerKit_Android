@@ -1,0 +1,20 @@
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item android:id="@android:id/background">
+        <nine-patch android:src="@drawable/blue_player_controller_video_progress_bg" >
+        </nine-patch>
+    </item>
+    <item android:id="@android:id/progress">
+        <clip>
+            <nine-patch android:src="@drawable/blue_player_controller_video_progress_primary" >
+            </nine-patch>
+        </clip>
+    </item>
+    <item android:id="@android:id/secondaryProgress">
+        <clip>
+            <nine-patch android:src="@drawable/blue_player_controller_video_progress_secondary" >
+            </nine-patch>
+        </clip>
+    </item>
+
+</layer-list>

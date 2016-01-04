@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipChildren="false" >
+
+    <com.ksy.media.widget.videoview.MediaPlayerTextureVideoView
+        android:id="@+id/live_ks_camera_video_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.ksy.media.widget.ui.common.MediaPlayerBufferingView
+        android:id="@+id/ks_camera_buffering_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/blue_media_player_buffering_view" />
+    </com.ksy.media.widget.ui.common.MediaPlayerBufferingView>
+
+    <com.ksy.media.widget.ui.common.MediaPlayerLoadingView
+        android:id="@+id/ks_camera_loading_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/blue_media_player_loading_view" />
+    </com.ksy.media.widget.ui.common.MediaPlayerLoadingView>
+
+    <com.ksy.media.widget.ui.live.LiveMediaPlayerEventActionView
+        android:id="@+id/ks_camera_event_action_view_live"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/live_finish_event_action_view" />
+    </com.ksy.media.widget.ui.live.LiveMediaPlayerEventActionView>
+
+    <com.ksy.media.widget.controller.LiveMediaPlayerControllerView
+        android:id="@+id/media_player_controller_view_live"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/blue_media_player_controller_live" />
+    </com.ksy.media.widget.controller.LiveMediaPlayerControllerView>
+    
+</RelativeLayout>
+

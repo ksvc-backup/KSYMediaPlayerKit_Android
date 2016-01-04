@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/controller_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:layout_alignParentBottom="true"
+        android:paddingTop="5dp" >
+
+        <Button
+            android:id="@+id/live_information_switch_bt"
+            android:layout_width="52dp"
+            android:layout_height="60dp"
+            android:layout_alignParentLeft="true"
+            android:text="@string/live_info_switch"
+            android:layout_marginRight="@dimen/small_margin_left" />
+
+        <EditText
+            android:id="@+id/video_comment_text"
+            android:layout_width="220dp"
+            android:layout_height="44dp"
+            android:layout_centerVertical="true"
+            android:singleLine="true"
+            android:background="@drawable/short_video_edittext_bg"
+            android:hint="@string/live_comment"
+            android:layout_toRightOf="@+id/live_information_switch_bt"
+            android:layout_marginRight="@dimen/small_margin_left" />
+
+        <Button
+            android:id="@+id/live_share_bt"
+            android:layout_width="52dp"
+            android:layout_height="55dp"
+            android:layout_toRightOf="@+id/video_comment_text"
+            android:text="@string/live_share"
+            android:layout_marginRight="@dimen/small_margin_left" />
+    </RelativeLayout>
+</RelativeLayout>

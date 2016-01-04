@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <RelativeLayout
+        android:id="@+id/controller_top_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/controller_large_top"
+        android:layout_alignParentTop="true"
+        android:clickable="true" >
+
+        <ImageView
+            android:id="@+id/image_live_replay_head"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="@dimen/small_margin_left"
+            android:layout_marginRight="@dimen/small_margin_left"
+            android:src="@drawable/live_person_grey" />
+
+        <TextView
+            android:id="@+id/text_live_replay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/live_loading"
+            android:layout_toRightOf="@+id/image_live_replay_head"
+            android:layout_toEndOf="@+id/image_live_replay_head" />
+
+        <TextView
+            android:id="@+id/title_text_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginLeft="@dimen/small_margin_left"
+            android:layout_marginRight="@dimen/small_margin_left"
+            android:gravity="center_vertical"
+            android:text="@string/live_close" />
+
+        <TextView
+            android:id="@+id/title_text_report"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/title_text_close"
+            android:layout_marginLeft="@dimen/small_margin_left"
+            android:layout_marginRight="@dimen/small_margin_left"
+            android:gravity="center_vertical"
+            android:text="@string/live_report" />
+
+        <TextView
+            android:id="@+id/textViewNetError"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/live_replay_net_error"
+            android:layout_below="@+id/text_live_replay"
+            android:layout_toRightOf="@+id/image_live_replay_head"
+            android:layout_toEndOf="@+id/image_live_replay_head" />
+    </RelativeLayout>
+
+</RelativeLayout>

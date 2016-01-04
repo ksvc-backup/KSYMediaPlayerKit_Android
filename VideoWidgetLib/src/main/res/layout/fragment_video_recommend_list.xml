@@ -1,0 +1,16 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.ksy.media.widget.ui.common.fragment.RecommendListFragment">
+
+    <ListView
+        android:id="@+id/video_recomment_list"
+        android:background="@color/transparent"
+        android:divider="@color/transparent"
+        android:dividerHeight="@dimen/list_item_margin"
+        android:layout_width="match_parent"
+        android:layout_margin="@dimen/list_small_margin"
+        android:layout_height="match_parent" />
+
+</FrameLayout>
