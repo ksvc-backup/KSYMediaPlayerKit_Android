@@ -540,9 +540,6 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
         enableOrientationEventListener();
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
-//        if (mMediaPlayerController.canStart()){
-//            mMediaPlayerController.start();
-//        }
     }
 
     public void onPause() {
@@ -554,10 +551,6 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
         mPausePosition = mLiveReplayMediaPlayerController.getCurrentPosition();
 
         disableOrientationEventListener();
-
-       /* if (mLiveReplayMediaPlayerController.isPlaying()) {
-            mLiveReplayMediaPlayerController.pause();
-        }*/
         WakeLocker.release();
     }
 

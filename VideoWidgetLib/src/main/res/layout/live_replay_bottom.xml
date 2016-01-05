@@ -6,16 +6,17 @@
     <RelativeLayout
         android:id="@+id/controller_bottom_layout"
         android:layout_width="match_parent"
-        android:layout_height="63dp"
-        android:layout_alignParentBottom="true"
-        android:paddingTop="5dp" >
+        android:layout_height="55dp"
+        android:layout_alignParentBottom="true">
 
-        <Button
+        <ImageView
             android:id="@+id/live_replay_information_switch"
-            android:layout_width="52dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="@string/live_info_switch"
+            android:layout_centerVertical="true"
+            android:src="@drawable/live_model_image"
+            android:layout_marginRight="5dp"
             android:layout_marginLeft="@dimen/small_margin_left" />
 
         <ImageView
@@ -25,15 +26,16 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/live_replay_information_switch"
             android:layout_marginRight="@dimen/small_margin_left"
-            android:src="@drawable/blue_ksy_pause" />
+            android:src="@drawable/live_replay_pause" />
 
-        <Button
+        <ImageView
             android:id="@+id/live_replay_share_bt"
-            android:layout_width="52dp"
-            android:layout_height="55dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/small_margin_left"
             android:layout_alignParentRight="true"
-            android:text="@string/live_share" />
+            android:src="@drawable/live_extension" />
 
         <com.ksy.media.widget.ui.common.MediaPlayerVideoSeekBar
             android:id="@+id/seekbar_video_progress"
@@ -42,15 +44,15 @@
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@id/live_replay_share_bt"
             android:layout_toRightOf="@id/video_playback_image_view"
-            android:maxHeight="@dimen/controller_seekbar_margin"
-            android:minHeight="@dimen/controller_seekbar_margin"
+            android:maxHeight="@dimen/livereplay_controller_seekbar_height"
+            android:minHeight="@dimen/livereplay_controller_seekbar_height"
             android:paddingLeft="@dimen/small_margin_left"
             android:paddingRight="@dimen/small_margin_left"
             android:thumbOffset="16dp"
             android:progressDrawable="@drawable/blue_ksy_video_progress_seekbar_style_selector"
             android:thumb="@drawable/blue_ksy_video_progress_seekbar_thumb_selector"
             android:indeterminate="false" />
-
+        <!--android:maxHeight="@dimen/controller_seekbar_margin"-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

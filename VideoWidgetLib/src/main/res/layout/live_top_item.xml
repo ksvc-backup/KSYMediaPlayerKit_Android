@@ -2,24 +2,24 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@color/white"
+    android:background="@color/black"
+    android:alpha="0.5"
     android:orientation="horizontal" >
 
     <ImageView
         android:id="@+id/live_imageview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/live_person_grey" />
+        android:src="@drawable/live_dialog_list_item" />
 
     <TextView
         android:id="@+id/live_username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_toRightOf="@+id/live_imageview"
         android:singleLine="true"
         android:text="@string/live_username"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="14sp" />
     
     <TextView
@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:singleLine="true"
         android:text="@string/live_comment_content"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="14sp"
         android:layout_toRightOf="@+id/live_imageview"
         android:layout_below="@+id/live_username" />

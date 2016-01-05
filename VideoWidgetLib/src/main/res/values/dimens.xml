@@ -15,7 +15,6 @@
     <dimen name="video_comment_distance">48dp</dimen>
     <dimen name="controller_small_top">48dp</dimen>
 
-    <!-- 800*480  需要做-->
     <dimen name="buffer_width">60dp</dimen>
     <dimen name="buffer_height">60dp</dimen>
     <dimen name="controller_bright_width">31dp</dimen>
@@ -25,6 +24,7 @@
     <dimen name="controller_large_bottom_bg">67dp</dimen>
     <dimen name="controller_large_bottom">44dp</dimen>
     <dimen name="controller_seekbar_margin">1dp</dimen>
+    <dimen name="livereplay_controller_seekbar_height">4dp</dimen>
     <dimen name="controller_large_margin">18dp</dimen>
     <dimen name="controller_large_bottom_seek">8dp</dimen>
     <dimen name="controller_large_time_margin">9dp</dimen>

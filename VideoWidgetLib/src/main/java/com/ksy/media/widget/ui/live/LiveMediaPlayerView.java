@@ -43,7 +43,6 @@ import com.ksy.media.widget.util.NetReceiver.NetStateChangedListener;
 import com.ksy.media.widget.util.WakeLocker;
 import com.ksy.media.widget.ui.common.MediaPlayerBufferingView;
 import com.ksy.media.widget.ui.common.MediaPlayerLoadingView;
-import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
 import com.ksy.media.widget.videoview.MediaPlayerTextureVideoView;
 import com.ksy.mediaPlayer.widget.R;
 import com.ksyun.media.player.IMediaPlayer;
@@ -531,9 +530,6 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         enableOrientationEventListener();
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
-//        if (mMediaPlayerController.canStart()) {
-//            mMediaPlayerController.start();
-//        }
     }
 
     public void onPause() {
@@ -545,10 +541,6 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         mPausePosition = mMediaPlayerController.getCurrentPosition();
 
         disableOrientationEventListener();
-
-//        if (mMediaPlayerController.isPlaying()) {
-//            mMediaPlayerController.pause();
-//        }
         WakeLocker.release();
     }
 

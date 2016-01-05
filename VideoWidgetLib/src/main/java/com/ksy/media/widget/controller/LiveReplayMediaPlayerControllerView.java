@@ -6,31 +6,31 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-
-import com.ksy.media.widget.util.MediaPlayerUtils;
 import com.ksy.media.widget.ui.common.LiveAnchorDialog;
 import com.ksy.media.widget.ui.common.MediaPlayerVideoSeekBar;
 import com.ksy.media.widget.ui.common.HeartLayout;
 import com.ksy.media.widget.ui.common.HorizontalListView;
 import com.ksy.media.widget.ui.common.LiveExitDialog;
 import com.ksy.media.widget.ui.common.LivePersonDialog;
-import com.ksy.media.widget.ui.livereplay.LiveReplayDialogAdapter;
-import com.ksy.media.widget.ui.livereplay.LiveReplayDialogInfo;
+import com.ksy.media.widget.ui.live.LiveChatAdapter;
 import com.ksy.media.widget.ui.livereplay.LiveReplayHeadListAdapter;
+import com.ksy.media.widget.util.MediaPlayerUtils;
 import com.ksy.mediaPlayer.widget.R;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -42,15 +42,17 @@ import android.widget.Toast;
 public class LiveReplayMediaPlayerControllerView extends FrameLayout implements View.OnClickListener {
 
 	private ImageView liveReplayHead;
-	private TextView  loadingTextView;
+	private ImageView  loadingImage;
 	private TextView  netErrorTextView;
-	private TextView  closeTextView;
-	private TextView  reportTextView;
+	private ImageView  closeImage;
+	private ImageView  reportImage;
 
 	private ListView listView;
-	private List<LiveReplayDialogInfo> dialogList;
-	private LiveReplayDialogAdapter dialogAdapter;
 	private TextView noticeTextView;
+	private List<Map<String, Object>> data;
+	private Timer refreshTimerLive = new Timer();
+	private LiveChatAdapter adapter;
+	Map<String, Object> map;
 
 	private TextView personCountTextView;
 	private ImageView liveReplayPerson;
@@ -59,8 +61,8 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 	private LiveReplayHeadListAdapter headListAdapter;
 	private int praiseCount;
 
-    private Button switchButton;
-	private Button shareButton;
+    private ImageView switchButton;
+	private ImageView shareButton;
 	private MediaPlayerVideoSeekBar mSeekBar;
 	private TextView currentTimeTextView;
 	private TextView lineTextView;
@@ -122,19 +124,18 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 		hideAudienceAnimation = AnimationUtils.loadAnimation(mContext, R.anim.live_audience_hide);
 
 		liveReplayHead = (ImageView)findViewById(R.id.image_live_replay_head);
-		loadingTextView = (TextView) findViewById(R.id.text_live_replay);
+		loadingImage = (ImageView) findViewById(R.id.text_live_replay);
 		netErrorTextView = (TextView) findViewById(R.id.textViewNetError);
-		closeTextView = (TextView) findViewById(R.id.title_text_close);
-		reportTextView = (TextView) findViewById(R.id.title_text_report);
+		closeImage = (ImageView) findViewById(R.id.title_text_close);
+		reportImage = (ImageView) findViewById(R.id.title_text_report);
 		praiseCountTextView = (TextView) findViewById(R.id.praise_count_text);
 		personCountTextView = (TextView) findViewById(R.id.person_count_textview);
 
 		listView = (ListView) findViewById(R.id.live_list);
-		//load data
-		dialogList = new ArrayList<LiveReplayDialogInfo>();
-		dialogAdapter = new LiveReplayDialogAdapter(dialogList, mContext);
-		listView.setAdapter(dialogAdapter);
 		noticeTextView = (TextView)findViewById(R.id.notice_text);
+		data = getData();
+		adapter = new LiveChatAdapter(mContext, data);
+		listView.setAdapter(adapter);
 
 		mHorizontalList = (HorizontalListView) findViewById(R.id.live_replay_horizon);
 		headListAdapter = new LiveReplayHeadListAdapter(mContext);
@@ -144,15 +145,20 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 			@Override
 			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 				LivePersonDialog dialogPerson = new LivePersonDialog(mContext);
+
+				WindowManager.LayoutParams lp = dialogPerson.getWindow().getAttributes();
+				lp.alpha = 0.5f;
+				dialogPerson.getWindow().setAttributes(lp);
+
 				dialogPerson.show();
 			}
 		});
 
 		liveReplayPerson = (ImageView)findViewById(R.id.live_replay_person_image);
-		switchButton = (Button) findViewById(R.id.live_replay_information_switch);
+		switchButton = (ImageView) findViewById(R.id.live_replay_information_switch);
 		mHeartLayout = (HeartLayout)findViewById(R.id.live_replay_image_heart);
 		heartImageView = (ImageView) findViewById(R.id.image_heart);
-		shareButton = (Button) findViewById(R.id.live_replay_share_bt);
+		shareButton = (ImageView) findViewById(R.id.live_replay_share_bt);
 
 		mSeekBar = (MediaPlayerVideoSeekBar) findViewById(R.id.seekbar_video_progress);
 		mPlaybackImageView = (ImageView) findViewById(R.id.video_playback_image_view);
@@ -162,6 +168,8 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 		mSeekBar.setMax(LIVEREPLAY_MAX_VIDEO_PROGRESS);
 		mSeekBar.setProgress(0);
 
+		chatListControlLiveReplay();
+
 		seekRefresh();
 
 		heartRefresh();
@@ -169,17 +177,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 		audienceComeTimer();
 
 		audienceComeTimerGoneTimer();
-
-		mHandler.postDelayed(listHideRunnable, 4000);
 	}
-
-    //delay
-	Runnable listHideRunnable = new Runnable() {
-		@Override
-		public void run() {
-			listView.setVisibility(GONE);
-		}
-	};
 
 	Runnable seekRefreshRunnable = new Runnable() {
 		@Override
@@ -191,7 +189,6 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 	Runnable mAudienceComeRunnable = new Runnable() {
 		@Override
 		public void run() {
-//			noticeTextView.setVisibility(VISIBLE);
 			noticeTextView.startAnimation(showAudienceAnimation);
 		}
 	};
@@ -200,8 +197,8 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 		@Override
 		public void run() {
 			if (noticeTextView.isShown()) {
-//				noticeTextView.setVisibility(GONE);
 				noticeTextView.startAnimation(hideAudienceAnimation);
+				noticeTextView.setVisibility(INVISIBLE);
 			}
 		}
 	};
@@ -229,7 +226,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 					}
 				});
 			}
-		}, 500, 500);
+		}, 500, 1000);
 	}
 
 	public void audienceComeTimer() {
@@ -250,6 +247,42 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 		}, 100, 8000);
 	}
 
+	private List<Map<String, Object>> getData() {
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+		Map<String, Object> map;
+
+		map = new HashMap<String, Object>();
+		map.put("img", R.drawable.live_dialog_list_item);
+		map.put("title", "用户名");
+		map.put("info", "评论内容评论内容");
+
+		this.map = map;
+		list.add(map);
+
+		return list;
+	}
+
+	private void chatListControlLiveReplay() {
+		refreshTimerLive.scheduleAtFixedRate(new TimerTask() {
+			@Override
+			public void run() {
+				if (data.size() >= 8) {
+					data.remove(0);
+					data.add(7, map);
+				} else {
+					data.add(map);
+				}
+
+				mHandler.post(new Runnable() {
+					@Override
+					public void run() {
+						adapter.notifyDataSetChanged();
+					}
+				});
+			}
+		}, 200, 2000);
+	}
+
 	public void stopLiveReplayTimer() {
 		if (null != seekTimer) {
 			seekTimer.cancel();
@@ -267,6 +300,10 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 			mAudienceComeTimerGoneTimer.cancel();
 		}
 
+		if (null != refreshTimerLive) {
+			refreshTimerLive.cancel();
+		}
+
 		currentTimeTextView.setText("00:00:00");
 		totalTimeTextView.setText("00:00:00");
 	}
@@ -274,8 +311,8 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 	protected void initListeners() {
 
 		liveReplayHead.setOnClickListener(this);
-		closeTextView.setOnClickListener(this);
-		reportTextView.setOnClickListener(this);
+		closeImage.setOnClickListener(this);
+		reportImage.setOnClickListener(this);
 
 		liveReplayPerson.setOnClickListener(this);
 		switchButton.setOnClickListener(this);
@@ -307,7 +344,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
 				/*if (fromUser) {
 					if (isShowing()) {
-
+						show();
 					}
 				}*/
 			}
@@ -360,8 +397,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 	public void updateVideoPlaybackState(boolean isStart) {
 		// 播放中
 		if (isStart) {
-			loadingTextView.setText("回放中");
-			mPlaybackImageView.setImageResource(R.drawable.blue_ksy_pause);
+			mPlaybackImageView.setImageResource(R.drawable.live_replay_pause);
 
 			if (mLiveReplayMediaPlayerController.canPause()) {
 				mPlaybackImageView.setEnabled(true);
@@ -371,8 +407,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 		}
 		// 未播放
 		else {
-
-			mPlaybackImageView.setImageResource(R.drawable.blue_ksy_play);
+			mPlaybackImageView.setImageResource(R.drawable.live_replay_play);
 			if (mLiveReplayMediaPlayerController.canStart()) {
 				mPlaybackImageView.setEnabled(true);
 			} else {
@@ -388,21 +423,25 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 
 		if (id == liveReplayHead.getId()) {
 			LiveAnchorDialog dialogPerson = new LiveAnchorDialog(mContext);
+
+			WindowManager.LayoutParams lp=dialogPerson.getWindow().getAttributes();
+			lp.alpha=0.5f;
+			dialogPerson.getWindow().setAttributes(lp);
+
 			dialogPerson.show();
 
 		} else if (id == mPlaybackImageView.getId()) {
 			if (mLiveReplayMediaPlayerController.isPlaying()) {
 				mLiveReplayMediaPlayerController.pause();
-
 			} else if (!mLiveReplayMediaPlayerController.isPlaying()) {
 				mLiveReplayMediaPlayerController.start();
 			}
-		} else if (id == closeTextView.getId()) {
-			LiveExitDialog dialog = new LiveExitDialog(mContext, "确定关闭该直播");
+		} else if (id == closeImage.getId()) {
+			LiveExitDialog dialog = new LiveExitDialog(mContext, "确定关闭该直播？");
 			dialog.show();
 
-		} else if (id == reportTextView.getId()) {
-			LiveExitDialog dialog = new LiveExitDialog(mContext, "确定举报该直播");
+		} else if (id == reportImage.getId()) {
+			LiveExitDialog dialog = new LiveExitDialog(mContext, "确定举报该直播？");
 			dialog.show();
 
 		} else if (id == liveReplayPerson.getId()) {
@@ -416,7 +455,6 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 			}
 
 		} else if (id == shareButton.getId()) {
-
 			Toast.makeText(mContext, "I am share", Toast.LENGTH_SHORT).show();
 
 		} else if (id == switchButton.getId()) {
@@ -433,6 +471,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 				heartImageView.setVisibility(VISIBLE);
 				personCountTextView.setVisibility(VISIBLE);
 				praiseCountTextView.setVisibility(VISIBLE);
+				switchButton.setImageResource(R.drawable.live_model_image);
 				isSwitch = false;
 
 			} else {
@@ -448,6 +487,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 				heartImageView.setVisibility(GONE);
 				personCountTextView.setVisibility(GONE);
 				praiseCountTextView.setVisibility(GONE);
+				switchButton.setImageResource(R.drawable.live_quiet_model_image);
 				isSwitch = true;
 			  }
 			} else if (id == heartImageView.getId()) {

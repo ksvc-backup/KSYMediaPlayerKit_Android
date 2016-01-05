@@ -6,6 +6,7 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,10 +19,9 @@ public class LiveReplayMediaPlayerEventActionView extends RelativeLayout {
 	public static final int EVENT_ACTION_VIEW_MODE_WAIT = 0X01;
 	public static final int EVENT_ACTION_VIEW_MODE_ERROR = 0X02;
 
-	private TextView closeTextView;
-	private TextView reportTextView;
+	private ImageView closeTextView;
+	private ImageView reportTextView;
 	private Button  replayButton;
-	private Button  noticeButton;
 
 	private RelativeLayout mxCompleteLayout;
 
@@ -53,10 +53,9 @@ public class LiveReplayMediaPlayerEventActionView extends RelativeLayout {
 
 	private void initViews() {
 
-		closeTextView = (TextView) findViewById(R.id.title_text_close);
-		reportTextView = (TextView) findViewById(R.id.title_text_report);
+		closeTextView = (ImageView) findViewById(R.id.title_text_close);
+		reportTextView = (ImageView) findViewById(R.id.title_text_report);
 		replayButton = (Button)findViewById(R.id.button_replay);
-		noticeButton = (Button)findViewById(R.id.button_notice);
 
 		mxCompleteLayout = (RelativeLayout) findViewById(R.id.layout_live_replay_finish);
 
@@ -74,9 +73,11 @@ public class LiveReplayMediaPlayerEventActionView extends RelativeLayout {
 		replayButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (mCallback != null) {
+				/*if (mCallback != null) {
 					mCallback.onActionReplay();
-				}
+				}*/
+
+				System.exit(0);
 			}
 		});
 
@@ -87,7 +88,6 @@ public class LiveReplayMediaPlayerEventActionView extends RelativeLayout {
 					mCallback.onActionError();
 			}
 		});
-
 	}
 
 	@Override

@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="wrap_content" >
 
     <RelativeLayout
         android:id="@+id/controller_top_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/controller_large_top"
-        android:layout_alignParentTop="true"
-        android:clickable="true" >
+        android:layout_height="wrap_content"
+        android:src="@drawable/live_top_alpha_image"
+        android:layout_alignParentTop="true">
 
         <ImageView
             android:id="@+id/image_live_head"
@@ -18,44 +18,45 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_marginRight="@dimen/small_margin_left"
-            android:src="@drawable/live_person_grey" />
+            android:src="@drawable/live_anchor" />
 
-        <TextView
+        <ImageView
             android:id="@+id/text_living"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/live_ing"
+            android:src="@drawable/live_image"
             android:gravity="center_vertical"
             android:layout_toRightOf="@+id/image_live_head"
             android:layout_alignTop="@+id/image_live_head" />
 
-        <TextView
+        <ImageView
             android:id="@+id/title_text_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:src="@drawable/live_close"
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_marginRight="@dimen/small_margin_left"
-            android:gravity="center_vertical"
-            android:text="@string/live_close" />
+            android:gravity="center_vertical" />
 
-        <TextView
+        <ImageView
             android:id="@+id/title_text_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/title_text_close"
+            android:src="@drawable/live_report_image"
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_marginRight="@dimen/small_margin_left"
-            android:gravity="center_vertical"
-            android:text="@string/live_report" />
+            android:gravity="center_vertical" />
 
         <TextView
             android:id="@+id/textViewTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/live_time"
+            android:textColor="@color/white"
             android:gravity="center_vertical"
             android:layout_below="@+id/text_living"
             android:layout_toRightOf="@+id/image_live_head"

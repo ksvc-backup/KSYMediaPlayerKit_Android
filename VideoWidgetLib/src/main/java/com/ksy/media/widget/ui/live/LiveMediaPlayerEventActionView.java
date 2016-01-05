@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -20,10 +21,10 @@ public class LiveMediaPlayerEventActionView extends RelativeLayout implements Vi
 	public static final int EVENT_ACTION_VIEW_MODE_WAIT = 0X01;
 	public static final int EVENT_ACTION_VIEW_MODE_ERROR = 0X02;
 
-	private TextView closeTextView;
-	private TextView reportTextView;
-	private Button liveNotice;
-	private Button liveNoticePerson;
+	private ImageView closeTextView;
+	private ImageView reportTextView;
+	private Button liveBackHome;
+
 	private RelativeLayout mxCompleteLayout;
 	private EventActionViewCallback mCallback;
 
@@ -54,10 +55,9 @@ public class LiveMediaPlayerEventActionView extends RelativeLayout implements Vi
 
 	private void initViews() {
 
-		closeTextView = (TextView) findViewById(R.id.title_text_close);
-		reportTextView = (TextView) findViewById(R.id.title_text_report);
-		liveNotice = (Button)findViewById(R.id.live_notice_button);
-		liveNoticePerson = (Button)findViewById(R.id.live_notice_person_button);
+		closeTextView = (ImageView) findViewById(R.id.title_text_close);
+		reportTextView = (ImageView) findViewById(R.id.title_text_report);
+		liveBackHome = (Button)findViewById(R.id.button_replay);
 
 		mxCompleteLayout = (RelativeLayout) findViewById(R.id.layout_live_finish);
 		mErrorLayout = (LinearLayout) findViewById(R.id.error_layout);
@@ -147,7 +147,7 @@ public class LiveMediaPlayerEventActionView extends RelativeLayout implements Vi
 	public void onClick(View view) {
 		int id = view.getId();
 
-		if (id == liveNoticePerson.getId()) {
+		if (id == liveBackHome.getId()) {
 			System.exit(0);
 		}
 

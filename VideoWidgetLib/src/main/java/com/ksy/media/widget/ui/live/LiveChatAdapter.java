@@ -1,5 +1,7 @@
 package com.ksy.media.widget.ui.live;
 
+import java.util.List;
+import java.util.Map;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,44 +12,35 @@ import android.widget.TextView;
 
 import com.ksy.mediaPlayer.widget.R;
 
-import java.util.List;
+public class LiveChatAdapter extends BaseAdapter {
 
-/**
- * @author LIXIAOPENG
- *
- */
-public class LiveDialogAdapter extends BaseAdapter {
+	private LayoutInflater mInflater = null;
+	private List<Map<String, Object>> dataReceive;
 
-	private List<LiveDialogInfo> liveReplayInfoList;
-
-	private LayoutInflater inflater;
-
-	public LiveDialogAdapter(List<LiveDialogInfo> videoInfoList,
-							 Context mContext) {
-		this.liveReplayInfoList = videoInfoList;
-		// this.mContext = mContext;
-		inflater = LayoutInflater.from(mContext);
+	public LiveChatAdapter(Context context, List<Map<String, Object>> data) {
+		dataReceive = data;
+		this.mInflater = LayoutInflater.from(context);
 	}
+
 
 	@Override
 	public int getCount() {
-		return 5/*videoInfoList.size()*/;
+
+		return dataReceive.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return liveReplayInfoList.get(position);
+
+		return position;
 	}
 
 	@Override
 	public long getItemId(int position) {
-		return 0;
+
+		return position;
 	}
 
-	public void refreshList(List<LiveDialogInfo> list) {
-		this.liveReplayInfoList = list;
-		notifyDataSetInvalidated();
-	}
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -55,33 +48,30 @@ public class LiveDialogAdapter extends BaseAdapter {
 		
 		if (convertView == null) {
 			viewHolder = new ViewHolder();
+			convertView = mInflater.inflate(R.layout.live_top_item, null);
 
-			convertView = inflater.inflate(R.layout.live_top_item, null);
-			
 			viewHolder.commendHeadImage = (ImageView)convertView.findViewById(R.id.live_imageview);
 			viewHolder.userNameText = (TextView)convertView.findViewById(R.id.live_username);
 			viewHolder.commendText = (TextView)convertView.findViewById(R.id.live_comment);
-			
+
 			convertView.setTag(viewHolder);
 			
 		} else {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 
-		viewHolder.commendHeadImage.setImageResource(R.drawable.live_person_grey);
-//		viewHolder.videoTextName.setText(videoInfoList.get(position).getDisplayName());
-		viewHolder.userNameText.setText("用户名");
-		viewHolder.commendText.setText("评论内容评论内容评论内容");
+		viewHolder.commendHeadImage.setBackgroundResource((Integer) dataReceive.get(position)
+				.get("img"));
+		viewHolder.userNameText.setText((String) dataReceive.get(position).get("title"));
+		viewHolder.commendText.setText((String) dataReceive.get(position).get("info"));
 		
 		return convertView;
 	}
 
-	
 	class ViewHolder {
 		public ImageView commendHeadImage;
 		public TextView userNameText;
 		public TextView commendText;
 	}
-	
-}
 
+}

@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
+    android:alpha="0.6"
     tools:context=".MainActivity">
 
     <!-- complete-->
@@ -18,27 +19,25 @@
         android:layout_alignParentTop="true"
         android:clickable="true" >
 
-        <TextView
+        <ImageView
             android:id="@+id/title_text_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
+            android:src="@drawable/live_close"
             android:layout_marginLeft="25dp"
             android:layout_marginRight="25dp"
-            android:textColor="@color/white"
-            android:gravity="center_vertical"
-            android:text="@string/live_close" />
+            android:gravity="center_vertical" />
 
-        <TextView
+        <ImageView
             android:id="@+id/title_text_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:textColor="@color/white"
+            android:src="@drawable/live_report_image"
             android:layout_toLeftOf="@+id/title_text_close"
-            android:gravity="center_vertical"
-            android:text="@string/live_report" />
+            android:gravity="center_vertical" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -53,7 +52,7 @@
         android:id="@+id/imageView2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:src="@drawable/live_replay_head_portrait"
+        android:src="@drawable/live_anchor_detail"
         android:layout_marginLeft="47dp"
         android:layout_marginStart="47dp"
         android:layout_marginTop="27dp" />
@@ -64,6 +63,7 @@
         android:gravity="center_vertical"
         android:text="@string/live_username_one"
         android:textColor="@color/white"
+        android:layout_marginLeft="6dp"
         android:layout_alignTop="@+id/imageView2"
         android:layout_toRightOf="@+id/imageView2"
         android:layout_toEndOf="@+id/imageView2" />
@@ -72,22 +72,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginLeft="6dp"
         android:textColor="@color/white"
         android:text="@string/live_fans_praise"
         android:layout_below="@+id/textView3"
         android:layout_toRightOf="@+id/imageView2"
         android:layout_centerHorizontal="true" />
-    <Button
-        android:id="@+id/textView5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:layout_marginTop="6dp"
-        android:text="@string/live_attention"
-        android:layout_toRightOf="@+id/imageView2"
-        android:layout_below="@+id/textView4"
-        android:layout_centerHorizontal="true" />
+
     </RelativeLayout>
 
     <TextView
@@ -104,79 +96,98 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/live_replay"
+        android:text="@string/live_back_home"
         android:id="@+id/button_replay"
+        android:layout_marginTop="10dp"
+        android:background="@color/lightblue"
         android:layout_below="@+id/textView6"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/live_attention_person"
-        android:id="@+id/button_notice"
-        android:layout_below="@+id/button_replay"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="@string/live_share"
-        android:layout_marginTop="15dp"
-        android:textColor="@color/white"
-        android:id="@+id/textView7"
-        android:layout_below="@+id/button_notice"
-        android:layout_centerHorizontal="true" />
-
     <RelativeLayout
-        android:layout_below="@+id/textView7"
-        android:layout_centerVertical="true"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
+        android:layout_marginBottom="30dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView3"
-        android:src="@drawable/live_person_grey"
-        android:layout_marginTop="35dp" />
+        android:id="@+id/imageViewFacebook"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/live_share_facebook" />
+
+    <TextView
+        android:text="脸书"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView5" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView4"
-        android:src="@drawable/live_person_grey"
-        android:layout_alignTop="@+id/imageView3"
-        android:layout_toRightOf="@+id/imageView3" />
+        android:id="@+id/imageViewGoogleplus"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/live_share_googleplus"
+        android:layout_toRightOf="@+id/imageViewFacebook" />
+
+    <TextView
+        android:layout_below="@+id/imageViewGoogleplus"
+        android:layout_toRightOf="@+id/imageViewFacebook"
+        android:text="谷歌"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView5" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView5"
-        android:src="@drawable/live_person_grey"
-        android:layout_alignTop="@+id/imageView4"
-        android:layout_toRightOf="@+id/imageView4"
-        android:layout_toEndOf="@+id/imageView4" />
+        android:id="@+id/imageViewLine"
+        android:src="@drawable/live_share_line"
+        android:layout_marginRight="15dp"
+        android:layout_toRightOf="@+id/imageViewGoogleplus" />
+
+    <TextView
+        android:layout_below="@+id/imageViewLine"
+        android:layout_toRightOf="@+id/imageViewGoogleplus"
+        android:text="Line"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView6"
-        android:src="@drawable/live_person_grey"
-        android:layout_alignBottom="@+id/imageView5"
-        android:layout_toRightOf="@+id/imageView5"
-        android:layout_toEndOf="@+id/imageView5" />
+        android:id="@+id/imageViewTwitter"
+        android:layout_marginRight="15dp"
+        android:src="@drawable/live_share_twitter"
+        android:layout_toRightOf="@+id/imageViewLine" />
+
+    <TextView
+        android:layout_below="@+id/imageViewTwitter"
+        android:layout_toRightOf="@+id/imageViewLine"
+        android:text="twitter"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView7"
-        android:src="@drawable/live_person_grey"
-        android:layout_alignTop="@+id/imageView6"
-        android:layout_toRightOf="@+id/imageView6"
-        android:layout_toEndOf="@+id/imageView6" />
+        android:id="@+id/imageViewWechat"
+        android:src="@drawable/live_share_wechat"
+        android:layout_toRightOf="@+id/imageViewTwitter"
+        android:layout_toEndOf="@+id/imageViewTwitter" />
 
+    <TextView
+        android:layout_below="@+id/imageViewWechat"
+        android:layout_toRightOf="@+id/imageViewTwitter"
+        android:text="微信"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
      </RelativeLayout>
     </RelativeLayout>
 

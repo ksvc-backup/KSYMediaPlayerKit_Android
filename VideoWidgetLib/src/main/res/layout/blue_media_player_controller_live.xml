@@ -12,42 +12,48 @@
         android:headerDividersEnabled="false"
         android:stackFromBottom="true"
         android:dividerHeight="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_width="220dp"
-        android:layout_height="400dp">
+        android:layout_marginLeft="10dp"
+        android:layout_width="200dp"
+        android:layout_height="300dp">
     </ListView>
 
     <TextView
         android:id="@+id/notice_text_live"
         android:layout_above="@+id/live_person_list"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginBottom="6dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="6dp"
         android:text="@string/live_replay_notice"
         android:gravity="center_vertical"
-        android:textColor="@color/black"
-        android:background="@color/white"
+        android:textColor="@color/white"
+        android:background="@color/black"
+        android:alpha="0.4"
         android:layout_width="110dp"
         android:layout_height="35dp" />
 
     <RelativeLayout
         android:id="@+id/live_person_list"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
         android:layout_above="@+id/controller_bottom_layout"
         android:layout_width="300dp"
-        android:layout_height="120dp">
+        android:layout_height="100dp">
         <ImageView
             android:id="@+id/live_person_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/live_person_grey"/>
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:src="@drawable/live_person_count"/>
 
         <TextView
             android:id="@+id/live_person_count_textview"
             android:textColor="@color/white"
-            android:text="88人"
+            android:text="@string/live_fans_count"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/live_person_image"
             android:layout_width="wrap_content"
@@ -76,7 +82,7 @@
 
         <ImageView
             android:id="@+id/live_image_heart_bt"
-            android:src="@drawable/heart"
+            android:src="@drawable/live_favorite"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/live_image_heart"
             android:layout_width="wrap_content"
@@ -86,7 +92,7 @@
             android:id="@+id/live_praise_count_text"
             android:layout_below="@+id/live_image_heart_bt"
             android:layout_marginLeft="6dp"
-            android:text="0"
+            android:text="@string/live_favarite_count"
             android:textColor="@color/white"
             android:layout_centerHorizontal="true"
             android:layout_width="wrap_content"

@@ -57,7 +57,7 @@
     <string name="live_share">分享</string>
     <string name="live_info_switch">信息开关</string>
     <string name="live_comment">说点什么吧</string>
-    <string name="live_comment_content">评论评论评论评论评论评论评论评论评论评论</string>
+    <string name="live_comment_content">评论评论评论评论评论</string>
     <string name="live_info_quiet">安静模式</string>
     <string name="live_username_one">用户名123</string>
     <string name="live_fans_praise">1.2w 赞   1.2w粉丝</string>
@@ -65,13 +65,14 @@
     <string name="live_attention_person">关注播主</string>
     <string name="live_finish">直播已经结束</string>
     <string name="live_is_report">确定举报该直播？</string>
-    <string name="live_yse">是</string>
-    <string name="live_no">否</string>
+    <string name="live_yse">确定</string>
+    <string name="live_no">取消</string>
     <string name="live_praise">1.2w 赞</string>
     <string name="live">直播</string>
     <string name="live_signature_line">签名档签名档签名档签名档</string>
     <string name="live_fans">粉丝</string>
     <string name="live_replay">重新播放</string>
+    <string name="live_back_home">返回主页</string>
     <string name="live_replay_finish">直播回放已经结束</string>
     <string name="live_current">当前直播：</string>
     <string name="live_current_content">直播标题直播标题</string>
@@ -83,8 +84,10 @@
     <string name="live_replay_current_time">00:00:00</string>
     <string name="live_replay_line">/</string>
     <string name="live_replay_total_time">00:00:00</string>
-    <string name="live_replay_net_error">提示文字</string>
+    <string name="live_replay_net_error">12月1日 09:00:00</string>
     <string name="live_replay_notice">路飞路飞     来了</string>
+    <string name="live_fans_count">222人</string>
+    <string name="live_favarite_count">0</string>
 
     <string name="video_detail_focus">+关注</string>
     <string name="video_detail_title">直播间信息</string>
