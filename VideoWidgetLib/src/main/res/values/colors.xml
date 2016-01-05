@@ -58,5 +58,12 @@
     <color name="primary_accent">@color/red_300</color>
     <color name="dark_bg_font">#aaffffff</color>
     <color name="deepgray">#FF9DA6AD</color>
-    
+
+    <color name="ksy_color_prime">#71DFEA</color>
+    <color name="ksy_color_bg">#111111</color>
+    <color name="ksy_color_card_bg">#212121</color>
+    <color name="ksy_color_component_bg_alpha">#B2212121</color>
+    <color name="ksy_color_divider_alpha">#4CFFFFFF</color>
+    <color name="ksy_color_font">#FFFFFF</color>
+    <color name="ksy_color_font_alpha">#7FFFFFFF</color>
 </resources>

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:layout_alignParentBottom="true"
-    android:background="@color/white"
+    android:background="@color/ksy_color_card_bg"
     android:orientation="horizontal">
 
     <EditText
@@ -13,6 +13,8 @@
         android:layout_height="32dp"
         android:layout_gravity="center_vertical"
         android:layout_margin="@dimen/list_margin"
+        android:textColor="@color/ksy_color_font"
+        android:textColorHint="@color/ksy_color_font_alpha"
         android:layout_weight="5"
         android:background="@drawable/short_video_edittext_bg"
         android:textCursorDrawable="@null"
@@ -25,7 +27,8 @@
         android:layout_height="60dp"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
-        android:background="@color/white"
+        android:background="@color/ksy_color_card_bg"
         android:text="@string/short_video_comment_commit"
+        android:textColor="@color/ksy_color_font"
         android:textSize="18sp" />
 </LinearLayout>

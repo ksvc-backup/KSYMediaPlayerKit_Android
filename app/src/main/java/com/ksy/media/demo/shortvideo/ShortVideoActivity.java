@@ -6,6 +6,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -65,6 +66,10 @@ public class ShortVideoActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
         setContentView(R.layout.activity_short_movie);
         setupScreenSize();
         setupViews();
@@ -147,7 +152,7 @@ public class ShortVideoActivity extends AppCompatActivity implements
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
             mToolbar.setTitle(getResources().getString(R.string.short_video_title));
-            mToolbar.setTitleTextColor(Color.BLACK);
+//            mToolbar.setTitleTextColor(Color.BLACK);
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -169,6 +174,7 @@ public class ShortVideoActivity extends AppCompatActivity implements
                     public void onClick(DialogInterface dialog, int which) {
                         String inputString = editInput.getText().toString();
                         if (!TextUtils.isEmpty(inputString)) {
+
                             startPlayer(inputString);
                         } else {
                             Toast.makeText(ShortVideoActivity.this,

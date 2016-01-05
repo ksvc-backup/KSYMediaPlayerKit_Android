@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:background="#ffffff">
+    android:layout_height="150dp"
+    android:background="@color/ksy_color_card_bg">
 
     <EditText
         android:id="@+id/input"
@@ -10,6 +10,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
+        android:textColor="@color/ksy_color_font"
+        android:textColorHint="@color/ksy_color_font_alpha"
         android:hint="Please Input Video Path or URL..."
         android:text="http://sfvbook-eflake.bj.bcebos.com/BETA3/RYU/20151220224301.mp4">
         <requestFocus />

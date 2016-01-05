@@ -34,33 +34,33 @@
         </activity>
         <activity
             android:name=".live.PhoneLiveActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_phone_live"
             android:screenOrientation="nosensor"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".livereplay.PhoneLiveReplayActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_phone_live_replay"
             android:screenOrientation="nosensor"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".shortvideo.ShortVideoActivity"
-            android:screenOrientation="nosensor"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_short_movie"
+            android:screenOrientation="nosensor"
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".stream.StreamVideoActivity"
-            android:screenOrientation="nosensor"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_stream_video"
+            android:screenOrientation="nosensor"
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".video.OnlineVideoActivity"
-            android:screenOrientation="nosensor"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_online_video"
+            android:screenOrientation="nosensor"
             android:theme="@style/FullscreenTheme" />
     </application>
 

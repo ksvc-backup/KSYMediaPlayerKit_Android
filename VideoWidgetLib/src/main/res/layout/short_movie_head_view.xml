@@ -33,6 +33,7 @@
             android:layout_alignLeft="@+id/short_video_watch_icon"
             android:layout_below="@+id/short_video_watch_icon"
             android:layout_marginTop="4dp"
+            android:textColor="@color/white"
             android:gravity="center_horizontal"
             android:text="@string/short_video_watch_count_tv_default" />
 
@@ -49,6 +50,7 @@
             android:id="@+id/short_video_comment_info_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:layout_alignLeft="@+id/short_video_comment_icon"
             android:layout_below="@+id/short_video_comment_icon"
             android:layout_marginTop="4dp"
@@ -68,6 +70,7 @@
             android:id="@+id/short_video_favourate_info_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:layout_alignLeft="@+id/short_video_favourate_icon"
             android:layout_below="@+id/short_video_favourate_icon"
             android:layout_marginTop="4dp"
@@ -87,6 +90,7 @@
             android:id="@+id/short_video_share_info_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/white"
             android:layout_alignLeft="@+id/short_video_share_icon"
             android:layout_below="@+id/short_video_share_icon"
             android:layout_marginTop="4dp"
@@ -97,6 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
+            android:textColor="@color/white"
             android:layout_centerVertical="true"
             android:text="@string/short_video_time_tv_default" />
     </RelativeLayout>

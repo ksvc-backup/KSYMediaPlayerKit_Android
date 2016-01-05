@@ -23,20 +23,24 @@
     <!-- Application theme. -->
     <style name="AppTheme" parent="AppBaseTheme"></style>
 
-    <style name="FullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar"></style>
+    <style name="FullscreenTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="android:fitsSystemWindows">true</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="android:windowBackground">@null</item>
+    </style>
 
 
     <!--ToolBar theme-->
-    <style name="Widget.Demo.Toolbar" parent="Widget.AppCompat.Toolbar">
-        <item name="android:background">?attr/colorPrimary</item>
-        <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
-        <item name="android:actionModeBackground">@color/gray_primary_dark</item>
-        <item name="theme">@style/Demo.Theme.actionbar</item>
-    </style>
+    <!--    <style name="Widget.Demo.Toolbar" parent="Widget.AppCompat.Toolbar">
+            <item name="android:background">?attr/colorPrimary</item>
+            <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
+            <item name="android:actionModeBackground">@color/gray_primary_dark</item>
+            <item name="theme">@style/Demo.Theme.actionbar</item>
+        </style>
 
-    <style name="Demo.Theme.actionbar" parent="ThemeOverlay.AppCompat.ActionBar">
-        <item name="android:actionModeBackground">@color/gray_primary_dark</item>
-    </style>
+        <style name="Demo.Theme.actionbar" parent="ThemeOverlay.AppCompat.ActionBar">
+            <item name="android:actionModeBackground">@color/gray_primary_dark</item>
+        </style>-->
 
     <style name="Widget.Demo.Toolbar.Transparent">
         <item name="android:background">@null</item>
@@ -52,8 +56,8 @@
     <style name="AppBaseTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="popAnimStyle">
-            <item name="android:windowEnterAnimation">@anim/pop_show</item>
-            <item name="android:windowExitAnimation">@anim/pop_hidden</item>
+        <item name="android:windowEnterAnimation">@anim/pop_show</item>
+        <item name="android:windowExitAnimation">@anim/pop_hidden</item>
     </style>
 
 </resources>

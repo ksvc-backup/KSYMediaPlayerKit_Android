@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="48dp"
     android:layout_alignParentBottom="true"
-    android:background="@color/white"
+    android:background="@color/ksy_color_card_bg"
     android:orientation="horizontal">
 
     <EditText
@@ -16,13 +16,16 @@
         android:textCursorDrawable="@null"
         android:background="@drawable/video_edittext_bg"
         android:layout_gravity="center_vertical"
+        android:textColor="@color/ksy_color_font"
+        android:textColorHint="@color/ksy_color_font_alpha"
         android:hint="@string/short_video_comment_hint" />
 
     <Button
         android:layout_width="0dp"
         android:layout_weight="1"
         android:layout_height="48dp"
-        android:background="@color/white"
+        android:background="@color/ksy_color_card_bg"
+        android:textColor="@color/ksy_color_font"
         android:textSize="18sp"
         android:layout_gravity="center_vertical"
         android:text="@string/short_video_comment_commit" />
