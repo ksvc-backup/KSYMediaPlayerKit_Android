@@ -40,7 +40,6 @@ public class LiveChatAdapter extends BaseAdapter {
 		return position;
 	}
 
-
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		ViewHolder viewHolder = null;

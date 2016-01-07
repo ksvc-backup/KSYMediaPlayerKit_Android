@@ -23,7 +23,6 @@ public class LiveReplayChatAdapter extends BaseAdapter {
 		this.mInflater = LayoutInflater.from(context);
 	}
 
-
 	@Override
 	public int getCount() {
 
@@ -41,7 +40,6 @@ public class LiveReplayChatAdapter extends BaseAdapter {
 
 		return position;
 	}
-
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
