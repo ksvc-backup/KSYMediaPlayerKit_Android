@@ -13,7 +13,7 @@
         android:layout_height="@dimen/live_bottom_height"
         android:text="@string/live_is_report"
         android:textColor="@color/white"
-        android:layout_marginLeft="12dp"
+        android:layout_marginLeft="@dimen/live_margin_left"
         android:gravity="center_vertical"
         android:textSize="16sp"
         android:textStyle="bold" />

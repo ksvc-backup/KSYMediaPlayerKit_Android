@@ -7,6 +7,7 @@ import android.app.KeyguardManager;
 import android.app.KeyguardManager.KeyguardLock;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.media.AudioManager;
 import android.net.Uri;
 import android.os.Build;
@@ -881,4 +882,7 @@ public class MediaPlayerVideoView extends SurfaceView implements
         }
     }
 
+    public void getCurrentFrame(Bitmap bitmap) {
+        ksyMediaPlayer.getCurrentFrame(bitmap);
+    }
 }

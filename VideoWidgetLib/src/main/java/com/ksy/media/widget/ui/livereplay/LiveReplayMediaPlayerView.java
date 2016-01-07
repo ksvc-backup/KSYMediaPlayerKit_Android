@@ -1246,7 +1246,23 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
 
         @Override
         public void onMovieCrop() {
+            if (!mScreenshotPreparing) {
+                mScreenshotPreparing = true;
+                bitmap = Bitmap.createBitmap(
+                        mLiveReplayMediaPlayerVideoView.getVideoWidth(),
+                        mLiveReplayMediaPlayerVideoView.getVideoHeight(),
+                        Bitmap.Config.ARGB_8888);
+                if (bitmap != null) {
+                    mLiveReplayMediaPlayerVideoView.getCurrentFrame(bitmap);
+                    compressAndSaveBitmapToSDCard(bitmap, getCurrentTime(),
+                            LiveReplayMediaPlayerView.QUALITY_BEST);
 
+                    mHandler.postDelayed(runnableCrop, 1000);
+                    mScreenshotPreparing = false;
+                } else {
+                    Log.d(Constants.LOG_TAG, "bitmap is null");
+                }
+            }
         }
 
         @Override

@@ -6,8 +6,7 @@
     <RelativeLayout
         android:id="@+id/controller_bottom_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/live_bottom_height"
-
+        android:layout_height="@dimen/live_dialog_height"
         android:layout_alignParentBottom="true">
 
         <ImageView

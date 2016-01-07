@@ -9,6 +9,7 @@ import android.app.KeyguardManager;
 import android.app.KeyguardManager.KeyguardLock;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -864,6 +865,10 @@ public class MediaPlayerTextureVideoView extends TextureView implements
     @Override
     public void onSurfaceTextureUpdated(SurfaceTexture surface) {
 
+    }
+
+    public void getCurrentFrame(Bitmap bitmap) {
+        ksyMediaPlayer.getCurrentFrame(bitmap);
     }
 
 }

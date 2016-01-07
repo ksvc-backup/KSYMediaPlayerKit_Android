@@ -1418,7 +1418,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
                         mMediaPlayerVideoView.getVideoHeight(),
                         Config.ARGB_8888);
                 if (bitmap != null) {
-//                    mMediaPlayerVideoView.getCurrentFrame(bitmap);
+                    mMediaPlayerVideoView.getCurrentFrame(bitmap);
                     compressAndSaveBitmapToSDCard(bitmap, getCurrentTime(),
                             StreamMediaPlayerView.QUALITY_BEST);
                     /*

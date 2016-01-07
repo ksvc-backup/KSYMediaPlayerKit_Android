@@ -7,15 +7,14 @@
         android:id="@+id/controller_top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black"
-        android:alpha="0.5"
+        android:paddingTop="@dimen/live_margin_top"
+        android:background="@drawable/live_top_alpha_image"
         android:layout_alignParentTop="true">
 
         <ImageView
             android:id="@+id/image_live_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_marginRight="@dimen/small_margin_left"
@@ -26,32 +25,25 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/live_image"
-            android:layout_marginTop="@dimen/live_margin_left"
-            android:gravity="center_vertical"
-            android:layout_toRightOf="@+id/image_live_head"
-            android:layout_alignTop="@+id/image_live_head" />
+            android:layout_toRightOf="@+id/image_live_head" />
 
         <ImageView
             android:id="@+id/live_image_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:src="@drawable/live_close"
             android:layout_marginLeft="@dimen/small_margin_left"
-            android:layout_marginRight="@dimen/small_margin_left"
-            android:gravity="center_vertical" />
+            android:layout_marginRight="@dimen/small_margin_left" />
 
         <ImageView
             android:id="@+id/live_image_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/live_image_close"
             android:src="@drawable/live_report_image"
             android:layout_marginLeft="@dimen/small_margin_left"
-            android:layout_marginRight="@dimen/small_margin_left"
-            android:gravity="center_vertical" />
+            android:layout_marginRight="@dimen/small_margin_left" />
 
         <TextView
             android:id="@+id/textViewTime"
@@ -59,10 +51,9 @@
             android:layout_height="wrap_content"
             android:text="@string/live_time"
             android:textColor="@color/white"
-            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/live_listview_margin"
             android:layout_below="@+id/text_living"
-            android:layout_toRightOf="@+id/image_live_head"
-            android:layout_toEndOf="@+id/image_live_head" />
+            android:layout_toRightOf="@+id/image_live_head" />
 
     </RelativeLayout>
 </RelativeLayout>

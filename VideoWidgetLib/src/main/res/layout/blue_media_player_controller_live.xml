@@ -27,7 +27,7 @@
         android:gravity="center_vertical"
         android:textColor="@color/white"
         android:background="@color/black"
-        android:alpha="0.4"
+        android:alpha="0.5"
         android:layout_width="@dimen/live_margin_one_hundred"
         android:layout_height="@dimen/live_anchor_margin" />
 
@@ -35,10 +35,9 @@
         android:id="@+id/live_person_list"
         android:layout_alignParentBottom="true"
         android:layout_above="@+id/controller_bottom_layout"
-        android:background="@color/black"
-        android:alpha="0.5"
+        android:background="@drawable/live_bottom_alpha_image"
         android:layout_width="@dimen/live_person_three_handred"
-        android:layout_height="@dimen/live_margin_one_hundred">
+        android:layout_height="@dimen/live_margin_nine">
         <ImageView
             android:id="@+id/live_person_image"
             android:layout_width="wrap_content"
@@ -73,7 +72,7 @@
         android:layout_alignParentBottom="true"
         android:layout_above="@+id/controller_bottom_layout"
         android:layout_toRightOf="@+id/live_person_list"
-        android:layout_marginBottom="@dimen/live_dialog_height"
+        android:layout_marginBottom="@dimen/live_anchor_margin"
         android:layout_width="@dimen/live_heart_margin"
         android:layout_height="@dimen/live_heart_margin_height">
 

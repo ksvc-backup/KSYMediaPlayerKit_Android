@@ -1188,7 +1188,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                         mLiveMediaPlayerVideoView.getVideoHeight(),
                         Config.ARGB_8888);
                 if (bitmap != null) {
-//                    mLiveMediaPlayerVideoView.getCurrentFrame(bitmap);
+                    mLiveMediaPlayerVideoView.getCurrentFrame(bitmap);
                     compressAndSaveBitmapToSDCard(bitmap, getCurrentTime(),
                             LiveMediaPlayerView.QUALITY_BEST);
 
