@@ -60,7 +60,7 @@ public class ShortVideoActivity extends AppCompatActivity implements
     private ImageView short_video_favourate_icon;
     private ImageView short_video_share_icon;
     private View pop_comment_btn;
-    private View pop_edittext_et;
+    private EditText pop_edittext_et;
     private TextView short_video_add_focus;
 
     @Override
@@ -81,7 +81,7 @@ public class ShortVideoActivity extends AppCompatActivity implements
         listView = (ListView) findViewById(R.id.short_video_list);
         commentLayout = LayoutInflater.from(ShortVideoActivity.this).inflate(
                 R.layout.short_video_pop_layout, null);
-        pop_edittext_et = commentLayout.findViewById(R.id.pop_edittext_et);
+        pop_edittext_et = (EditText) commentLayout.findViewById(R.id.pop_edittext_et);
         pop_comment_btn = commentLayout.findViewById(R.id.pop_comment_btn);
         pop_comment_btn.setOnClickListener(this);
         setupFunctionIcon();
@@ -334,8 +334,11 @@ public class ShortVideoActivity extends AppCompatActivity implements
             case R.id.pop_comment_btn:
                 Toast.makeText(ShortVideoActivity.this, "comment send", Toast.LENGTH_SHORT).show();
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                hideCommentLayout();
+                if (imm.isActive() && !TextUtils.isEmpty(pop_edittext_et.getText().toString())) {
+                    imm.hideSoftInputFromWindow(pop_edittext_et.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    hideCommentLayout();
+                    pop_edittext_et.setText("");
+                }
                 break;
             case R.id.short_video_add_focus:
                 Toast.makeText(ShortVideoActivity.this, "follow clicked", Toast.LENGTH_SHORT).show();

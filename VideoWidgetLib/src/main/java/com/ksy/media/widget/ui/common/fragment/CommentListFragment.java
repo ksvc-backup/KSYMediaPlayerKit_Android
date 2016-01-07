@@ -1,24 +1,29 @@
 package com.ksy.media.widget.ui.common.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.ksy.mediaPlayer.widget.R;
 
 import java.util.ArrayList;
 
 
-public class CommentListFragment extends Fragment implements AbsListView.OnItemClickListener, AbsListView.OnScrollListener {
+public class CommentListFragment extends Fragment implements AbsListView.OnItemClickListener, AbsListView.OnScrollListener, View.OnClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
@@ -36,6 +41,8 @@ public class CommentListFragment extends Fragment implements AbsListView.OnItemC
     private ArrayList<CommentItem> items;
     private RelativeLayout view_container;
     private View commentLayout;
+    private EditText pop_edittext_et;
+    private View pop_comment_btn;
 
     public CommentListFragment() {
     }
@@ -81,6 +88,9 @@ public class CommentListFragment extends Fragment implements AbsListView.OnItemC
 
         commentLayout = LayoutInflater.from(getActivity()).inflate(
                 R.layout.video_pop_layout, null);
+        pop_edittext_et = (EditText) commentLayout.findViewById(R.id.pop_edittext_et);
+        pop_comment_btn = commentLayout.findViewById(R.id.pop_comment_btn);
+        pop_comment_btn.setOnClickListener(this);
         return view;
     }
 
@@ -151,6 +161,19 @@ public class CommentListFragment extends Fragment implements AbsListView.OnItemC
         }
     }
 
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == pop_comment_btn.getId() && !TextUtils.isEmpty(pop_edittext_et.getText().toString())) {
+            Toast.makeText(getActivity(), "comment send", Toast.LENGTH_SHORT).show();
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm.isActive()) {
+                imm.hideSoftInputFromWindow(pop_edittext_et.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                hideCommentLayout();
+                pop_edittext_et.setText("");
+            }
+        }
+    }
+
     public interface OnFragmentInteractionListener {
         public void onCommentFragmentInteraction(String id);
     }
@@ -164,5 +187,6 @@ public class CommentListFragment extends Fragment implements AbsListView.OnItemC
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         view_container.addView(commentLayout, params);
     }
+
 
 }

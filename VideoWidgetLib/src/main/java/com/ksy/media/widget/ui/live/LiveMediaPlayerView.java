@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -23,6 +24,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.OrientationEventListener;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
@@ -74,14 +76,15 @@ public class LiveMediaPlayerView extends RelativeLayout implements
 
     private final int ORIENTATION_UNKNOWN = -2;
     private final int ORIENTATION_HORIZON = -1;
-    private final int ORIENTATION_PORTRAIT_NORMAL = 0;
-    private final int ORIENTATION_LANDSCAPE_REVERSED = 90;
-    private final int ORIENTATION_PORTRAIT_REVERSED = 180;
-    private final int ORIENTATION_LANDSCAPE_NORMAL = 270;
+    public static final int ORIENTATION_PORTRAIT_NORMAL = 0;
+    public static final int ORIENTATION_LANDSCAPE_REVERSED = 90;
+    public static final int ORIENTATION_PORTRAIT_REVERSED = 180;
+    public static final int ORIENTATION_LANDSCAPE_NORMAL = 270;
+    public static final int ORIENTATION_NONE = -3;
 
     private volatile int mScreenOrientation = ORIENTATION_UNKNOWN;
     private volatile int mPlayMode = MediaPlayMode.PLAYMODE_FULLSCREEN;
-    private volatile boolean mLockMode = false;
+
     private volatile boolean mScreenLockMode = false;
     private volatile boolean mScreenshotPreparing = false;
 
@@ -119,6 +122,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
     private PlayConfig playConfig = PlayConfig.getInstance();
     private Context mContext;
     private IPowerStateListener powerStateListener;
+    private View live_share_bt;
 
     public LiveMediaPlayerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -157,8 +161,6 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         } else if (playmode == 1) {
             this.mPlayMode = MediaPlayMode.PLAYMODE_WINDOW;
         }
-        this.mLockMode = typedArray.getBoolean(R.styleable.PlayerView_lockmode,
-                false);
         typedArray.recycle();
 
         this.mLayoutInflater = LayoutInflater.from(context);
@@ -195,8 +197,15 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                 .findViewById(R.id.ks_camera_event_action_view_live);
         this.mLiveMediaPlayerControllerView = (LiveMediaPlayerControllerView) mRootView
                 .findViewById(R.id.media_player_controller_view_live);
-
-		/* 设置播放器监听器 */
+        live_share_bt = mLiveMediaPlayerControllerView.findViewById(R.id.live_share_bt);
+        live_share_bt.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mContext, "clicked", Toast.LENGTH_SHORT).show();
+//                mLiveMediaPlayerVideoView.doMatrixChange();
+            }
+        });
+        /* 设置播放器监听器 */
         this.mLiveMediaPlayerVideoView.setOnPreparedListener(mOnPreparedListener);
         this.mLiveMediaPlayerVideoView
                 .setOnBufferingUpdateListener(mOnPlaybackBufferingUpdateListener);
@@ -366,7 +375,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         });
 
         // Default not use,if need it ,open it
-        // initOrientationEventListener(context);
+        initOrientationEventListener(context);
 
         mNetReceiver = NetReceiver.getInstance();
         mNetChangedListener = new NetStateChangedListener() {
@@ -581,30 +590,17 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                     if (preScreenOrientation != mScreenOrientation) {
                         if (!MediaPlayerUtils.checkSystemGravity(getContext()))
                             return;
-                        if (MediaPlayerUtils.isWindowMode(mPlayMode)) {
-                            Log.i(Constants.LOG_TAG, " Window to FullScreen ");
-                            if (mScreenOrientation == ORIENTATION_LANDSCAPE_NORMAL
-                                    || mScreenOrientation == ORIENTATION_LANDSCAPE_REVERSED) {
-                                if (!mLockMode) {
-                                    boolean requestResult = requestPlayMode(MediaPlayMode.PLAYMODE_FULLSCREEN);
-                                    if (requestResult) {
-                                        doScreenOrientationRotate(mScreenOrientation);
-                                    }
-                                }
-                            }
-                        } else if (MediaPlayerUtils.isFullScreenMode(mPlayMode)) {
-                            Log.i(Constants.LOG_TAG, " Full Screen to Window");
-                            if (mScreenOrientation == ORIENTATION_PORTRAIT_NORMAL) {
-                                if (!mLockMode) {
-                                    boolean requestResult = requestPlayMode(MediaPlayMode.PLAYMODE_WINDOW);
-                                    if (requestResult) {
-                                        doScreenOrientationRotate(mScreenOrientation);
-                                    }
-                                }
-                            } else if (mScreenOrientation == ORIENTATION_LANDSCAPE_NORMAL
-                                    || mScreenOrientation == ORIENTATION_LANDSCAPE_REVERSED) {
-                                doScreenOrientationRotate(mScreenOrientation);
-                            }
+                        Log.i("eflake", "mScreenOrientation = " + mScreenOrientation);
+                        if (mScreenOrientation == ORIENTATION_LANDSCAPE_NORMAL
+                                || mScreenOrientation == ORIENTATION_LANDSCAPE_REVERSED) {
+                            Log.i("eflake", "Accurate ScreenOrientation = " + ORIENTATION_LANDSCAPE_REVERSED);
+                            doScreenOrientationRotate(mScreenOrientation);
+                        } else if (mScreenOrientation == ORIENTATION_PORTRAIT_NORMAL) {
+                            Log.i("eflake", "Accurate ScreenOrientation = " + ORIENTATION_PORTRAIT_NORMAL);
+                            doScreenOrientationRotate(mScreenOrientation);
+                        } else if (mScreenOrientation == ORIENTATION_LANDSCAPE_REVERSED) {
+                            Log.i("eflake", "Accurate ScreenOrientation = " + ORIENTATION_LANDSCAPE_REVERSED);
+                            doScreenOrientationRotate(mScreenOrientation);
                         }
                     }
                 }
@@ -645,15 +641,16 @@ public class LiveMediaPlayerView extends RelativeLayout implements
     }
 
     private void doScreenOrientationRotate(int screenOrientation) {
-
+        mLiveMediaPlayerVideoView.setmTargetOrientaion(mScreenOrientation);
         switch (screenOrientation) {
             case ORIENTATION_PORTRAIT_NORMAL:
-//			mActivity
-//					.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                mActivity
+                        .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 break;
             case ORIENTATION_LANDSCAPE_REVERSED:
-//			mActivity
-//					.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
+                Log.d("eflake", "*** On orientation");
+                mActivity
+                        .setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_REVERSE_LANDSCAPE);
                 if (mDeviceNavigationBarExist
                         && mFullScreenNavigationBarHeight <= 0
                         && MediaPlayerUtils.isFullScreenMode(mPlayMode)) {
@@ -695,6 +692,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                 break;
         }
     }
+
 
     private void enableOrientationEventListener() {
 
@@ -925,6 +923,16 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         playConfig.setInterruptMode(interruptMode);
     }
 
+    public void ConfigurationChanged(Configuration newConfig) {
+        Log.d("eflake", "*** onConfigurationChanged");
+        if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
+        } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
+
+        } else {
+
+        }
+    }
+
     public interface PlayerViewCallback {
 
         void hideViews();
@@ -1054,8 +1062,6 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         public void onRequestPlayMode(int requestPlayMode) {
 
             if (mPlayMode == requestPlayMode)
-                return;
-            if (mLockMode)
                 return;
 
             // 请求窗口模式

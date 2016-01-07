@@ -8,8 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/controller_small_top"
         android:layout_alignParentTop="true"
-        android:alpha="0.6"
-        android:background="@color/balck">
+        android:background="@drawable/top_bar_blur_up">
 
         <RelativeLayout
             android:id="@+id/back_layout"
@@ -25,7 +24,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/small_margin_left"
                 android:layout_marginRight="@dimen/small_margin_left"
-                android:src="@drawable/ic_account_circle_grey600_48dp" />
+                android:src="@drawable/ic_account_circle_grey600_36dp" />
 
         </RelativeLayout>
 
@@ -60,8 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/controller_small_top"
         android:layout_alignParentBottom="true"
-        android:alpha="0.6"
-        android:background="@color/balck"
+        android:background="@drawable/top_bar_blur_down"
         android:paddingBottom="5dp"
         android:paddingTop="5dp">
 

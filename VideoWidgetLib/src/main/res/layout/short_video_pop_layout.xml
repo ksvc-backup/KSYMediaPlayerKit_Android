@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/comment_layout"
     android:layout_width="match_parent"
     android:layout_height="48dp"
@@ -9,13 +9,13 @@
 
     <EditText
         android:id="@+id/pop_edittext_et"
-        android:layout_width="0dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_width="300dp"
         android:layout_height="32dp"
-        android:layout_gravity="center_vertical"
         android:layout_margin="@dimen/list_margin"
         android:textColor="@color/ksy_color_font"
         android:textColorHint="@color/ksy_color_font_alpha"
-        android:layout_weight="5"
         android:background="@drawable/short_video_edittext_bg"
         android:textCursorDrawable="@null"
         android:hint="@string/short_video_comment_hint"
@@ -23,12 +23,13 @@
 
     <Button
         android:id="@+id/pop_comment_btn"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:background="@color/ksy_color_card_bg"
-        android:text="@string/short_video_comment_commit"
+        android:layout_marginRight="@dimen/list_item_large_margin"
+        android:background="@drawable/ic_send_24px"
         android:textColor="@color/ksy_color_font"
         android:textSize="18sp" />
-</LinearLayout>
+</RelativeLayout>

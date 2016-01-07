@@ -10,6 +10,7 @@ import android.app.KeyguardManager.KeyguardLock;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.graphics.SurfaceTexture;
 import android.media.AudioManager;
 import android.net.Uri;
@@ -24,6 +25,7 @@ import android.view.Surface;
 import android.view.TextureView;
 import android.view.ViewGroup.LayoutParams;
 
+import com.ksy.media.widget.ui.live.LiveMediaPlayerView;
 import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.controller.MediaPlayerController;
 import com.ksy.media.widget.util.auth.MD5Util;
@@ -97,6 +99,11 @@ public class MediaPlayerTextureVideoView extends TextureView implements
     private boolean misTexturePowerEvent;
     private boolean mNeedUnlock;
     public boolean mNeedPauseAfterLeave;
+    private int mLastWidth;
+    private int mLastHeight;
+    private boolean mMethodControl;
+    public int mTargetOrientaion;
+    public int mLastOrientaion;
 
     public MediaPlayerTextureVideoView(Context context) {
         super(context);
@@ -105,13 +112,10 @@ public class MediaPlayerTextureVideoView extends TextureView implements
 
     public MediaPlayerTextureVideoView(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
-        // LogClient.getInstance(context).put(LogRecord.getInstance()
-        // .getUserDefinedJson(map, field, type));
     }
 
     public MediaPlayerTextureVideoView(Context context, AttributeSet attrs,
                                        int defStyle) {
-
         super(context, attrs, defStyle);
         initVideoView(context);
     }
@@ -342,6 +346,13 @@ public class MediaPlayerTextureVideoView extends TextureView implements
             Log.d(Constants.LOG_TAG, "OnSizeChanged");
             mVideoWidth = mp.getVideoWidth();
             mVideoHeight = mp.getVideoHeight();
+
+            Log.d("eflake", "OnSizeChanged,width = " + mp.getVideoWidth() + ",height = " + mp.getVideoHeight());
+            fixPreviewFrame(mVideoWidth, mVideoHeight, mSurfaceWidth,
+                    mSurfaceHeight);
+            if (mVideoWidth > mVideoHeight) {
+//                applyMatrixRotation(90);
+            }
             mVideoSarNum = sarNum;
             mVideoSarDen = sarDen;
         }
@@ -818,13 +829,13 @@ public class MediaPlayerTextureVideoView extends TextureView implements
                 break;
             case PlayConfig.INTERRUPT_MODE_PAUSE_RESUME:
                 if (mMediaPlayer != null) {
-                    Log.d("Constants.LOG_TAG", "MediaPlayerTextureVideoView onSurfaceTextureAvailable Start");
+                    Log.d(Constants.LOG_TAG, "MediaPlayerTextureVideoView onSurfaceTextureAvailable Start");
                     stopMusicService();
                     mMediaPlayer.setSurface(new Surface(mSurfaceTexture));
                     if (!mNeedPauseAfterLeave) {
                         start();
                     } else {
-                        Log.d("Constants.LOG_TAG", "POWER_ON PAUSED STATE,Ingored start()");
+                        Log.d(Constants.LOG_TAG, "POWER_ON PAUSED STATE,Ingored start()");
                         mNeedPauseAfterLeave = false;
                     }
                 } else {
@@ -839,21 +850,56 @@ public class MediaPlayerTextureVideoView extends TextureView implements
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width,
                                             int height) {
+//        Log.d("eflake", "** onSurfaceTextureSizeChanged");
+        mLastWidth = getWidth();
+        mLastHeight = getHeight();
+//        Log.d("eflake", "onSurfaceTextureSizeChanged :surface width = " + width + ",surface height =" + height);
+//        Log.d("eflake", "onSurfaceTextureSizeChanged: view width = " + mLastWidth + "view height = " + mLastHeight);
+        mSurfaceWidth = width;
+        mSurfaceHeight = height;
+        if (mTargetOrientaion == LiveMediaPlayerView.ORIENTATION_LANDSCAPE_REVERSED) {
+//            Log.d("eflake", "**ORIENTATION_LANDSCAPE_REVERSED");
+            if (mLastOrientaion == LiveMediaPlayerView.ORIENTATION_LANDSCAPE_NORMAL) {
+                // Skip portrait mode
+//                Log.d("eflake", "270-90");
+                resetMatrix();
+            }
+            doMatrixChange(mTargetOrientaion);
+            setmLastOrientaion(mTargetOrientaion);
+        } else if (mTargetOrientaion == LiveMediaPlayerView.ORIENTATION_LANDSCAPE_NORMAL) {
+//            Log.d("eflake", "**ORIENTATION_LANDSCAPE_NORMAL");
+            if (mLastOrientaion == LiveMediaPlayerView.ORIENTATION_LANDSCAPE_REVERSED) {
+                // Skip portrait mode
+//                Log.d("eflake", "90-270");
+                resetMatrix();
+            }
+            doMatrixChange(mTargetOrientaion);
+            setmLastOrientaion(mTargetOrientaion);
+        } else if (mTargetOrientaion == LiveMediaPlayerView.ORIENTATION_PORTRAIT_NORMAL) {
+//            Log.d("eflake", "**ORIENTATION_PORTRAIT_NORMAL");
+            resetMatrix();
+            setmLastOrientaion(mTargetOrientaion);
+        } else if (mTargetOrientaion == LiveMediaPlayerView.ORIENTATION_PORTRAIT_REVERSED) {
+//            Log.d("eflake", "**ORIENTATION_PORTRAIT_REVERSED");
+            resetMatrix();
+            setmLastOrientaion(mTargetOrientaion);
+        }
+        setmTargetOrientaion(LiveMediaPlayerView.ORIENTATION_NONE);
     }
 
     @Override
     public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-        Log.d("Constants.LOG_TAG", "MediaPlayerTextureVideoView onSurfaceTextureDestroyed");
+        Log.d(Constants.LOG_TAG, "MediaPlayerTextureVideoView onSurfaceTextureDestroyed");
         if (mCurrentState == STATE_PAUSED) {
             mNeedPauseAfterLeave = true;
         }
         switch (playConfig.getInterruptMode()) {
             case PlayConfig.INTERRUPT_MODE_RELEASE_CREATE:
-                Log.d("Constants.LOG_TAG", "MediaPlayerTextureVideoView onSurfaceTextureDestroyed Release");
+                Log.d(Constants.LOG_TAG, "MediaPlayerTextureVideoView onSurfaceTextureDestroyed Release");
                 release(true);
                 break;
             case PlayConfig.INTERRUPT_MODE_PAUSE_RESUME:
-                Log.d("Constants.LOG_TAG", "MediaPlayerTextureVideoView onSurfaceTextureDestroyed Pause");
+                Log.d(Constants.LOG_TAG, "MediaPlayerTextureVideoView onSurfaceTextureDestroyed Pause");
                 pause();
                 break;
             case PlayConfig.INTERRUPT_MODE_STAY_PLAYING:
@@ -869,6 +915,83 @@ public class MediaPlayerTextureVideoView extends TextureView implements
 
     public void getCurrentFrame(Bitmap bitmap) {
         ksyMediaPlayer.getCurrentFrame(bitmap);
+    }
+
+    private void fixPreviewFrame(int videoWidth, int videoHeight,
+                                 int surfaceWidth, int surfaceHeight) {
+        if (videoWidth == 0 || videoHeight == 0 || surfaceWidth == 0
+                || surfaceHeight == 0) {
+            return;
+        }
+        Matrix matrix = new Matrix();
+        getTransform(matrix);
+
+        float scaleWid = (float) surfaceWidth / videoWidth;
+        float scaleHei = (float) surfaceHeight / videoHeight;
+
+//        Log.e(Constants.LOG_TAG, "fixPreviewFrame 33 surfaceWidth="
+//                + surfaceWidth + " surfaceHeight=" + surfaceHeight);
+//        Log.e(Constants.LOG_TAG, "fixPreviewFrame videoWidth=" + videoWidth
+//                + " videoHeight=" + videoHeight);
+//        Log.e(Constants.LOG_TAG, "fixPreviewFrame scaleWid " + scaleWid
+//                + " scaleHei=" + scaleHei);
+        float fixFactor = 1f;
+        if (scaleWid < scaleHei) {
+            fixFactor = scaleHei;
+        } else {
+            fixFactor = scaleWid;
+        }
+
+        matrix.setScale(1f / scaleWid * fixFactor, 1f / scaleHei * fixFactor,
+                videoWidth / 2, videoHeight / 2);
+
+        setTransform(matrix);
+    }
+
+    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
+    public void doMatrixChange(int mTargetOrientaion) {
+//        Log.d("eflake", "on SetMatrix");
+        Matrix matrix = new Matrix();
+        getTransform(matrix);
+//        Log.d("eflake", "matrix default = " + matrix.toString());
+//        Log.d("eflake", "matrix use: mSurfaceWidth = " + mSurfaceWidth + ",nSurfaceHeight = " + mSurfaceHeight);
+        if (mTargetOrientaion == LiveMediaPlayerView.ORIENTATION_LANDSCAPE_REVERSED) {
+            float scaleW = (float) mSurfaceHeight / mSurfaceWidth;
+            float scaleH = 1 / scaleW;
+            matrix.setScale(scaleW, scaleH, mSurfaceWidth / 2, mSurfaceHeight / 2);
+            matrix.postRotate(90, mSurfaceWidth / 2, mSurfaceHeight / 2);
+        } else {
+            float scaleW = (float) mSurfaceHeight / mSurfaceWidth;
+            float scaleH = 1 / scaleW;
+            matrix.setScale(scaleW, scaleH, mSurfaceWidth / 2, mSurfaceHeight / 2);
+            matrix.postRotate(-90, mSurfaceWidth / 2, mSurfaceHeight / 2);//
+        }
+//        Log.d("eflake", "matrix changed = " + matrix.toString());
+        setTransform(matrix);
+//        Log.d("eflake", "matrix changed: view width =" + getWidth() + ",height = " + getHeight());
+        mMethodControl = true;
+    }
+
+    public void resetMatrix() {
+        Matrix matrix = new Matrix();
+        getTransform(matrix);
+        matrix.reset();
+        setTransform(matrix);
+    }
+
+    public void applyMatrixRotation(int degree) {
+        Matrix matrix = new Matrix();
+        getTransform(matrix);
+        matrix.setRotate(degree, mSurfaceWidth / 2, mSurfaceHeight / 2);
+        setTransform(matrix);
+    }
+
+    public void setmTargetOrientaion(int mTargetOrientaion) {
+        this.mTargetOrientaion = mTargetOrientaion;
+    }
+
+    public void setmLastOrientaion(int mLastOrientaion) {
+        this.mLastOrientaion = mLastOrientaion;
     }
 
 }
