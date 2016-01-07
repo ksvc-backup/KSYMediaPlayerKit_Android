@@ -7,7 +7,7 @@
     <com.ksy.media.widget.ui.shortvideo.ShortVideoMediaPlayerView
         android:id="@+id/player_view_short_movie"
         android:layout_width="fill_parent"
-        android:layout_height="250dp"
+        android:layout_height="350dp"
         player:playmode="window" />
 
     <RelativeLayout

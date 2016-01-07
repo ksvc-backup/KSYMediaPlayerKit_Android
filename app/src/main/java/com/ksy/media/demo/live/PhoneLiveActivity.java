@@ -2,6 +2,7 @@ package com.ksy.media.demo.live;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -68,6 +69,12 @@ public class PhoneLiveActivity extends AppCompatActivity implements LiveMediaPla
     protected void onResume() {
         super.onResume();
         playerViewLive.onResume();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        playerViewLive.ConfigurationChanged(newConfig);
     }
 
     @Override
