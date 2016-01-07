@@ -113,8 +113,8 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 		liveEditText = (EditText) findViewById(R.id.video_comment_text);
 		liveHead = (ImageView)findViewById(R.id.image_live_head);
 		timeTextView = (TextView) findViewById(R.id.textViewTime);
-		liveCloseImage = (ImageView) findViewById(R.id.title_text_close);
-		liveReportImage = (ImageView) findViewById(R.id.title_text_report);
+		liveCloseImage = (ImageView) findViewById(R.id.live_image_close);
+		liveReportImage = (ImageView) findViewById(R.id.live_image_report);
 		livePersonCountTextView = (TextView) findViewById(R.id.live_person_count_textview);
         livePraiseCountTextView = (TextView) findViewById(R.id.live_praise_count_text);
 
@@ -321,6 +321,7 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 				liveSwitchButton.setImageResource(R.drawable.live_model_image);
 				livePersonCountTextView.setVisibility(VISIBLE);
 				livePraiseCountTextView.setVisibility(VISIBLE);
+				liveListView.setVisibility(VISIBLE);
 
 				isSwitch = false;
 
@@ -335,6 +336,8 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 				liveSwitchButton.setImageResource(R.drawable.live_quiet_model_image);
 				livePersonCountTextView.setVisibility(GONE);
 				livePraiseCountTextView.setVisibility(GONE);
+				liveListView.setVisibility(GONE);
+
 				isSwitch = true;
 			}
 		} else if (id == liveImageView.getId()) {

@@ -22,7 +22,6 @@ public class LiveChatAdapter extends BaseAdapter {
 		this.mInflater = LayoutInflater.from(context);
 	}
 
-
 	@Override
 	public int getCount() {
 

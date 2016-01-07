@@ -56,7 +56,7 @@
     <string name="live_time">01:02:03</string>
     <string name="live_share">分享</string>
     <string name="live_info_switch">信息开关</string>
-    <string name="live_comment">说点什么吧</string>
+    <string name="live_comment">说点什么吧....</string>
     <string name="live_comment_content">评论评论评论评论评论</string>
     <string name="live_info_quiet">安静模式</string>
     <string name="live_username_one">用户名123</string>
@@ -88,6 +88,8 @@
     <string name="live_replay_notice">路飞路飞     来了</string>
     <string name="live_fans_count">222人</string>
     <string name="live_favarite_count">0</string>
+    <string name="live_anchor_releat_count">100</string>
+
 
     <string name="video_detail_focus">+关注</string>
     <string name="video_detail_title">直播间信息</string>

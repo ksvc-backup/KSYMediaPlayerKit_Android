@@ -6,7 +6,9 @@
     <RelativeLayout
         android:id="@+id/controller_bottom_layout"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
+        android:layout_height="@dimen/live_bottom_height"
+        android:background="@color/black"
+        android:alpha="0.4"
         android:layout_alignParentBottom="true">
 
         <ImageView
@@ -16,7 +18,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:src="@drawable/live_model_image"
-            android:layout_marginRight="5dp"
+            android:layout_marginRight="@dimen/live_margin"
             android:layout_marginLeft="@dimen/small_margin_left" />
 
         <ImageView
@@ -52,7 +54,6 @@
             android:progressDrawable="@drawable/blue_ksy_video_progress_seekbar_style_selector"
             android:thumb="@drawable/blue_ksy_video_progress_seekbar_thumb_selector"
             android:indeterminate="false" />
-        <!--android:maxHeight="@dimen/controller_seekbar_margin"-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

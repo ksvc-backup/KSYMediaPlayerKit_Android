@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@color/black"
+    android:layout_height="45dp"
+    android:background="@drawable/live_chat_item_shape"
     android:alpha="0.5"
     android:orientation="horizontal" >
 
@@ -10,6 +10,8 @@
         android:id="@+id/live_replay_imageview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/live_item_margin"
+        android:layout_centerVertical="true"
         android:src="@drawable/live_dialog_list_item" />
 
     <TextView
@@ -18,8 +20,9 @@
         android:layout_height="wrap_content"
         android:layout_toRightOf="@+id/live_replay_imageview"
         android:singleLine="true"
+        android:layout_marginLeft="@dimen/live_margin"
         android:text="@string/live_username"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="14sp" />
     
     <TextView
@@ -27,8 +30,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:singleLine="true"
+        android:layout_marginLeft="@dimen/live_margin"
         android:text="@string/live_comment_content"
-        android:textColor="@color/black"
+        android:textColor="@color/white"
         android:textSize="14sp"
         android:layout_toRightOf="@+id/live_replay_imageview"
         android:layout_below="@+id/live_replay_username" />

@@ -23,7 +23,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageView_person"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="@dimen/live_margin"
             android:layout_below="@+id/imageLiveViewClose"
             android:src="@drawable/live_anchor_detail"
             android:layout_centerHorizontal="true" />
@@ -32,7 +32,7 @@
             android:id="@+id/text_username"
             android:text="@string/live_username_one"
             android:textColor="@color/white"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/live_margin_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/imageView_person"
@@ -54,7 +54,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="@dimen/live_margin_top"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
 
@@ -63,8 +63,8 @@
             android:layout_below="@+id/textView2"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="65dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginLeft="@dimen/live_anchor_margin_left"
+            android:layout_marginTop="@dimen/live_margin_top"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -89,7 +89,7 @@
             android:layout_below="@+id/layout_current_live"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="65dp"
+            android:layout_marginLeft="@dimen/live_anchor_margin_left"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -115,7 +115,7 @@
             android:layout_below="@+id/layout_device_live"
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="65dp"
+            android:layout_marginLeft="@dimen/live_anchor_margin_left"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <TextView
@@ -137,13 +137,13 @@
         <LinearLayout
             android:id="@+id/layout_live"
             android:orientation="vertical"
-            android:layout_marginLeft="35dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginLeft="@dimen/live_anchor_margin"
+            android:layout_marginTop="@dimen/live_margin_top"
             android:layout_below="@+id/layout_place_live"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
-                android:text="100"
+                android:text="@string/live_anchor_releat_count"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -157,14 +157,14 @@
         <LinearLayout
             android:id="@+id/layout_fans"
             android:orientation="vertical"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginLeft="@dimen/live_bottom_height"
+            android:layout_marginTop="@dimen/live_margin_top"
             android:layout_below="@+id/layout_place_live"
             android:layout_toRightOf="@+id/layout_live"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
-                android:text="100"
+                android:text="@string/live_anchor_releat_count"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -178,14 +178,14 @@
         <LinearLayout
             android:id="@+id/layout_notice"
             android:orientation="vertical"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginLeft="@dimen/live_bottom_height"
+            android:layout_marginTop="@dimen/live_margin_top"
             android:layout_below="@+id/layout_place_live"
             android:layout_toRightOf="@+id/layout_fans"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
-                android:text="100"
+                android:text="@string/live_anchor_releat_count"
                 android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
@@ -197,14 +197,14 @@
         </LinearLayout>
 
         <Button
-            android:layout_width="200dp"
-            android:layout_height="45dp"
+            android:layout_width="@dimen/live_dialog_width"
+            android:layout_height="@dimen/live_dialog_height"
             android:text="@string/live_attention_plus"
             android:id="@+id/live_button"
             android:textColor="@color/lightblue"
             android:background="@drawable/live_button_shape"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/live_margin_top"
             android:layout_below="@+id/layout_fans" />
     </RelativeLayout>
 

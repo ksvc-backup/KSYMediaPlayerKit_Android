@@ -23,6 +23,7 @@ import com.ksy.media.widget.ui.common.HorizontalListView;
 import com.ksy.media.widget.ui.common.LiveExitDialog;
 import com.ksy.media.widget.ui.common.LivePersonDialog;
 import com.ksy.media.widget.ui.live.LiveChatAdapter;
+import com.ksy.media.widget.ui.livereplay.LiveReplayChatAdapter;
 import com.ksy.media.widget.ui.livereplay.LiveReplayHeadListAdapter;
 import com.ksy.media.widget.util.MediaPlayerUtils;
 import com.ksy.mediaPlayer.widget.R;
@@ -47,11 +48,11 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 	private ImageView  closeImage;
 	private ImageView  reportImage;
 
-	private ListView listView;
+	private ListView liveReplayListView;
 	private TextView noticeTextView;
 	private List<Map<String, Object>> data;
-	private Timer refreshTimerLive = new Timer();
-	private LiveChatAdapter adapter;
+	private Timer refreshTimerLiveReplay = new Timer();
+	private LiveReplayChatAdapter adapter;
 	Map<String, Object> map;
 
 	private TextView personCountTextView;
@@ -126,16 +127,16 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 		liveReplayHead = (ImageView)findViewById(R.id.image_live_replay_head);
 		loadingImage = (ImageView) findViewById(R.id.text_live_replay);
 		netErrorTextView = (TextView) findViewById(R.id.textViewNetError);
-		closeImage = (ImageView) findViewById(R.id.title_text_close);
-		reportImage = (ImageView) findViewById(R.id.title_text_report);
+		closeImage = (ImageView) findViewById(R.id.live_replay_image_close);
+		reportImage = (ImageView) findViewById(R.id.live_replay_image_report);
 		praiseCountTextView = (TextView) findViewById(R.id.praise_count_text);
 		personCountTextView = (TextView) findViewById(R.id.person_count_textview);
 
-		listView = (ListView) findViewById(R.id.live_list);
-		noticeTextView = (TextView)findViewById(R.id.notice_text);
+		liveReplayListView = (ListView) findViewById(R.id.live_replay_list);
+		noticeTextView = (TextView)findViewById(R.id.live_replay_notice_text);
 		data = getData();
-		adapter = new LiveChatAdapter(mContext, data);
-		listView.setAdapter(adapter);
+		adapter = new LiveReplayChatAdapter(mContext, data);
+		liveReplayListView.setAdapter(adapter);
 
 		mHorizontalList = (HorizontalListView) findViewById(R.id.live_replay_horizon);
 		headListAdapter = new LiveReplayHeadListAdapter(mContext);
@@ -156,8 +157,8 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 
 		liveReplayPerson = (ImageView)findViewById(R.id.live_replay_person_image);
 		switchButton = (ImageView) findViewById(R.id.live_replay_information_switch);
-		mHeartLayout = (HeartLayout)findViewById(R.id.live_replay_image_heart);
-		heartImageView = (ImageView) findViewById(R.id.image_heart);
+		mHeartLayout = (HeartLayout)findViewById(R.id.live_replay_layout_heart);
+		heartImageView = (ImageView) findViewById(R.id.live_replay_image_heart);
 		shareButton = (ImageView) findViewById(R.id.live_replay_share_bt);
 
 		mSeekBar = (MediaPlayerVideoSeekBar) findViewById(R.id.seekbar_video_progress);
@@ -263,7 +264,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 	}
 
 	private void chatListControlLiveReplay() {
-		refreshTimerLive.scheduleAtFixedRate(new TimerTask() {
+		refreshTimerLiveReplay.scheduleAtFixedRate(new TimerTask() {
 			@Override
 			public void run() {
 				if (data.size() >= 8) {
@@ -300,8 +301,8 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 			mAudienceComeTimerGoneTimer.cancel();
 		}
 
-		if (null != refreshTimerLive) {
-			refreshTimerLive.cancel();
+		if (null != refreshTimerLiveReplay) {
+			refreshTimerLiveReplay.cancel();
 		}
 
 		currentTimeTextView.setText("00:00:00");
@@ -471,6 +472,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 				heartImageView.setVisibility(VISIBLE);
 				personCountTextView.setVisibility(VISIBLE);
 				praiseCountTextView.setVisibility(VISIBLE);
+				liveReplayListView.setVisibility(VISIBLE);
 				switchButton.setImageResource(R.drawable.live_model_image);
 				isSwitch = false;
 
@@ -487,6 +489,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 				heartImageView.setVisibility(GONE);
 				personCountTextView.setVisibility(GONE);
 				praiseCountTextView.setVisibility(GONE);
+				liveReplayListView.setVisibility(GONE);
 				switchButton.setImageResource(R.drawable.live_quiet_model_image);
 				isSwitch = true;
 			  }

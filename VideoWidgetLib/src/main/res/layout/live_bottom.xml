@@ -6,7 +6,8 @@
     <RelativeLayout
         android:id="@+id/controller_bottom_layout"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/live_bottom_height"
+
         android:layout_alignParentBottom="true">
 
         <ImageView
@@ -16,19 +17,18 @@
             android:layout_alignParentLeft="true"
             android:src="@drawable/live_model_image"
             android:layout_centerVertical="true"
-            android:layout_marginRight="6dp"
-            android:layout_marginLeft="@dimen/small_margin_left" />
+            android:layout_marginRight="@dimen/live_bottom_margin_right"
+            android:layout_marginLeft="@dimen/live_margin_left" />
 
         <EditText
             android:id="@+id/video_comment_text"
-            android:layout_width="270dp"
-            android:layout_height="40dp"
+            android:layout_width="@dimen/live_bottom_edit_width"
+            android:layout_height="@dimen/live_bottom_edit_height"
             android:singleLine="true"
             android:layout_centerVertical="true"
-            android:background="@drawable/short_video_edittext_bg"
             android:hint="@string/live_comment"
             android:layout_toRightOf="@+id/live_information_switch_bt"
-            android:layout_marginRight="@dimen/small_margin_left" />
+            android:layout_marginRight="@dimen/live_margin_left" />
 
         <ImageView
             android:id="@+id/live_share_bt"
@@ -37,6 +37,6 @@
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/video_comment_text"
             android:src="@drawable/live_extension"
-            android:layout_marginRight="@dimen/small_margin_left" />
+            android:layout_marginRight="@dimen/live_margin_left" />
     </RelativeLayout>
 </RelativeLayout>

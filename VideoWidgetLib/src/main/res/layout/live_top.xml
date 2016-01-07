@@ -7,7 +7,8 @@
         android:id="@+id/controller_top_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@drawable/live_top_alpha_image"
+        android:background="@color/black"
+        android:alpha="0.5"
         android:layout_alignParentTop="true">
 
         <ImageView
@@ -25,12 +26,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/live_image"
+            android:layout_marginTop="@dimen/live_margin_left"
             android:gravity="center_vertical"
             android:layout_toRightOf="@+id/image_live_head"
             android:layout_alignTop="@+id/image_live_head" />
 
         <ImageView
-            android:id="@+id/title_text_close"
+            android:id="@+id/live_image_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -41,11 +43,11 @@
             android:gravity="center_vertical" />
 
         <ImageView
-            android:id="@+id/title_text_report"
+            android:id="@+id/live_image_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/title_text_close"
+            android:layout_toLeftOf="@+id/live_image_close"
             android:src="@drawable/live_report_image"
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_marginRight="@dimen/small_margin_left"

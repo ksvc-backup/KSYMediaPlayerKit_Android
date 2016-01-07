@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
+    android:alpha="0.6"
     tools:context=".MainActivity">
 
     <!-- complete-->
@@ -14,9 +15,8 @@
         <RelativeLayout
             android:id="@+id/controller_top_layout"
             android:layout_width="match_parent"
-            android:layout_height="33dp"
-            android:layout_alignParentTop="true"
-            android:clickable="true" >
+            android:layout_height="@dimen/live_anchor_margin"
+            android:layout_alignParentTop="true">
 
             <ImageView
                 android:id="@+id/title_text_close"
@@ -25,8 +25,8 @@
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
                 android:src="@drawable/live_close"
-                android:layout_marginLeft="25dp"
-                android:layout_marginRight="25dp"
+                android:layout_marginLeft="@dimen/live_person_margin"
+                android:layout_marginRight="@dimen/live_person_margin"
                 android:gravity="center_vertical" />
 
             <ImageView
@@ -52,9 +52,8 @@
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
                 android:src="@drawable/live_anchor_detail"
-                android:layout_marginLeft="47dp"
-                android:layout_marginStart="47dp"
-                android:layout_marginTop="27dp" />
+                android:layout_marginLeft="@dimen/live_anchor_margin"
+                android:layout_marginTop="@dimen/live_person_margin" />
             <TextView
                 android:id="@+id/textView3"
                 android:layout_width="wrap_content"
@@ -62,7 +61,8 @@
                 android:gravity="center_vertical"
                 android:text="@string/live_username_one"
                 android:textColor="@color/white"
-                android:layout_marginLeft="6dp"
+                android:layout_marginTop="@dimen/live_margin_left"
+                android:layout_marginLeft="@dimen/event_action_padding_left"
                 android:layout_alignTop="@+id/imageView2"
                 android:layout_toRightOf="@+id/imageView2"
                 android:layout_toEndOf="@+id/imageView2" />
@@ -71,8 +71,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
-                android:layout_marginTop="12dp"
-                android:layout_marginLeft="6dp"
+                android:layout_marginTop="@dimen/live_margin_left"
+                android:layout_marginLeft="@dimen/event_action_padding_left"
                 android:textColor="@color/white"
                 android:text="@string/live_fans_praise"
                 android:layout_below="@+id/textView3"
@@ -87,7 +87,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="@string/live_replay_finish"
             android:id="@+id/textView6"
-            android:layout_marginTop="57dp"
+            android:layout_marginTop="@dimen/live_anchor_margin_left"
             android:textColor="@color/white"
             android:layout_below="@+id/person_layout"
             android:layout_centerHorizontal="true" />
@@ -97,7 +97,7 @@
             android:layout_height="wrap_content"
             android:text="@string/live_back_home"
             android:id="@+id/button_replay"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="@dimen/live_margin_left"
             android:background="@color/lightblue"
             android:layout_below="@+id/textView6"
             android:layout_centerHorizontal="true" />
@@ -105,7 +105,7 @@
         <RelativeLayout
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_marginBottom="30dp"
+            android:layout_marginBottom="@dimen/live_anchor_margin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
@@ -113,7 +113,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageViewFacebook"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="@dimen/live_margin_top"
                 android:src="@drawable/live_share_facebook" />
 
             <TextView
@@ -127,7 +127,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageViewGoogleplus"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="@dimen/live_margin_top"
                 android:src="@drawable/live_share_googleplus"
                 android:layout_toRightOf="@+id/imageViewFacebook" />
 
@@ -145,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/imageViewLine"
                 android:src="@drawable/live_share_line"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="@dimen/live_margin_top"
                 android:layout_toRightOf="@+id/imageViewGoogleplus" />
 
             <TextView
@@ -160,7 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/imageViewTwitter"
-                android:layout_marginRight="15dp"
+                android:layout_marginRight="@dimen/live_margin_top"
                 android:src="@drawable/live_share_twitter"
                 android:layout_toRightOf="@+id/imageViewLine" />
 
