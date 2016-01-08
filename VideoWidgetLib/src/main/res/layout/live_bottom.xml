@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/video_comment_text"
-            android:src="@drawable/live_extension"
+            android:src="@drawable/live_extension_image"
             android:layout_marginRight="@dimen/live_margin_left" />
     </RelativeLayout>
 </RelativeLayout>

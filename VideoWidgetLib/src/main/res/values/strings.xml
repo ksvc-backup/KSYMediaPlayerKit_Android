@@ -37,7 +37,8 @@
     <string name="short_video_play_title">播放99 赞153 踩223 分享1002 评论23</string>
     <string name="short_video_item_comment">评评论内容评论内容评论内容评论</string>
     <string name="short_video_item_fav">22</string>
-    <string name="short_video_item_info">用户名  评论时间 ：1分钟之前</string>
+    <string name="short_video_item_info">用户名ID</string>
+    <string name="short_video_item_time">4:09PM</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

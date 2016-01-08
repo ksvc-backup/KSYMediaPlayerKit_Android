@@ -30,7 +30,7 @@
         android:layout_alignLeft="@+id/title_tv"
         android:layout_below="@+id/title_tv"
         android:layout_toRightOf="@+id/icon_img"
-        android:src="@drawable/ic_visibility_grey600_24dp" />
+        android:src="@drawable/short_eye_image" />
 
     <TextView
         android:id="@+id/watch_tv"

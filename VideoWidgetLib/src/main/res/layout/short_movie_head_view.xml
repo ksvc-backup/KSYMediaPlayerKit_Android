@@ -24,7 +24,7 @@
             android:layout_height="32dp"
             android:layout_marginLeft="24dp"
             android:layout_marginTop="@dimen/volume_margin_bottom"
-            android:src="@drawable/ic_visibility_grey600_48dp" />
+            android:src="@drawable/short_eye_image" />
 
         <TextView
             android:id="@+id/short_video_play_info_tv"
@@ -44,7 +44,7 @@
             android:layout_marginLeft="24dp"
             android:layout_marginTop="@dimen/volume_margin_bottom"
             android:layout_toRightOf="@+id/short_video_watch_icon"
-            android:src="@drawable/ic_message_grey600_48dp" />
+            android:src="@drawable/live_model_image" />
 
         <TextView
             android:id="@+id/short_video_comment_info_tv"
@@ -64,7 +64,7 @@
             android:layout_marginLeft="24dp"
             android:layout_marginTop="@dimen/volume_margin_bottom"
             android:layout_toRightOf="@+id/short_video_comment_icon"
-            android:src="@drawable/ic_favorite_outline_grey600_48dp" />
+            android:src="@drawable/live_favorite_image" />
 
         <TextView
             android:id="@+id/short_video_favourate_info_tv"
@@ -84,7 +84,7 @@
             android:layout_marginLeft="24dp"
             android:layout_marginTop="@dimen/volume_margin_bottom"
             android:layout_toRightOf="@+id/short_video_favourate_icon"
-            android:src="@drawable/ic_share_grey600_48dp" />
+            android:src="@drawable/short_share_image" />
 
         <TextView
             android:id="@+id/short_video_share_info_tv"

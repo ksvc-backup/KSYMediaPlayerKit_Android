@@ -92,7 +92,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_marginRight="@dimen/small_margin_left"
-            android:src="@drawable/blue_ksy_changeover_big" />
+            android:src="@drawable/video_change_big" />
 
         <TextView
             android:id="@+id/video_small_duration_time_tv"

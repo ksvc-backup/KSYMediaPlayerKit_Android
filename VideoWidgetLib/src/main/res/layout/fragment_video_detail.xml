@@ -12,10 +12,11 @@
 
             <ImageView
                 android:id="@+id/user_img"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_margin="@dimen/list_item_margin"
-                android:src="@drawable/ic_account_circle_grey600_36dp" />
+                android:src="@drawable/shortvideo_head_image" />
 
             <TextView
                 android:id="@+id/user_tv"

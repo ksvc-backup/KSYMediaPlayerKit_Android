@@ -60,7 +60,7 @@
             android:layout_marginRight="20dp"
             android:layout_toLeftOf="@+id/stream_setting_large"
             android:layout_toStartOf="@+id/stream_setting_large"
-            android:src="@drawable/ic_favorite_outline_white_48dp" />
+            android:src="@drawable/live_favorite_image" />
 
         <ImageView
             android:id="@+id/stream_queue_large"

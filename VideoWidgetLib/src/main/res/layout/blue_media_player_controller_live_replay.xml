@@ -81,7 +81,7 @@
 
             <ImageView
                 android:id="@+id/live_replay_image_heart"
-                android:src="@drawable/live_favorite"
+                android:src="@drawable/live_favorite_image"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@+id/live_replay_layout_heart"
                 android:layout_width="wrap_content"

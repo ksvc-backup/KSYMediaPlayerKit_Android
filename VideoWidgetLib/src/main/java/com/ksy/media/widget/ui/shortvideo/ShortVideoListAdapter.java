@@ -47,6 +47,7 @@ public class ShortVideoListAdapter extends BaseAdapter {
             holder = new ViewHolder();
             convertView = LayoutInflater.from(context).inflate(R.layout.short_video_list_item_layout, null);
             holder.info_tv = (TextView) convertView.findViewById(R.id.info_tv);
+            holder.info_time = (TextView) convertView.findViewById(R.id.info_time);
             holder.comment_tv = (TextView) convertView.findViewById(R.id.comment_tv);
             holder.headImg = (ImageView) convertView.findViewById(R.id.icon_img);
             convertView.setTag(holder);
@@ -55,11 +56,13 @@ public class ShortVideoListAdapter extends BaseAdapter {
         }
         holder.comment_tv.setText(getItem(position).comment);
         holder.info_tv.setText(getItem(position).info);
+        holder.info_time.setText(getItem(position).time);
         return convertView;
     }
 
     static class ViewHolder {
         public TextView info_tv;
+        public TextView info_time;
         public TextView comment_tv;
         public ImageView headImg;
 

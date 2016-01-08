@@ -5,6 +5,7 @@ import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -25,8 +26,9 @@ public class MediaPlayerEventActionView extends RelativeLayout {
     private RelativeLayout mWaitLayout;
 
     private RelativeLayout mxCompleteLayout;
-    private LinearLayout mCompeteReplayLayout;
+//    private LinearLayout mCompeteReplayLayout;
 
+    private Button mCompletaReplayButton;
     private LinearLayout mErrorLayout;
     private LinearLayout mErrorReplayLayout;
     private TextView mErrorTextView;
@@ -60,19 +62,20 @@ public class MediaPlayerEventActionView extends RelativeLayout {
 
         mRootView = (RelativeLayout) findViewById(R.id.event_action_layout);
 
-        mBackImageView = (ImageView) findViewById(R.id.back_image_view);
-        mTitleTextView = (TextView) findViewById(R.id.title_text_view);
+//        mBackImageView = (ImageView) findViewById(R.id.back_image_view);
+//        mTitleTextView = (TextView) findViewById(R.id.title_text_view);
 
         mWaitLayout = (RelativeLayout) findViewById(R.id.wait_layout);
 
         mxCompleteLayout = (RelativeLayout) findViewById(R.id.complete_layout);
-        mCompeteReplayLayout = (LinearLayout) findViewById(R.id.complete_replay_layout);
+//        mCompeteReplayLayout = (LinearLayout) findViewById(R.id.complete_replay_layout);
 
+        mCompletaReplayButton = (Button)findViewById(R.id.complete_replay_bt);
         mErrorLayout = (LinearLayout) findViewById(R.id.error_layout);
         mErrorReplayLayout = (LinearLayout) findViewById(R.id.error_replay_layout);
         mErrorTextView = (TextView) findViewById(R.id.error_info_title_text_view);
 
-        mBackImageView.setOnClickListener(new OnClickListener() {
+       /* mBackImageView.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -80,7 +83,7 @@ public class MediaPlayerEventActionView extends RelativeLayout {
                 if (mCallback != null)
                     mCallback.onActionBack();
             }
-        });
+        });*/
 
         mWaitLayout.setOnClickListener(new OnClickListener() {
 
@@ -92,8 +95,7 @@ public class MediaPlayerEventActionView extends RelativeLayout {
             }
         });
 
-        mCompeteReplayLayout.setOnClickListener(new OnClickListener() {
-
+        mCompletaReplayButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -153,7 +155,7 @@ public class MediaPlayerEventActionView extends RelativeLayout {
     public void updateVideoTitle(String title) {
 
         if (!TextUtils.isEmpty(title)) {
-            mTitleTextView.setText(title);
+//            mTitleTextView.setText(title);
         }
     }
 

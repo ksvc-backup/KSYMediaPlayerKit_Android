@@ -83,7 +83,7 @@
 
         <ImageView
             android:id="@+id/live_image_heart_bt"
-            android:src="@drawable/live_favorite"
+            android:src="@drawable/live_favorite_image"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/live_image_heart"
             android:layout_width="wrap_content"

@@ -35,7 +35,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/small_margin_left"
             android:layout_alignParentRight="true"
-            android:src="@drawable/live_extension" />
+            android:src="@drawable/live_extension_image" />
 
         <com.ksy.media.widget.ui.common.MediaPlayerVideoSeekBar
             android:id="@+id/seekbar_video_progress"

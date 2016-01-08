@@ -35,7 +35,7 @@
             android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_marginRight="@dimen/small_margin_left"
-            android:src="@drawable/live_close"/>
+            android:src="@drawable/live_close_image"/>
 
         <ImageView
             android:id="@+id/live_replay_image_report"

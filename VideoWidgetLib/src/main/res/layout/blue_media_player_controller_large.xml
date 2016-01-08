@@ -138,7 +138,7 @@
                 android:layout_marginBottom="@dimen/screen_tosmall_bottom"
                 android:layout_marginLeft="@dimen/controller_large_margin"
                 android:layout_marginRight="@dimen/controller_large_margin"
-                android:src="@drawable/blue_ksy_changeover_small" />
+                android:src="@drawable/video_change_small" />
         </RelativeLayout>
     </RelativeLayout>
 

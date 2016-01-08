@@ -5,7 +5,10 @@ import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +19,8 @@ import android.util.Log;
 import android.view.Display;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -24,6 +29,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,6 +68,11 @@ public class ShortVideoActivity extends AppCompatActivity implements
     private View pop_comment_btn;
     private EditText pop_edittext_et;
     private TextView short_video_add_focus;
+    private PopupWindow shortVideoPopupWindow;
+    private View stream_share_tv;
+    private View stream_alarm_tv;
+    private View stream_setting_tv;
+    private ImageView viewFlowImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +95,19 @@ public class ShortVideoActivity extends AppCompatActivity implements
         pop_edittext_et = (EditText) commentLayout.findViewById(R.id.pop_edittext_et);
         pop_comment_btn = commentLayout.findViewById(R.id.pop_comment_btn);
         pop_comment_btn.setOnClickListener(this);
+        viewFlowImage = (ImageView) findViewById(R.id.image_overflow);
+        viewFlowImage.setOnClickListener(this);
+
+        View view = LayoutInflater.from(this).inflate(com.ksy.mediaPlayer.widget.R.layout.stream_small_pop, null);
+        stream_share_tv = view.findViewById(com.ksy.mediaPlayer.widget.R.id.stream_share_tv);
+        stream_alarm_tv = view.findViewById(com.ksy.mediaPlayer.widget.R.id.stream_alarm_tv);
+        stream_setting_tv = view.findViewById(com.ksy.mediaPlayer.widget.R.id.stream_setting_tv);
+
+        shortVideoPopupWindow = new PopupWindow(view, getResources().getDimensionPixelSize(com.ksy.mediaPlayer.widget.R.dimen.stream_pop_width), getResources().getDimensionPixelOffset(com.ksy.mediaPlayer.widget.R.dimen.stream_pop_height));
+        shortVideoPopupWindow.setFocusable(true);
+        shortVideoPopupWindow.setTouchable(true);
+        shortVideoPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+
         setupFunctionIcon();
         setupCommentList();
         setupDialog();
@@ -136,6 +160,34 @@ public class ShortVideoActivity extends AppCompatActivity implements
         mWidth = dm.widthPixels;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+//            case R.id.action_pop:
+//               //TODO
+//                showPopWindow();
+//
+//                break;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showPopWindow() {
+        if (!shortVideoPopupWindow.isShowing()) { //getResources().getDimensionPixelSize(com.ksy.mediaPlayer.widget.R.dimen.stream_pop_offset)
+            shortVideoPopupWindow.showAsDropDown(viewFlowImage, 10,10);
+            stream_share_tv.setOnClickListener(this);
+            stream_alarm_tv.setOnClickListener(this);
+            stream_setting_tv.setOnClickListener(this);
+        }
+    }
+
     private void makeContents() {
         items = new ArrayList<>();
         for (int i = 0; i < 15; i++) {
@@ -143,6 +195,7 @@ public class ShortVideoActivity extends AppCompatActivity implements
             item.setComment(getString(R.string.short_video_item_comment));
             item.setFav(getString(R.string.short_video_item_fav));
             item.setInfo(getString(R.string.short_video_item_info));
+            item.setTime(getString(R.string.short_video_item_time));
             items.add(item);
         }
     }
@@ -153,9 +206,13 @@ public class ShortVideoActivity extends AppCompatActivity implements
             setSupportActionBar(mToolbar);
             mToolbar.setTitle(getResources().getString(R.string.short_video_title));
 //            mToolbar.setTitleTextColor(Color.BLACK);
+            mToolbar.setNavigationIcon(R.drawable.short_navigate_before);
+
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Log.d("lixp", "back  ....");
+                    finish();
                 }
             });
         }
@@ -343,6 +400,27 @@ public class ShortVideoActivity extends AppCompatActivity implements
             case R.id.short_video_add_focus:
                 Toast.makeText(ShortVideoActivity.this, "follow clicked", Toast.LENGTH_SHORT).show();
                 break;
+
+            case R.id.image_overflow:
+                showPopWindow();
+
+                break;
+
+            case R.id.stream_share_tv:
+                Toast.makeText(ShortVideoActivity.this, " share", Toast.LENGTH_SHORT).show();
+                shortVideoPopupWindow.dismiss();
+                break;
+
+            case R.id.stream_alarm_tv:
+                Toast.makeText(ShortVideoActivity.this, " report ", Toast.LENGTH_SHORT).show();
+                shortVideoPopupWindow.dismiss();
+                break;
+
+            case R.id.stream_setting_tv:
+                Toast.makeText(ShortVideoActivity.this, " setting ", Toast.LENGTH_SHORT).show();
+                shortVideoPopupWindow.dismiss();
+                break;
+
         }
     }
 

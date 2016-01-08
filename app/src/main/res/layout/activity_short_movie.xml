@@ -1,17 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/ksy_color_card_bg"
     android:fitsSystemWindows="true"
     tools:context=".shortvideo.ShortVideoActivity">
+
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/Widget.Demo.Toolbar"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize" />
+        android:layout_height="?attr/actionBarSize" >
+
+        <ImageView
+            android:id="@+id/image_overflow"
+            android:paddingLeft="90dp"
+            android:src="@drawable/short_overflow_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </android.support.v7.widget.Toolbar>
+
     <ListView
         android:id="@+id/short_video_list"
         android:layout_below="@+id/toolbar"

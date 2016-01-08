@@ -46,7 +46,7 @@
         <ImageView
             android:id="@+id/stream_setting"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_overflow"
+            android:src="@drawable/short_overflow_image"
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:layout_centerVertical="true" />
@@ -99,7 +99,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_marginRight="@dimen/small_margin_left"
-            android:src="@drawable/blue_ksy_changeover_big" />
+            android:src="@drawable/video_change_big" />
 
     </RelativeLayout>
 
