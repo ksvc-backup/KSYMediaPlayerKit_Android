@@ -21,6 +21,7 @@ import com.ksy.media.widget.ui.common.MediaPlayerSeekView;
 import com.ksy.media.widget.model.MediaPlayerMovieRatio;
 import com.ksy.media.widget.util.MediaPlayerUtils;
 import com.ksy.media.widget.model.MediaPlayerVideoQuality;
+
 /*
 *   Base controller, handle show/hide and gesture event
 * */
@@ -215,8 +216,8 @@ public abstract class MediaPlayerBaseControllerView extends FrameLayout {
                 if (mNeedGesture && !mScreenLock) {
                     if (mCurrentGesture == GESTURE_LIGHT) {
                         if (mNeedGestureLight) {
-						/*if (mWidgetLightView != null)
-							mWidgetLightView.onGestureLightFinish();*/
+                        /*if (mWidgetLightView != null)
+                            mWidgetLightView.onGestureLightFinish();*/
                         }
                     } else if (mCurrentGesture == GESTURE_VOLUME) {
                         if (mNeedGestureVolume) {

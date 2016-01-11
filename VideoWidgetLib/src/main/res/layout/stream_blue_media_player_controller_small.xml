@@ -12,7 +12,6 @@
         android:background="@color/balck">
 
         <RelativeLayout
-            android:id="@+id/back_layout"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/controller_large_top"
             android:layout_alignParentLeft="true"
@@ -34,11 +33,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/small_margin_left"
-            android:layout_marginRight="@dimen/small_margin_left"
-            android:layout_toRightOf="@id/back_layout"
+            android:layout_marginLeft="@dimen/live_anchor_margin"
             android:ellipsize="end"
-            android:gravity="left|center_vertical"
             android:singleLine="true"
             android:textColor="@color/white"
             android:textSize="@dimen/large_text_size" />
@@ -47,8 +43,9 @@
             android:id="@+id/stream_setting"
             android:layout_alignParentRight="true"
             android:src="@drawable/short_overflow_image"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_marginRight="@dimen/small_margin_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true" />
     </RelativeLayout>
 
@@ -64,22 +61,22 @@
 
         <ImageView
             android:id="@+id/video_playback_image_view"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_marginRight="@dimen/small_margin_left"
-            android:src="@drawable/ic_pause_white_36dp" />
+            android:src="@drawable/video_pause_circle_image" />
 
         <ImageView
             android:id="@+id/stream_watch_img"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/small_margin_left"
             android:layout_toRightOf="@id/video_playback_image_view"
-            android:src="@drawable/ic_person_outline_white_36dp" />
+            android:src="@drawable/short_head_image_p" />
 
         <TextView
             android:id="@+id/stream_watch_tv"

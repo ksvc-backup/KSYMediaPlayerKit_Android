@@ -17,6 +17,7 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -170,18 +171,14 @@ public class ShortVideoActivity extends AppCompatActivity implements
     public boolean onOptionsItemSelected(MenuItem item) {
 
         switch (item.getItemId()) {
-//            case R.id.action_pop:
-//               //TODO
-//                showPopWindow();
-//
-//                break;
+
         }
         return super.onOptionsItemSelected(item);
     }
 
     private void showPopWindow() {
-        if (!shortVideoPopupWindow.isShowing()) { //getResources().getDimensionPixelSize(com.ksy.mediaPlayer.widget.R.dimen.stream_pop_offset)
-            shortVideoPopupWindow.showAsDropDown(viewFlowImage, 10,10);
+        if (!shortVideoPopupWindow.isShowing()) { //getResources().getDimensionPixelSize(R.dimen.short_pop_bottom)
+            shortVideoPopupWindow.showAsDropDown(viewFlowImage, 0, getResources().getDimensionPixelSize(com.ksy.mediaPlayer.widget.R.dimen.stream_pop_offset));
             stream_share_tv.setOnClickListener(this);
             stream_alarm_tv.setOnClickListener(this);
             stream_setting_tv.setOnClickListener(this);
@@ -211,7 +208,6 @@ public class ShortVideoActivity extends AppCompatActivity implements
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Log.d("lixp", "back  ....");
                     finish();
                 }
             });

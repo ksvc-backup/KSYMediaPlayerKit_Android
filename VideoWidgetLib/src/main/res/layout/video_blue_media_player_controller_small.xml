@@ -28,15 +28,13 @@
                 android:src="@drawable/blue_ksy_back" />
 
             <ImageView
-                android:id="@+id/image_logo"
+                android:id="@+id/image_overflow_video"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/image_back"
-                android:layout_alignTop="@id/image_back"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/small_margin_left"
-                android:layout_toRightOf="@id/image_back"
-                android:src="@drawable/ic_movie_white_48dp" />
+                android:src="@drawable/short_overflow_image" />
         </RelativeLayout>
 
         <TextView
@@ -44,14 +42,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/small_margin_left"
-            android:layout_marginRight="@dimen/small_margin_left"
-            android:layout_toRightOf="@id/back_layout"
+            android:layout_marginLeft="@dimen/live_anchor_margin"
             android:ellipsize="end"
-            android:gravity="left|center_vertical"
             android:singleLine="true"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="@dimen/large_text_size" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -112,8 +107,8 @@
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_toLeftOf="@+id/video_small_duration_time_tv"
             android:layout_toRightOf="@id/video_small_current_time_tv"
-            android:maxHeight="@dimen/controller_seekbar_margin"
-            android:minHeight="@dimen/controller_seekbar_margin"
+            android:maxHeight="@dimen/livereplay_controller_seekbar_height"
+            android:minHeight="@dimen/livereplay_controller_seekbar_height"
             android:paddingLeft="@dimen/small_margin_left"
             android:paddingRight="@dimen/small_margin_left"
             android:progressDrawable="@drawable/blue_ksy_video_progress_seekbar_style_selector"

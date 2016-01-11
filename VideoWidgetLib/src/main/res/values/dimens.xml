@@ -2,7 +2,7 @@
 <resources>
     <dimen name="small_text_size">15sp</dimen>
     <dimen name="medium_text_size">20sp</dimen>
-    <dimen name="large_text_size">17sp</dimen>
+    <dimen name="large_text_size">16sp</dimen>
     <dimen name="list_item_margin">8dp</dimen>
     <dimen name="list_item_large_margin">16dp</dimen>
     <dimen name="list_margin">8dp</dimen>
@@ -10,10 +10,11 @@
     <dimen name="card_height">100dp</dimen>
     <dimen name="stream_pop_widget">150dp</dimen>
     <dimen name="stream_pop_width">120dp</dimen>
-    <dimen name="stream_pop_height">160dp</dimen>
+    <dimen name="stream_pop_height">150dp</dimen>
     <dimen name="stream_pop_offset">5dp</dimen>
     <dimen name="video_comment_distance">48dp</dimen>
     <dimen name="controller_small_top">48dp</dimen>
+    <dimen name="short_pop_bottom">18dp</dimen>
 
     <dimen name="buffer_width">60dp</dimen>
     <dimen name="buffer_height">60dp</dimen>
@@ -54,6 +55,7 @@
     <dimen name="live_heart_margin_height">350dp</dimen>
     <dimen name="small_margin_left">10dp</dimen>
     <dimen name="live_margin_nine">90dp</dimen>
+    <dimen name="video_margin_right">20dp</dimen>
 
     <dimen name="controller_button_width">60dp</dimen>
     <dimen name="controller_button_height">30dp</dimen>

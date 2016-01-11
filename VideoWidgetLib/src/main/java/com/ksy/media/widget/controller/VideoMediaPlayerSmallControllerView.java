@@ -1,10 +1,13 @@
 package com.ksy.media.widget.controller;
 
 import android.content.Context;
+import android.graphics.drawable.BitmapDrawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
@@ -18,7 +21,7 @@ import com.ksy.mediaPlayer.widget.R;
 public class VideoMediaPlayerSmallControllerView extends MediaPlayerBaseControllerView implements View.OnClickListener {
 
     private RelativeLayout mControllerTopView;
-    private RelativeLayout mBackLayout;
+    private ImageView  backImage;
     private TextView mTitleTextView;
 
     private RelativeLayout mControllerBottomView;
@@ -27,19 +30,28 @@ public class VideoMediaPlayerSmallControllerView extends MediaPlayerBaseControll
     private ImageView mScreenModeImageView;
     private TextView mCurrentTimeTextView;
     private TextView mTotalTimeTextView;
+    private PopupWindow mVideoPopWindow;
+    private View stream_share_tv;
+    private View stream_alarm_tv;
+    private View stream_setting_tv;
+    private Context mContext;
+    private ImageView overflowImage;
 
     public VideoMediaPlayerSmallControllerView(Context context, AttributeSet attrs, int defStyle) {
 
         super(context, attrs, defStyle);
+        this.mContext = context;
     }
 
     public VideoMediaPlayerSmallControllerView(Context context, AttributeSet attrs) {
 
         super(context, attrs);
+        this.mContext= context;
     }
 
     public VideoMediaPlayerSmallControllerView(Context context) {
         super(context);
+        this.mContext = context;
         mLayoutInflater.inflate(R.layout.video_blue_media_player_controller_small, this);
 
         initViews();
@@ -50,8 +62,9 @@ public class VideoMediaPlayerSmallControllerView extends MediaPlayerBaseControll
     protected void initViews() {
 
         mControllerTopView = (RelativeLayout) findViewById(R.id.controller_top_layout);
-        mBackLayout = (RelativeLayout) findViewById(R.id.back_layout);
+        backImage = (ImageView) findViewById(R.id.image_back);
         mTitleTextView = (TextView) findViewById(R.id.title_text_view);
+        overflowImage = (ImageView) findViewById(R.id.image_overflow_video);
 
         mControllerBottomView = (RelativeLayout) findViewById(R.id.controller_bottom_layout);
         mSeekBar = (MediaPlayerVideoSeekBar) findViewById(R.id.seekbar_video_progress);
@@ -62,12 +75,22 @@ public class VideoMediaPlayerSmallControllerView extends MediaPlayerBaseControll
         mSeekBar.setMax(MAX_VIDEO_PROGRESS);
         mSeekBar.setProgress(0);
 
+        View view = LayoutInflater.from(mContext).inflate(R.layout.stream_small_pop, null);
+        stream_share_tv = view.findViewById(R.id.stream_share_tv);
+        stream_alarm_tv = view.findViewById(R.id.stream_alarm_tv);
+        stream_setting_tv = view.findViewById(R.id.stream_setting_tv);
+        mVideoPopWindow = new PopupWindow(view, getResources().getDimensionPixelSize(R.dimen.stream_pop_width), getResources().getDimensionPixelOffset(R.dimen.stream_pop_height));
+        mVideoPopWindow.setFocusable(true);
+        mVideoPopWindow.setTouchable(true);
+        mVideoPopWindow.setBackgroundDrawable(new BitmapDrawable());
+
     }
 
     @Override
     protected void initListeners() {
 
-        mBackLayout.setOnClickListener(this);
+        backImage.setOnClickListener(this);
+        overflowImage.setOnClickListener(this);
         mTitleTextView.setOnClickListener(this);
         mPlaybackImageView.setOnClickListener(this);
         mScreenModeImageView.setOnClickListener(this);
@@ -191,12 +214,11 @@ public class VideoMediaPlayerSmallControllerView extends MediaPlayerBaseControll
 
         int id = v.getId();
 
-        if (id == mBackLayout.getId() || id == mTitleTextView.getId()) {
+        if (id == backImage.getId() || id == mTitleTextView.getId()) {
 
             mMediaPlayerController.onBackPress(MediaPlayMode.PLAYMODE_WINDOW);
 
         } else if (id == mPlaybackImageView.getId()) {
-
             if (mMediaPlayerController.isPlaying()) {
                 mMediaPlayerController.pause();
                 show(0);
@@ -204,9 +226,13 @@ public class VideoMediaPlayerSmallControllerView extends MediaPlayerBaseControll
                 mMediaPlayerController.start();
                 show();
             }
-
         } else if (id == mScreenModeImageView.getId()) {
             mMediaPlayerController.onRequestPlayMode(MediaPlayMode.PLAYMODE_FULLSCREEN);
+        } else if (id == overflowImage.getId()) {
+            showPopWindow();
+
+        } else if (id == stream_alarm_tv.getId() || id == stream_setting_tv.getId() || id == stream_share_tv.getId()) {
+            hidePopWindow();
         }
 
     }
@@ -216,4 +242,21 @@ public class VideoMediaPlayerSmallControllerView extends MediaPlayerBaseControll
         long progress = duration * percent / 100;
         mSeekBar.setSecondaryProgress((int) progress);
     }
+
+    private void showPopWindow() {
+        if (!mVideoPopWindow.isShowing()) {
+            mVideoPopWindow.showAsDropDown(overflowImage,0,getResources().getDimensionPixelSize(R.dimen.stream_pop_offset));
+            stream_share_tv.setOnClickListener(this);
+            stream_alarm_tv.setOnClickListener(this);
+            stream_setting_tv.setOnClickListener(this);
+            stopTimerTicker();
+        }
+    }
+
+    private void hidePopWindow() {
+        if (mVideoPopWindow.isShowing()) {
+            mVideoPopWindow.dismiss();
+        }
+    }
+
 }

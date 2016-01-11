@@ -53,7 +53,7 @@
         android:layout_alignBottom="@+id/watch_img"
         android:layout_below="@+id/title_tv"
         android:layout_toRightOf="@+id/watch_tv"
-        android:src="@drawable/ic_query_builder_grey600_24dp" />
+        android:src="@drawable/live_report_image" />
 
     <TextView
         android:id="@+id/time_tv"

@@ -27,7 +27,7 @@
                 android:layout_marginRight="@dimen/small_margin_left"
                 android:src="@drawable/blue_ksy_back" />
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/image_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/small_margin_left"
                 android:layout_toRightOf="@id/image_back"
-                android:src="@drawable/ic_movie_white_48dp" />
+                android:src="@drawable/ic_movie_white_48dp" />-->
         </RelativeLayout>
 
         <TextView

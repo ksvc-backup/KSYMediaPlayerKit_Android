@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/controller_bright_width"
-    android:layout_height="@dimen/controller_bright_height"
+    android:layout_height="140dp"
     android:alpha="0.6"
     android:background="@color/balck">
 
@@ -9,23 +9,11 @@
         android:id="@+id/controller_volume_iv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/volume_margin_bottom" 
+        android:layout_marginBottom="@dimen/volume_margin_bottom"
+        android:layout_marginTop="@dimen/bright_margin_bottom"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:src="@drawable/blue_ksy_volume_no" />
-
-   <!--  <com.ksy.media.widget.ui.common.MediaPlayerVolumeSeekBar
-        android:id="@+id/seekbar_volume_progress"
-        android:layout_width="26dp"
-        android:layout_height="match_parent"
-        android:maxHeight="5dp"
-        android:minHeight="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@id/controller_volume_iv"
-        android:progressDrawable="@drawable/player_controller_video_progress_seekbar_style_small_selector"
-        android:thumb="@drawable/player_controller_volume_progress_thumb_normal" /> -->
+        android:src="@drawable/video_volume_image" />
     
     <ImageView
         android:id="@+id/iv_volume_status"
@@ -34,14 +22,5 @@
         android:layout_centerHorizontal="true"
         android:layout_above="@id/controller_volume_iv"
         android:src="@drawable/blue_ksy_controller_volume_gesture_selector" />
-    
-    <ImageView
-        android:id="@+id/controller_volume_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@id/iv_volume_status"
-        android:layout_marginBottom="@dimen/volume_margin_bottom"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/blue_ksy_volume_up" />
 
 </RelativeLayout>

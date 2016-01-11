@@ -46,10 +46,19 @@
             android:id="@+id/video_top_setting"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_marginRight="@dimen/list_small_margin"
-            android:src="@drawable/ic_settings_white_48dp"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/video_margin_right"
+            android:src="@drawable/stream_set_image"/>
+
+        <ImageView
+            android:id="@+id/video_camera_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="@dimen/video_margin_right"
+            android:layout_toLeftOf="@+id/video_top_setting"
+            android:src="@drawable/video_camera_image" />
 
     </RelativeLayout>
 
