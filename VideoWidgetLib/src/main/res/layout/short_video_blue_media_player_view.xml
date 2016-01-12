@@ -57,8 +57,8 @@
     <RelativeLayout
         android:id="@+id/layoutPop"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:background="@color/balck"
-        android:alpha="0.6"
+        android:background="@color/black"
+        android:alpha="0.5"
         android:visibility="gone"
         android:layout_width="@dimen/crop_view_width"
         android:layout_height="@dimen/crop_view_height" >

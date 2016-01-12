@@ -15,8 +15,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/controller_large_bottom_bg"
         android:layout_alignParentBottom="true"
-        android:alpha="0.6"
-        android:background="@color/balck">
+        android:alpha="0.5"
+        android:background="@color/black">
 
         <RelativeLayout
             android:id="@+id/video_info_layout"
@@ -42,7 +42,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/list_small_margin"
                 android:layout_toRightOf="@id/video_start_pause_image_view"
-                android:src="@drawable/short_head_image_p" />
+                android:src="@drawable/short_head_image_n" />
 
             <TextView
                 android:id="@+id/stream_watch_tv"
@@ -56,16 +56,16 @@
                 android:textSize="@dimen/small_text_size" />
             <EditText
                 android:id="@+id/stream_controller_comment"
-                android:layout_width="300dp"
-                android:layout_height="45dp"
+                android:layout_width="@dimen/live_person_three_handred"
+                android:layout_height="@dimen/live_dialog_height"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/small_margin_left"
                 android:layout_toRightOf="@+id/stream_watch_tv"
                 android:hint="@string/stream_comment_default"
                 android:paddingLeft="@dimen/small_margin_left"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:textSize="@dimen/small_text_size" />
+                android:backgroundTint="@color/live_edit_frame"
+                android:textColorHint="@color/live_edit_content" />
 
             <ImageView
                 android:id="@+id/video_save_image"
@@ -105,8 +105,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:alpha="0.6"
-        android:background="@color/balck"
+        android:alpha="0.5"
+        android:background="@color/black"
         android:padding="@dimen/bright_padding"
         android:visibility="gone" />
 
@@ -128,7 +128,6 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_marginLeft="@dimen/screen_lock_margin_left"
-        android:background="@drawable/lock_bg"
         android:clickable="true">
 
         <ImageView
@@ -156,7 +155,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:alpha="0.8"
-        android:background="@color/balck"
+        android:background="@color/black"
         android:divider="@null"
         android:scrollbars="none"
         android:visibility="gone"/>

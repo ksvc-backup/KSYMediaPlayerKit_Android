@@ -45,7 +45,7 @@
             android:layout_marginLeft="@dimen/live_margin_left"
             android:layout_marginRight="@dimen/live_margin_left"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/live_person_count"/>
+            android:src="@drawable/short_head_image_n"/>
         <TextView
             android:id="@+id/person_count_textview"
             android:textColor="@color/white"

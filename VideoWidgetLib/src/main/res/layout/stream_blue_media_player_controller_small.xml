@@ -9,7 +9,7 @@
         android:layout_height="@dimen/controller_large_top"
         android:layout_alignParentTop="true"
         android:alpha="0.5"
-        android:background="@color/balck">
+        android:background="@color/black">
 
         <RelativeLayout
             android:layout_width="wrap_content"
@@ -55,9 +55,8 @@
         android:layout_height="@dimen/controller_large_top"
         android:layout_alignParentBottom="true"
         android:alpha="0.5"
-        android:background="@color/balck"
-        android:paddingBottom="5dp"
-        android:paddingTop="5dp">
+        android:background="@color/black"
+        android:paddingBottom="@dimen/live_margin">
 
         <ImageView
             android:id="@+id/video_playback_image_view"
@@ -76,7 +75,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/small_margin_left"
             android:layout_toRightOf="@id/video_playback_image_view"
-            android:src="@drawable/short_head_image_p" />
+            android:src="@drawable/short_head_image_n" />
 
         <TextView
             android:id="@+id/stream_watch_tv"

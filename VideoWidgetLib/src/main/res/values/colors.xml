@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="balck">#000000</color>
+    <color name="black">#000000</color>
     <color name="blue">#006ddc</color>
     <color name="red">#a2000d</color>
     <color name="yellow">#ff700b</color>
     <color name="green">#8cd400</color>
-    <color name="pink">#ff6464</color> 
-    
+    <color name="pink">#ff6464</color>
 	<color name="lightblue">#71DFEA</color>
-
-    <!--Normal-->
     <color name="white">#ffffff</color>
-    <color name="black">#000000</color>
     <color name="gray_prime">#eeeeee</color>
     <color name="gray_primary_bg">#e0e0e0</color>
     <color name="gray_primary_dark">#616161</color>
+    <color name="live_edit_frame">#979797</color>
+    <color name="live_edit_content">#8B8B8B</color>
 
     <!--Material Design Colors-->
     <color name="red_900">#b0120a</color>

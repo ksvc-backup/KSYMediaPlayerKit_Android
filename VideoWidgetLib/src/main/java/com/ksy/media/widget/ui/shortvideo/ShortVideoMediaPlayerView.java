@@ -316,9 +316,10 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         addView(mMediaPlayerLoadingView, mediaPlayerLoadingViewParams);
         addView(mMediaPlayerEventActionView, mediaPlayereventActionViewParams);
         addView(layoutPop, mediaPlayerPopViewParams);
-//        addView(mTextViewSpeed);
+
         addView(mMediaPlayerSmallControllerView,
                 mMediaPlayerControllerViewSmallParams);
+
         mMediaPlayerSmallControllerView.hide();
         mMediaPlayerBufferingView.hide();
         mMediaPlayerLoadingView.hide();

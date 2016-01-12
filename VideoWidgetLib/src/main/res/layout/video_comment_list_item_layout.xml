@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="@dimen/live_margin_one_hundred"
     android:background="@color/ksy_color_card_bg"
     android:orientation="vertical">
 
@@ -23,7 +23,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="@dimen/list_item_margin"
-        android:layout_marginRight="100dp"
+        android:layout_marginRight="@dimen/live_margin_one_hundred"
         android:layout_marginTop="@dimen/list_item_margin"
         android:layout_toEndOf="@+id/icon_img"
         android:layout_toRightOf="@+id/icon_img"
@@ -53,7 +53,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="@dimen/list_item_margin"
         android:text="Text"
         android:textColor="@color/ksy_color_font"
         android:textSize="@dimen/small_text_size" />

@@ -3,7 +3,7 @@
     android:layout_width="@dimen/controller_bright_width"
     android:layout_height="140dp"
     android:alpha="0.6"
-    android:background="@color/balck">
+    android:background="@color/black">
 
     <ImageView
         android:id="@+id/controller_volume_iv"

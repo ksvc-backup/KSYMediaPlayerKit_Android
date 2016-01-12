@@ -9,7 +9,7 @@
         android:layout_height="@dimen/controller_large_top"
         android:layout_alignParentTop="true"
         android:alpha="0.6"
-        android:background="@color/balck" >
+        android:background="@color/black" >
 
         <RelativeLayout
             android:id="@+id/back_layout"
@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/controller_large_top"
         android:layout_alignParentBottom="true"
-        android:background="@color/balck"
+        android:background="@color/black"
         android:alpha="0.6"
         android:paddingBottom="5dp"
         android:paddingTop="5dp" >

@@ -14,9 +14,9 @@
         android:id="@+id/video_progress_layout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/controller_large_bottom_bg"
-        android:layout_alignParentBottom="true"
-        android:alpha="0.6"
-        android:background="@color/balck">
+        android:alpha="0.5"
+        android:background="@color/black"
+        android:layout_alignParentBottom="true">
 
         <com.ksy.media.widget.ui.common.MediaPlayerVideoSeekBar
             android:id="@+id/video_seekbar"
@@ -24,14 +24,13 @@
             android:layout_height="wrap_content"
             android:layout_above="@+id/video_info_layout"
             android:layout_centerInParent="true"
-            android:indeterminate="false"
             android:maxHeight="@dimen/livereplay_controller_seekbar_height"
             android:minHeight="@dimen/livereplay_controller_seekbar_height"
-            android:paddingLeft="@dimen/controller_seekbar_margin"
-            android:paddingRight="@dimen/controller_seekbar_margin"
+            android:paddingLeft="@dimen/live_margin_left"
+            android:paddingRight="@dimen/live_margin_left"
             android:progressDrawable="@drawable/blue_ksy_video_progress_seekbar_style_selector"
             android:thumb="@drawable/blue_ksy_video_progress_seekbar_thumb_selector"
-            android:thumbOffset="16dp" />
+            android:thumbOffset="8dp" />
 
         <RelativeLayout
             android:id="@+id/video_info_layout"
@@ -45,15 +44,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
-                android:layout_marginLeft="@dimen/controller_large_margin"
-                android:layout_marginRight="@dimen/controller_large_margin"
+                android:layout_marginLeft="@dimen/live_margin_top"
+                android:layout_marginRight="@dimen/live_margin_top"
                 android:src="@drawable/video_pause_land_image" />
 
             <TextView
                 android:id="@+id/video_current_time_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/controller_large_time_margin"
+                android:layout_marginTop="@dimen/controller_large_top_margin"
                 android:layout_toRightOf="@+id/video_start_pause_image_view"
                 android:singleLine="true"
                 android:text="@string/init_time"
@@ -64,7 +63,7 @@
                 android:id="@+id/video_total_time_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/controller_large_time_margin"
+                android:layout_marginTop="@dimen/controller_large_top_margin"
                 android:layout_toRightOf="@id/video_current_time_text_view"
                 android:singleLine="true"
                 android:text="@string/total_time"
@@ -73,16 +72,16 @@
 
             <EditText
                 android:id="@+id/video_controller_comment"
-                android:layout_width="300dp"
-                android:layout_height="45dp"
+                android:layout_width="@dimen/live_person_three_handred"
+                android:layout_height="@dimen/live_dialog_height"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/small_margin_left"
                 android:layout_toRightOf="@+id/video_total_time_text_view"
                 android:hint="@string/stream_comment_default"
                 android:paddingLeft="@dimen/small_margin_left"
                 android:textColor="@color/white"
-                android:textColorHint="@color/white"
-                android:textSize="@dimen/small_text_size" />
+                android:backgroundTint="@color/live_edit_frame"
+                android:textColorHint="@color/live_edit_content" />
 
             <ImageView
                 android:id="@+id/video_recent_image"
@@ -143,7 +142,7 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:alpha="0.6"
-        android:background="@color/balck"
+        android:background="@color/black"
         android:padding="@dimen/bright_padding"
         android:visibility="gone" />
 
@@ -183,7 +182,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:alpha="0.8"
-        android:background="@color/balck"
+        android:background="@color/black"
         android:divider="@null"
         android:scrollbars="none"
         android:visibility="gone"/>

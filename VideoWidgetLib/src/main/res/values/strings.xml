@@ -105,7 +105,7 @@
     <string name="stream_pop_share">分享</string>
     <string name="stream_pop_alarm">举报</string>
     <string name="stream_pop_setting">设置</string>
-    <string name="stream_comment_default">说点什么吧......</string>
+    <string name="stream_comment_default">说点什么吧....</string>
     <string name="stream_controller_send">发送</string>
     <string name="video_small_current_time_tv_default">当前时间</string>
     <string name="video_small_duration_time_tv_default">总时间</string>

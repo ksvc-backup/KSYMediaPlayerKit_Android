@@ -4,7 +4,7 @@
     android:layout_height="@dimen/controller_large_top"
     android:layout_alignParentTop="true"
     android:alpha="0.6"
-    android:background="@color/balck">
+    android:background="@color/black">
 
     <RelativeLayout
         android:id="@+id/controller_top_layout"
