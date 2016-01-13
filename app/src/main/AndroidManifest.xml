@@ -35,7 +35,7 @@
         <activity
             android:name=".live.PhoneLiveActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
-            android:windowSoftInputMode="adjustResize|stateHidden"
+            android:windowSoftInputMode="adjustPan|stateHidden"
             android:label="@string/title_activity_phone_live"
             android:screenOrientation="nosensor"
             android:theme="@style/FullscreenTheme" />

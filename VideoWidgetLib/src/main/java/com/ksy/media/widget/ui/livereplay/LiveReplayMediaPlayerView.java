@@ -63,7 +63,7 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
     private LayoutInflater mLayoutInflater;
     private Window mWindow;
     private ViewGroup mRootView;
-    private PhoneLiveMediaPlayerTextureVideoView mLiveReplayMediaPlayerVideoView;
+    private MediaPlayerTextureVideoView mLiveReplayMediaPlayerVideoView;
     private LiveReplayMediaPlayerControllerView mLiveReplayMediaPlayerControllerView;
     private MediaPlayerBufferingView mMediaPlayerBufferingView;
     private MediaPlayerLoadingView mMediaPlayerLoadingView;
@@ -153,7 +153,7 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
 		/* 初始化UI组件 */
         this.mRootView = (ViewGroup) mLayoutInflater.inflate(
                 R.layout.live_replay_blue_media_player_view, null);
-        this.mLiveReplayMediaPlayerVideoView = (PhoneLiveMediaPlayerTextureVideoView) mRootView
+        this.mLiveReplayMediaPlayerVideoView = (MediaPlayerTextureVideoView) mRootView
                 .findViewById(R.id.live_replay_ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);

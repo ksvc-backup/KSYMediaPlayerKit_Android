@@ -26,8 +26,8 @@ public class PhoneLiveReplayActivity extends AppCompatActivity implements LiveRe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         
-//        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
-//                WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_phone_live_replay);
 
