@@ -8,8 +8,8 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/controller_small_top"
         android:layout_alignParentTop="true"
-        android:alpha="0.6"
-        android:background="@color/balck">
+        android:alpha="0.5"
+        android:background="@color/black">
 
         <RelativeLayout
             android:id="@+id/back_layout"
@@ -28,15 +28,13 @@
                 android:src="@drawable/blue_ksy_back" />
 
             <ImageView
-                android:id="@+id/image_logo"
+                android:id="@+id/image_overflow_video"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/image_back"
-                android:layout_alignTop="@id/image_back"
+                android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/small_margin_left"
-                android:layout_toRightOf="@id/image_back"
-                android:src="@drawable/ic_movie_white_48dp" />
+                android:src="@drawable/short_overflow_image" />
         </RelativeLayout>
 
         <TextView
@@ -44,14 +42,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/small_margin_left"
-            android:layout_marginRight="@dimen/small_margin_left"
-            android:layout_toRightOf="@id/back_layout"
+            android:layout_marginLeft="@dimen/live_anchor_margin"
             android:ellipsize="end"
-            android:gravity="left|center_vertical"
             android:singleLine="true"
             android:textColor="@color/white"
-            android:textSize="14sp" />
+            android:textSize="@dimen/large_text_size" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -60,7 +55,7 @@
         android:layout_height="@dimen/controller_small_top"
         android:layout_alignParentBottom="true"
         android:alpha="0.6"
-        android:background="@color/balck"
+        android:background="@color/black"
         android:paddingBottom="5dp"
         android:paddingTop="5dp">
 
@@ -76,7 +71,7 @@
         <TextView
             android:id="@+id/video_small_current_time_tv"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/live_bottom_height"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_toRightOf="@+id/video_playback_image_view"
@@ -92,12 +87,12 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_marginRight="@dimen/small_margin_left"
-            android:src="@drawable/blue_ksy_changeover_big" />
+            android:src="@drawable/video_change_big" />
 
         <TextView
             android:id="@+id/video_small_duration_time_tv"
             android:layout_width="wrap_content"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/live_bottom_height"
             android:layout_centerVertical="true"
             android:layout_toLeftOf="@+id/video_fullscreen_image_view"
             android:gravity="center_vertical"
@@ -109,16 +104,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/small_margin_left"
+            android:layout_marginLeft="@dimen/live_margin"
             android:layout_toLeftOf="@+id/video_small_duration_time_tv"
             android:layout_toRightOf="@id/video_small_current_time_tv"
-            android:maxHeight="@dimen/controller_seekbar_margin"
-            android:minHeight="@dimen/controller_seekbar_margin"
+            android:maxHeight="@dimen/livereplay_controller_seekbar_height"
+            android:minHeight="@dimen/livereplay_controller_seekbar_height"
             android:paddingLeft="@dimen/small_margin_left"
             android:paddingRight="@dimen/small_margin_left"
             android:progressDrawable="@drawable/blue_ksy_video_progress_seekbar_style_selector"
             android:thumb="@drawable/blue_ksy_video_progress_seekbar_thumb_selector"
-            android:thumbOffset="16dp" />
+            android:thumbOffset="8dp" />
     </RelativeLayout>
 
 </RelativeLayout>

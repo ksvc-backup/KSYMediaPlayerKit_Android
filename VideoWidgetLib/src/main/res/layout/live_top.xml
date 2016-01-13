@@ -24,7 +24,7 @@
             android:id="@+id/text_living"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/live_image"
+            android:src="@drawable/live_play_image"
             android:layout_toRightOf="@+id/image_live_head" />
 
         <ImageView
@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:src="@drawable/live_close"
+            android:src="@drawable/live_close_image"
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_marginRight="@dimen/small_margin_left" />
 

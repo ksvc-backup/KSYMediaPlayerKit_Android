@@ -24,7 +24,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_alignParentRight="true"
-                android:src="@drawable/live_close"
+                android:src="@drawable/live_close_image"
                 android:layout_marginLeft="@dimen/live_person_margin"
                 android:layout_marginRight="@dimen/live_person_margin"
                 android:gravity="center_vertical" />

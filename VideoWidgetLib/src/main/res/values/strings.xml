@@ -37,7 +37,8 @@
     <string name="short_video_play_title">播放99 赞153 踩223 分享1002 评论23</string>
     <string name="short_video_item_comment">评评论内容评论内容评论内容评论</string>
     <string name="short_video_item_fav">22</string>
-    <string name="short_video_item_info">用户名  评论时间 ：1分钟之前</string>
+    <string name="short_video_item_info">用户名ID</string>
+    <string name="short_video_item_time">4:09PM</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -104,7 +105,7 @@
     <string name="stream_pop_share">分享</string>
     <string name="stream_pop_alarm">举报</string>
     <string name="stream_pop_setting">设置</string>
-    <string name="stream_comment_default">输入发送评论...</string>
+    <string name="stream_comment_default">说点什么吧....</string>
     <string name="stream_controller_send">发送</string>
     <string name="video_small_current_time_tv_default">当前时间</string>
     <string name="video_small_duration_time_tv_default">总时间</string>

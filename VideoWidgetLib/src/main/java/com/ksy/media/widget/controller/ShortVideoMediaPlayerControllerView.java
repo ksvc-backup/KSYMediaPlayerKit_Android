@@ -4,6 +4,7 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.SeekBar;
@@ -51,6 +52,7 @@ public class ShortVideoMediaPlayerControllerView extends MediaPlayerBaseControll
     protected void initViews() {
 
         mControllerTopView = (RelativeLayout) findViewById(R.id.controller_top_layout);
+        short_video_add_focus = (TextView) findViewById(R.id.short_video_add_focus);
         mBackLayout = (RelativeLayout) findViewById(R.id.back_layout);
         mTitleTextView = (TextView) findViewById(R.id.title_text_view);
         mControllerBottomView = (RelativeLayout) findViewById(R.id.controller_bottom_layout);
@@ -203,6 +205,9 @@ public class ShortVideoMediaPlayerControllerView extends MediaPlayerBaseControll
                 show();
             }
 
+        } else if (id == short_video_add_focus.getId()) {
+
+            short_video_add_focus.setText("已关注");
         }
 
     }

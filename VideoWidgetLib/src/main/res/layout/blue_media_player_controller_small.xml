@@ -9,7 +9,7 @@
         android:layout_height="@dimen/controller_large_top"
         android:layout_alignParentTop="true"
         android:alpha="0.6"
-        android:background="@color/balck" >
+        android:background="@color/black" >
 
         <RelativeLayout
             android:id="@+id/back_layout"
@@ -27,7 +27,7 @@
                 android:layout_marginRight="@dimen/small_margin_left"
                 android:src="@drawable/blue_ksy_back" />
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/image_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -36,7 +36,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginRight="@dimen/small_margin_left"
                 android:layout_toRightOf="@id/image_back"
-                android:src="@drawable/ic_movie_white_48dp" />
+                android:src="@drawable/ic_movie_white_48dp" />-->
         </RelativeLayout>
 
         <TextView
@@ -59,7 +59,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/controller_large_top"
         android:layout_alignParentBottom="true"
-        android:background="@color/balck"
+        android:background="@color/black"
         android:alpha="0.6"
         android:paddingBottom="5dp"
         android:paddingTop="5dp" >
@@ -82,7 +82,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_marginRight="@dimen/small_margin_left"
-            android:src="@drawable/blue_ksy_changeover_big" />
+            android:src="@drawable/video_change_big" />
 
         <com.ksy.media.widget.ui.common.MediaPlayerVideoSeekBar
             android:id="@+id/seekbar_video_progress"

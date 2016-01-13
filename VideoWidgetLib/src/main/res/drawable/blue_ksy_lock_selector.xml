@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/blue_ksy_lock_normal" android:state_selected="true" />
-    <item android:drawable="@drawable/blue_ksy_lock_open_normal" />
+    <item android:drawable="@drawable/video_lock_image" android:state_selected="true" />
+    <item android:drawable="@drawable/video_unlock_image" />
 </selector>
-
-<!--     <item android:state_selected="true" android:drawable="@drawable/ic_lock_outline_black_48dp"/>
-    <item android:drawable="@drawable/ic_lock_open_black_48dp"/> -->

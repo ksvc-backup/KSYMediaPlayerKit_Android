@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/comment_layout"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="@dimen/live_bottom_height"
     android:layout_alignParentBottom="true"
     android:background="@color/ksy_color_card_bg"
     android:orientation="horizontal">
@@ -11,8 +11,8 @@
         android:id="@+id/pop_edittext_et"
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
-        android:layout_width="300dp"
-        android:layout_height="32dp"
+        android:layout_width="@dimen/live_person_three_handred"
+        android:layout_height="@dimen/live_anchor_margin"
         android:layout_margin="@dimen/list_margin"
         android:textColor="@color/ksy_color_font"
         android:textColorHint="@color/ksy_color_font_alpha"
@@ -21,15 +21,15 @@
         android:hint="@string/short_video_comment_hint"
         android:singleLine="true" />
 
-    <Button
+    <ImageView
         android:id="@+id/pop_comment_btn"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginRight="@dimen/list_item_large_margin"
-        android:background="@drawable/ic_send_24px"
+        android:src="@drawable/ic_send_24px"
         android:textColor="@color/ksy_color_font"
         android:textSize="18sp" />
 </RelativeLayout>

@@ -5,11 +5,16 @@ package com.ksy.media.widget.ui.shortvideo;
  */
 public class ShortMovieItem {
     public String info;
+    public String time;
     public String comment;
     public String fav;
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 
     public void setComment(String comment) {

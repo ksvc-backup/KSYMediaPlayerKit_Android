@@ -19,7 +19,8 @@ public class StreamMediaPlayerSmallControllerView extends MediaPlayerBaseControl
 
     private Context mContext;
     private RelativeLayout mControllerTopView;
-    private RelativeLayout mBackLayout;
+//    private RelativeLayout mBackLayout;
+    private ImageView backImage;
     private TextView mTitleTextView;
     private RelativeLayout mControllerBottomView;
     private ImageView mPlaybackImageView;
@@ -53,7 +54,7 @@ public class StreamMediaPlayerSmallControllerView extends MediaPlayerBaseControl
     @Override
     protected void initViews() {
         mControllerTopView = (RelativeLayout) findViewById(R.id.controller_top_layout);
-        mBackLayout = (RelativeLayout) findViewById(R.id.back_layout);
+        backImage = (ImageView) findViewById(R.id.image_back);
         mTitleTextView = (TextView) findViewById(R.id.title_text_view);
         mSettingView = (ImageView) findViewById(R.id.stream_setting);
         mControllerBottomView = (RelativeLayout) findViewById(R.id.controller_bottom_layout);
@@ -72,7 +73,7 @@ public class StreamMediaPlayerSmallControllerView extends MediaPlayerBaseControl
     @Override
     protected void initListeners() {
         mSettingView.setOnClickListener(this);
-        mBackLayout.setOnClickListener(this);
+        backImage.setOnClickListener(this);
         mTitleTextView.setOnClickListener(this);
         mPlaybackImageView.setOnClickListener(this);
         mScreenModeImageView.setOnClickListener(this);
@@ -136,7 +137,7 @@ public class StreamMediaPlayerSmallControllerView extends MediaPlayerBaseControl
 
         int id = v.getId();
 
-        if (id == mBackLayout.getId() || id == mTitleTextView.getId()) {
+        if (id == backImage.getId() || id == mTitleTextView.getId()) {
 
             mMediaPlayerController.onBackPress(MediaPlayMode.PLAYMODE_WINDOW);
 
@@ -169,6 +170,7 @@ public class StreamMediaPlayerSmallControllerView extends MediaPlayerBaseControl
             stopTimerTicker();
         }
     }
+
 
     private void hidePopWindow() {
         if (mPopupWindow.isShowing()) {

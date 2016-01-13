@@ -7,7 +7,7 @@
     <com.ksy.media.widget.ui.shortvideo.ShortVideoMediaPlayerView
         android:id="@+id/player_view_short_movie"
         android:layout_width="fill_parent"
-        android:layout_height="350dp"
+        android:layout_height="@dimen/live_heart_margin_height"
         player:playmode="window" />
 
     <RelativeLayout
@@ -20,11 +20,11 @@
 
         <ImageView
             android:id="@+id/short_video_watch_icon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginLeft="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/live_person_margin"
             android:layout_marginTop="@dimen/volume_margin_bottom"
-            android:src="@drawable/ic_visibility_grey600_48dp" />
+            android:src="@drawable/short_eye_image" />
 
         <TextView
             android:id="@+id/short_video_play_info_tv"
@@ -32,19 +32,19 @@
             android:layout_height="wrap_content"
             android:layout_alignLeft="@+id/short_video_watch_icon"
             android:layout_below="@+id/short_video_watch_icon"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/volume_margin_bottom"
             android:textColor="@color/white"
             android:gravity="center_horizontal"
             android:text="@string/short_video_watch_count_tv_default" />
 
         <ImageView
             android:id="@+id/short_video_comment_icon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginLeft="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/live_person_margin"
             android:layout_marginTop="@dimen/volume_margin_bottom"
             android:layout_toRightOf="@+id/short_video_watch_icon"
-            android:src="@drawable/ic_message_grey600_48dp" />
+            android:src="@drawable/live_model_image" />
 
         <TextView
             android:id="@+id/short_video_comment_info_tv"
@@ -53,18 +53,18 @@
             android:textColor="@color/white"
             android:layout_alignLeft="@+id/short_video_comment_icon"
             android:layout_below="@+id/short_video_comment_icon"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/volume_margin_bottom"
             android:gravity="center_horizontal"
             android:text="@string/short_video_comment_count_tv_default" />
 
         <ImageView
             android:id="@+id/short_video_favourate_icon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginLeft="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/live_person_margin"
             android:layout_marginTop="@dimen/volume_margin_bottom"
             android:layout_toRightOf="@+id/short_video_comment_icon"
-            android:src="@drawable/ic_favorite_outline_grey600_48dp" />
+            android:src="@drawable/live_favorite_image" />
 
         <TextView
             android:id="@+id/short_video_favourate_info_tv"
@@ -73,18 +73,18 @@
             android:textColor="@color/white"
             android:layout_alignLeft="@+id/short_video_favourate_icon"
             android:layout_below="@+id/short_video_favourate_icon"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/volume_margin_bottom"
             android:gravity="center_horizontal"
             android:text="@string/short_video_favourate__tv_default" />
 
         <ImageView
             android:id="@+id/short_video_share_icon"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
-            android:layout_marginLeft="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/live_person_margin"
             android:layout_marginTop="@dimen/volume_margin_bottom"
             android:layout_toRightOf="@+id/short_video_favourate_icon"
-            android:src="@drawable/ic_share_grey600_48dp" />
+            android:src="@drawable/short_share_image" />
 
         <TextView
             android:id="@+id/short_video_share_info_tv"
@@ -93,7 +93,7 @@
             android:textColor="@color/white"
             android:layout_alignLeft="@+id/short_video_share_icon"
             android:layout_below="@+id/short_video_share_icon"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/volume_margin_bottom"
             android:gravity="center_horizontal"
             android:text="@string/short_video_share__tv_default" />
 
@@ -102,6 +102,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:textColor="@color/white"
+            android:layout_marginRight="@dimen/volume_margin_bottom"
             android:layout_centerVertical="true"
             android:text="@string/short_video_time_tv_default" />
     </RelativeLayout>

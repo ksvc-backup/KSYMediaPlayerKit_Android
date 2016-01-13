@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/live_replay_information_switch"
-            android:layout_marginRight="@dimen/small_margin_left"
+            android:layout_marginRight="@dimen/live_margin"
             android:src="@drawable/live_replay_pause" />
 
         <ImageView
@@ -35,7 +35,7 @@
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/small_margin_left"
             android:layout_alignParentRight="true"
-            android:src="@drawable/live_extension" />
+            android:src="@drawable/live_extension_image" />
 
         <com.ksy.media.widget.ui.common.MediaPlayerVideoSeekBar
             android:id="@+id/seekbar_video_progress"
@@ -48,10 +48,9 @@
             android:minHeight="@dimen/livereplay_controller_seekbar_height"
             android:paddingLeft="@dimen/small_margin_left"
             android:paddingRight="@dimen/small_margin_left"
-            android:thumbOffset="16dp"
+            android:thumbOffset="8dp"
             android:progressDrawable="@drawable/blue_ksy_video_progress_seekbar_style_selector"
-            android:thumb="@drawable/blue_ksy_video_progress_seekbar_thumb_selector"
-            android:indeterminate="false" />
+            android:thumb="@drawable/blue_ksy_video_progress_seekbar_thumb_selector" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

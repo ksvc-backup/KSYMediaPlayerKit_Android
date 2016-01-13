@@ -218,17 +218,6 @@ public class StreamMediaPlayerView extends RelativeLayout implements
         this.layoutPop = (RelativeLayout) mRootView
                 .findViewById(R.id.layoutPop);
 
-//		mTextViewSpeed = (TextView) mRootView.findViewById(R.id.player_speed);
-        // mTextViewDemux = (TextView)
-        // mRootView.findViewById(R.id.player_demux);
-        // mTextViewDecode = (TextView)
-        // mRootView.findViewById(R.id.player_decode);
-        // mTextViewTime = (TextView) mRootView.findViewById(R.id.player_time);
-
-        // mTextViewTotal = (TextView)
-        // mRootView.findViewById(R.id.player_total);
-        // mTextViewNet = (TextView) mRootView.findViewById(R.id.player_net);
-
         this.mMediaPlayerVideoView = (MediaPlayerVideoView) mRootView
                 .findViewById(R.id.ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
@@ -249,8 +238,6 @@ public class StreamMediaPlayerView extends RelativeLayout implements
         this.mMediaPlayerVideoView
                 .setOnCompletionListener(mOnCompletionListener);
         this.mMediaPlayerVideoView.setOnInfoListener(mOnInfoListener);
-//        this.mMediaPlayerVideoView
-//                .setOnDRMRequiredListener(mOnDRMRequiredListener);
         this.mMediaPlayerVideoView.setOnErrorListener(mOnErrorListener);
 //        this.mMediaPlayerVideoView.setOnSurfaceListener(mOnSurfaceListener);
         this.mMediaPlayerVideoView
@@ -293,7 +280,6 @@ public class StreamMediaPlayerView extends RelativeLayout implements
 		/* 设置eventActionView callback */
         this.mMediaPlayerEventActionView
                 .setCallback(new MediaPlayerEventActionView.EventActionViewCallback() {
-
                     @Override
                     public void onActionPlay() {
                         if (NetworkUtil.isNetworkAvailable(mContext)) {
@@ -471,45 +457,25 @@ public class StreamMediaPlayerView extends RelativeLayout implements
 
                     case NET_NO:
                         Log.i(Constants.LOG_TAG, "网络断了");
-
-                        // Toast.makeText(getContext(), "网络变化了:没有网络连接",
-                        // Toast.LENGTH_LONG).show();
                         break;
                     case NET_2G:
                         Log.i(Constants.LOG_TAG, "2g网络");
-
-                        // Toast.makeText(getContext(), "网络变化了:2g网络",
-                        // Toast.LENGTH_LONG).show();
                         break;
                     case NET_3G:
                         Log.i(Constants.LOG_TAG, "3g网络");
-
-                        // Toast.makeText(getContext(), "网络变化了:3g网络",
-                        // Toast.LENGTH_LONG).show();
                         break;
                     case NET_4G:
                         Log.i(Constants.LOG_TAG, "4g网络");
-
-                        // Toast.makeText(getContext(), "网络变化了:4g网络",
-                        // Toast.LENGTH_LONG).show();
                         break;
                     case NET_WIFI:
                         Log.i(Constants.LOG_TAG, "WIFI网络");
-
-                        // Toast.makeText(getContext(), "网络变化了:WIFI网络",
-                        // Toast.LENGTH_LONG).show();
                         break;
 
                     case NET_UNKNOWN:
                         Log.i(Constants.LOG_TAG, "未知网络");
-
-                        // Toast.makeText(getContext(), "网络变化了:未知网络",
-                        // Toast.LENGTH_LONG).show();
                         break;
                     default:
                         Log.i(Constants.LOG_TAG, "不知道什么情况~>_<~");
-                        // Toast.makeText(getContext(), "网络变化了:不知道什么情况~>_<~",
-                        // Toast.LENGTH_LONG).show();
                 }
             }
         };
@@ -670,9 +636,6 @@ public class StreamMediaPlayerView extends RelativeLayout implements
         enableOrientationEventListener();
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
-//        if (mMediaPlayerController.canStart()) {
-//            mMediaPlayerController.start();
-//        }
     }
 
     public void onPause() {
@@ -686,10 +649,6 @@ public class StreamMediaPlayerView extends RelativeLayout implements
 
         disableOrientationEventListener();
 
-//        if (mMediaPlayerController.isPlaying()) {
-//            mMediaPlayerController.pause();
-//            mStartAfterPause = true;
-//        }
         WakeLocker.release();
     }
 
@@ -846,7 +805,6 @@ public class StreamMediaPlayerView extends RelativeLayout implements
     }
 
     private void enableOrientationEventListener() {
-
         if (mOrientationEventListener != null
                 && mOrientationEventListener.canDetectOrientation()) {
             mOrientationEventListener.enable();

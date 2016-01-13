@@ -1,6 +1,7 @@
 package com.ksy.media.widget.controller;
 
 import android.content.Context;
+import android.media.Image;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -17,6 +18,8 @@ import android.widget.Toast;
 
 import com.ksy.media.widget.model.MediaPlayMode;
 import com.ksy.media.widget.model.MediaPlayerMovieRatio;
+import com.ksy.media.widget.ui.common.MediaPlayerControllerBrightView;
+import com.ksy.media.widget.ui.common.MediaPlayerControllerVolumeView;
 import com.ksy.media.widget.util.MediaPlayerUtils;
 import com.ksy.media.widget.model.MediaPlayerVideoQuality;
 import com.ksy.media.widget.ui.video.VideoRelateVideoInfo;
@@ -42,9 +45,7 @@ public class StreamMediaPlayerLargeControllerView extends
     private RelativeLayout mControllerTopView;
     private RelativeLayout mBackLayout;
     private TextView mTitleTextView;
-
     private ImageView mVideoPlayImageView; // 播放暂停
-
 
     private LinearLayout mVideoSizeLayout; //视频尺寸
     private TextView mVideoSizeTextView;
@@ -59,7 +60,7 @@ public class StreamMediaPlayerLargeControllerView extends
     private RelativeLayout mVideoProgressLayout;
     private ImageView mScreenModeImageView;
 
-    private MediaPlayerQualityPopupView mQualityPopup; // 清晰度
+//    private MediaPlayerQualityPopupView mQualityPopup; // 清晰度
 
     private MediaPlayerLockView mLockView; // 锁屏
     private ImageView stream_queue_large;
@@ -67,6 +68,9 @@ public class StreamMediaPlayerLargeControllerView extends
     private ImageView stream_setting_large;
     private Button steram_controller_send_btn;
     private EditText stream_controller_comment;
+    private ImageView changeSmallImage;
+    private ImageView saveImage;
+    private ImageView hdImage;
 
     public StreamMediaPlayerLargeControllerView(Context context, AttributeSet attrs,
                                                 int defStyle) {
@@ -101,18 +105,25 @@ public class StreamMediaPlayerLargeControllerView extends
         stream_queue_large = (ImageView) findViewById(R.id.stream_queue_large);
         stream_fav_large = (ImageView) findViewById(R.id.stream_fav_large);
         stream_setting_large = (ImageView) findViewById(R.id.stream_setting_large);
-        steram_controller_send_btn = (Button) findViewById(R.id.steram_controller_send_btn);
 
-        mQualityLayout = (LinearLayout) findViewById(R.id.video_quality_layout); // 分辨率切换layout
-        mQualityTextView = (TextView) findViewById(R.id.tv_definition); // 分辨率切换
+        changeSmallImage = (ImageView) findViewById(R.id.video_window_screen_image_view);
+        saveImage = (ImageView) findViewById(R.id.video_save_image);
+        hdImage = (ImageView) findViewById(R.id.video_hq_image);
 
-        stream_controller_comment = (EditText)findViewById(R.id.stream_controller_comment);
+//        steram_controller_send_btn = (Button) findViewById(R.id.steram_controller_send_btn);
+//        mQualityLayout = (LinearLayout) findViewById(R.id.video_quality_layout); // 分辨率切换layout
+//        mQualityTextView = (TextView) findViewById(R.id.tv_definition); // 分辨率切换
+
+        stream_controller_comment = (EditText) findViewById(R.id.stream_controller_comment);
         mLockView = (MediaPlayerLockView) findViewById(R.id.widget_lock_view);
 
         mVideoProgressLayout = (RelativeLayout) findViewById(R.id.video_progress_layout);
         mScreenModeImageView = (ImageView) findViewById(R.id.video_window_screen_image_view); // 大屏切小屏
 
-        mQualityPopup = new MediaPlayerQualityPopupView(getContext());
+        mWidgetVolumeControl = (MediaPlayerControllerVolumeView) findViewById(R.id.widget_controller_volume);
+        mControllerBrightView = (MediaPlayerControllerBrightView) findViewById(R.id.widge_control_light_view); // 新亮度调节
+
+//        mQualityPopup = new MediaPlayerQualityPopupView(getContext());
 
         mWidgetSeekView = (MediaPlayerSeekView) findViewById(R.id.widget_seek_view);
         setOnSystemUiVisibilityChangeListener(this);
@@ -127,15 +138,15 @@ public class StreamMediaPlayerLargeControllerView extends
         mScreenModeImageView.setOnClickListener(this);
         mBackLayout.setOnClickListener(this);
         mVideoPlayImageView.setOnClickListener(this);
-        mQualityLayout.setOnClickListener(this);
+//        mQualityLayout.setOnClickListener(this);
         mTitleTextView.setOnClickListener(this);
         stream_queue_large.setOnClickListener(this);
         stream_fav_large.setOnClickListener(this);
         stream_setting_large.setOnClickListener(this);
-        steram_controller_send_btn.setOnClickListener(this);
-        //清晰度
-        mQualityPopup.setCallback(new MediaPlayerQualityPopupView.Callback() {
+//        steram_controller_send_btn.setOnClickListener(this);
 
+        //清晰度
+     /*   mQualityPopup.setCallback(new MediaPlayerQualityPopupView.Callback() {
             @Override
             public void onQualitySelected(MediaPlayerVideoQuality quality) {
 
@@ -151,10 +162,9 @@ public class StreamMediaPlayerLargeControllerView extends
                 if (isShowing())
                     show();
             }
-        });
+        });*/
 
         mLockView.setCallback(new MediaPlayerLockView.ScreenLockCallback() {
-
             @Override
             public void onActionLockMode(boolean lock) {
 
@@ -172,7 +182,6 @@ public class StreamMediaPlayerLargeControllerView extends
                 }
             }
         });
-
 
     }
 
@@ -200,9 +209,14 @@ public class StreamMediaPlayerLargeControllerView extends
         if (mScreenLock) {
             mControllerTopView.setVisibility(INVISIBLE);
             mVideoProgressLayout.setVisibility(INVISIBLE);
+            mControllerBrightView.setVisibility(INVISIBLE);
+            mWidgetVolumeControl.setVisibility(INVISIBLE);
+
         } else {
             mControllerTopView.setVisibility(VISIBLE);
             mVideoProgressLayout.setVisibility(VISIBLE);
+            mControllerBrightView.setVisibility(VISIBLE);
+            mWidgetVolumeControl.setVisibility(VISIBLE);
         }
         if (MediaPlayerUtils.isFullScreenMode(mMediaPlayerController
                 .getPlayMode())) {
@@ -217,9 +231,12 @@ public class StreamMediaPlayerLargeControllerView extends
 
         mControllerTopView.setVisibility(INVISIBLE);
         mVideoProgressLayout.setVisibility(INVISIBLE);
-        if (mQualityPopup.isShowing()) {
-            mQualityPopup.hide();
-        }
+        mControllerBrightView.setVisibility(INVISIBLE);
+        mWidgetVolumeControl.setVisibility(INVISIBLE);
+
+//        if (mQualityPopup.isShowing()) {
+//            mQualityPopup.hide();
+//        }
 
         // 当前全屏模式,隐藏系统UI
         if (mDeviceNavigationBarExist) {
@@ -275,19 +292,17 @@ public class StreamMediaPlayerLargeControllerView extends
         // 播放中
         Log.i(TAG, "updateVideoPlaybackState  ----> start ? " + isStart);
         if (isStart) {
-            mVideoPlayImageView.setImageResource(R.drawable.blue_ksy_pause);
-            // mVideoPlayImageView.setSelected(true);
+            mVideoPlayImageView.setImageResource(R.drawable.video_pause_land_image);
         }
         // 未播放
         else {
-            mVideoPlayImageView.setImageResource(R.drawable.blue_ksy_play);
-            // mVideoPlayImageView.setSelected(false);
+            mVideoPlayImageView.setImageResource(R.drawable.video_play_land_image);
         }
     }
 
     public void updateVideoQualityState(MediaPlayerVideoQuality quality) {
 
-        mQualityTextView.setText(quality.getName());
+//        mQualityTextView.setText(quality.getName());
     }
 
     public void updateVideoVolumeState() {
@@ -317,9 +332,9 @@ public class StreamMediaPlayerLargeControllerView extends
                 show();
             }
 
-        } else if (id == mQualityLayout.getId()) { //清晰度
+       /* } else if (id == mQualityLayout.getId()) { //清晰度
             Log.d(TAG, "507  id == mVideoSizeLayout.getId() ......");
-            displayQualityPopupWindow();
+//            displayQualityPopupWindow();*/
         } else if (id == mScreenModeImageView.getId()) { // 切换大小屏幕
             mMediaPlayerController
                     .onRequestPlayMode(MediaPlayMode.PLAYMODE_WINDOW);
@@ -332,7 +347,15 @@ public class StreamMediaPlayerLargeControllerView extends
         } else if (id == steram_controller_send_btn.getId()) {
             stream_controller_comment.setText("");
             Toast.makeText(mContext, "comment send clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == changeSmallImage.getId()) {
+            mMediaPlayerController
+                    .onRequestPlayMode(MediaPlayMode.PLAYMODE_WINDOW);
+        } else if (id == saveImage.getId()) {
+            Toast.makeText(mContext, "save clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == hdImage.getId()) {
+            Toast.makeText(mContext, "hd clicked", Toast.LENGTH_SHORT).show();
         }
+
     }
 
     /**
@@ -358,7 +381,7 @@ public class StreamMediaPlayerLargeControllerView extends
     /**
      * 清晰度的弹框
      */
-    private void displayQualityPopupWindow() {
+  /*  private void displayQualityPopupWindow() {
 
         // 弹出清晰度框
         List<MediaPlayerVideoQuality> qualityList = new ArrayList<MediaPlayerVideoQuality>();
@@ -377,8 +400,7 @@ public class StreamMediaPlayerLargeControllerView extends
                 x, y, width, height);
         mQualityLayout.setSelected(true);
         show(0);
-    }
-
+    }*/
     @Override
     public void onScreenShow() {
         show();

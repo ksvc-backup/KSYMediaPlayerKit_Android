@@ -13,6 +13,6 @@
     <string name="title_activity_stream_video">StreamVideoActivity</string>
     <string name="title_activity_stream_replay">StreamReplayActivity</string>
     <string name="title_activity_online_video">OnlineVideoActivity</string>
-
+    <string name="short_title">pop</string>
 
 </resources>

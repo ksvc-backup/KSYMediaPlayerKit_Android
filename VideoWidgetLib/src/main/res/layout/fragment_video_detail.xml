@@ -12,10 +12,11 @@
 
             <ImageView
                 android:id="@+id/user_img"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_margin="@dimen/list_item_margin"
-                android:src="@drawable/ic_account_circle_grey600_36dp" />
+                android:src="@drawable/shortvideo_head_image" />
 
             <TextView
                 android:id="@+id/user_tv"
@@ -29,7 +30,7 @@
 
             <TextView
                 android:id="@+id/comment_tv"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/live_heart_margin"
                 android:layout_alignLeft="@+id/user_tv"
                 android:textColor="@color/ksy_color_font_alpha"
                 android:layout_height="wrap_content"
@@ -39,7 +40,7 @@
             <Button
                 android:id="@+id/follow_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/live_bottom_height"
                 android:background="@color/ksy_color_card_bg"
                 android:textColor="@color/ksy_color_prime"
                 android:layout_alignParentRight="true"

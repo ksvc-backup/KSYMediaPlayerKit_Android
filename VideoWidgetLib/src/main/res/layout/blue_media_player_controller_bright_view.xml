@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/controller_bright_width"
-    android:layout_height="@dimen/controller_bright_height"
+    android:layout_height="140dp"
     android:alpha="0.6"
-    android:background="@color/balck" >
+    android:background="@color/black" >
 
     <ImageView
         android:id="@+id/image_controller_bright_no"
@@ -11,29 +11,20 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/bright_margin_bottom"
-        android:src="@drawable/blue_ksy_light_light" />
+        android:layout_marginTop="@dimen/bright_margin_bottom"
+        android:layout_marginBottom="@dimen/volume_margin_bottom"
+        android:src="@drawable/video_light_image" />
 
     <com.ksy.media.widget.ui.common.MediaPlayerBrightSeekBar
         android:id="@+id/seekbar_bright_progress"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/bright_seek_margin_top"
-        android:layout_marginBottom="@dimen/bright_seek_margin_bottom"
-        android:maxHeight="1dp"
-        android:minHeight="1dp"
+        android:layout_marginBottom="20dp"
+        android:maxHeight="@dimen/livereplay_controller_seekbar_height"
+        android:minHeight="@dimen/livereplay_controller_seekbar_height"
         android:progressDrawable="@drawable/blue_ksy_video_progress_seekbar_style_selector"
         android:thumb="@drawable/blue_ksy_video_progress_seekbar_thumb_selector"
         android:thumbOffset="16dp" />
-<!-- android:layout_above="@+id/image_controller_bright_no"
-        android:layout_below="@+id/image_controller_volume_up" -->
-    <ImageView
-        android:id="@+id/image_controller_volume_up"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/bright_margin_top"
-        android:src="@drawable/blue_ksy_light_up" />
 
 </RelativeLayout>

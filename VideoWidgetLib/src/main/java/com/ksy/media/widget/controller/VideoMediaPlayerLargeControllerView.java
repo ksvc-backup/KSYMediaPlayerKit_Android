@@ -54,16 +54,16 @@ public class VideoMediaPlayerLargeControllerView extends
 
 //	private ImageView mVideoSizeImageView;
 
-    private LinearLayout mVideoSizeLayout; //视频尺寸
-    private TextView mVideoSizeTextView;
+//    private LinearLayout mVideoSizeLayout; //视频尺寸
+//    private TextView mVideoSizeTextView;
 
-    private LinearLayout mQualityLayout; // 视频清晰度切换
-    private TextView mQualityTextView;
+//    private LinearLayout mQualityLayout; // 视频清晰度切换
+//    private TextView mQualityTextView;
 
-    private TextView mEpisodeTextView; //剧集
-    private ListView mRelateListview; //剧集相关
-    private List<VideoRelateVideoInfo> relationList;
-    private VideoRelatedVideoAdapter relatedAdapter;
+//    private TextView mEpisodeTextView; //剧集
+//    private ListView mRelateListview; //剧集相关
+//    private List<VideoRelateVideoInfo> relationList;
+//    private VideoRelatedVideoAdapter relatedAdapter;
     private Context mContext;
 
     private RelativeLayout mVideoProgressLayout;
@@ -78,6 +78,10 @@ public class VideoMediaPlayerLargeControllerView extends
     private MediaPlayerLockView mLockView; // 锁屏
     private ImageView mVideoCropView; // 截图
     private ImageView video_top_setting;
+    private ImageView video_top_camera;
+    private ImageView changeScreenImage;
+    private ImageView recentImage;
+    private ImageView hdImage;
 
     // private MediaPlayerControllerVolumeView mWidgetControllerVolumeView;
     //声音控制
@@ -115,9 +119,15 @@ public class VideoMediaPlayerLargeControllerView extends
 
         mVideoPlayImageView = (ImageView) findViewById(R.id.video_start_pause_image_view); // 播放控制
 
-        mVideoSizeLayout = (LinearLayout) findViewById(R.id.video_screen_size_layout); //视频尺寸切换layout
-        mVideoSizeTextView = (TextView) findViewById(R.id.tv_screen_size);
+//        mVideoSizeLayout = (LinearLayout) findViewById(R.id.video_screen_size_layout); //视频尺寸切换layout
+//        mVideoSizeTextView = (TextView) findViewById(R.id.tv_screen_size);
         video_top_setting = (ImageView) findViewById(R.id.video_top_setting);
+        video_top_camera = (ImageView) findViewById(R.id.video_camera_image);
+        changeScreenImage = (ImageView) findViewById(R.id.video_window_screen_image_view);
+        recentImage = (ImageView) findViewById(R.id.video_recent_image);
+        hdImage = (ImageView) findViewById(R.id.video_hq_image);
+
+
 //		mVideoSizeImageView = (ImageView) findViewById(R.id.video_size_image_view); // 视频尺寸切换
 
         // mVideoRatioBackView = (ImageView) findViewById(R.id.video_fast_back_view);
@@ -125,11 +135,11 @@ public class VideoMediaPlayerLargeControllerView extends
 
 //		mVideoCropView = (ImageView) findViewById(R.id.crop_view); // 截屏
 
-        mQualityLayout = (LinearLayout) findViewById(R.id.video_quality_layout); // 分辨率切换layout
-        mQualityTextView = (TextView) findViewById(R.id.tv_definition); // 分辨率切换
+//        mQualityLayout = (LinearLayout) findViewById(R.id.video_quality_layout); // 分辨率切换layout
+//        mQualityTextView = (TextView) findViewById(R.id.tv_definition); // 分辨率切换
 
-        mEpisodeTextView = (TextView) findViewById(R.id.tv_episode); //剧集
-        mRelateListview = (ListView) findViewById(R.id.relatedlistview);
+//        mEpisodeTextView = (TextView) findViewById(R.id.tv_episode); //剧集
+//        mRelateListview = (ListView) findViewById(R.id.relatedlistview);
 
         mLockView = (MediaPlayerLockView) findViewById(R.id.widget_lock_view);
 
@@ -164,10 +174,10 @@ public class VideoMediaPlayerLargeControllerView extends
 
 
         //相关数据加载,没有数据，设置本地测试数据
-        relationList = new ArrayList<VideoRelateVideoInfo>();
-        relatedAdapter = new VideoRelatedVideoAdapter(relationList, mContext);
+//        relationList = new ArrayList<VideoRelateVideoInfo>();
+//        relatedAdapter = new VideoRelatedVideoAdapter(relationList, mContext);
 //		Log.d(Constants.LOG_TAG, "170 mContext =" + relationList + ">>relationList=" + relationList);
-        mRelateListview.setAdapter(relatedAdapter);
+//        mRelateListview.setAdapter(relatedAdapter);
 //		mRelateListview.setCacheColorHint(Color.TRANSPARENT);
     }
 
@@ -179,12 +189,13 @@ public class VideoMediaPlayerLargeControllerView extends
         // mVideoRatioBackView.setOnClickListener(this);
         // mVideoRatioForwardView.setOnClickListener(this);
         video_top_setting.setOnClickListener(this);
+        video_top_camera.setOnClickListener(this);
         mBackLayout.setOnClickListener(this);
         mVideoPlayImageView.setOnClickListener(this);
-        mQualityLayout.setOnClickListener(this);
-        mVideoSizeLayout.setOnClickListener(this);
+//        mQualityLayout.setOnClickListener(this);
+//        mVideoSizeLayout.setOnClickListener(this);
         mTitleTextView.setOnClickListener(this);
-        mEpisodeTextView.setOnClickListener(this);//剧集
+//        mEpisodeTextView.setOnClickListener(this);//剧集
 
 //		mVideoSizeImageView.setOnClickListener(this);
 
@@ -230,16 +241,16 @@ public class VideoMediaPlayerLargeControllerView extends
             public void onQualitySelected(MediaPlayerVideoQuality quality) {
 
                 mQualityPopup.hide();
-                mQualityTextView.setText(quality.getName());
+//                mQualityTextView.setText(quality.getName());
                 setMediaQuality(quality);
             }
 
             @Override
             public void onPopupViewDismiss() {
-
-                mQualityLayout.setSelected(false);
-                if (isShowing())
+//                mQualityLayout.setSelected(false);
+                if (isShowing()) {
                     show();
+                }
             }
         });
 
@@ -294,14 +305,14 @@ public class VideoMediaPlayerLargeControllerView extends
         //亮度调节
 //		mControllerBrightView.setCallback(callback)
 
-        mRelateListview.setOnItemClickListener(new OnItemClickListener() {
+       /* mRelateListview.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position,
                                     long arg3) {
                 Log.d(TAG, "mRelateListview  onItemClick position ====" + position);
                 mRelateListview.setVisibility(GONE);
             }
-        });
+        });*/
 
     }
 
@@ -454,19 +465,17 @@ public class VideoMediaPlayerLargeControllerView extends
         // 播放中
         Log.i(TAG, "updateVideoPlaybackState  ----> start ? " + isStart);
         if (isStart) {
-            mVideoPlayImageView.setImageResource(R.drawable.blue_ksy_pause);
-            // mVideoPlayImageView.setSelected(true);
+            mVideoPlayImageView.setImageResource(R.drawable.video_pause_land_image);
         }
         // 未播放
         else {
-            mVideoPlayImageView.setImageResource(R.drawable.blue_ksy_play);
-            // mVideoPlayImageView.setSelected(false);
+            mVideoPlayImageView.setImageResource(R.drawable.video_play_land_image);
         }
     }
 
     public void updateVideoQualityState(MediaPlayerVideoQuality quality) {
 
-        mQualityTextView.setText(quality.getName());
+//        mQualityTextView.setText(quality.getName());
     }
 
     public void updateVideoVolumeState() {
@@ -496,7 +505,7 @@ public class VideoMediaPlayerLargeControllerView extends
                 show();
             }
 
-        } else if (id == mQualityLayout.getId()) { //清晰度
+        } /*else if (id == mQualityLayout.getId()) { //清晰度
             Log.d(TAG, "507  id == mVideoSizeLayout.getId() ......");
             displayQualityPopupWindow();
 
@@ -506,21 +515,33 @@ public class VideoMediaPlayerLargeControllerView extends
 //			mWidgetMovieRatioView.show();
 //			show();
             displayScreenSizePopupWindow();
-			/*
+			*//*
 			 * } else if (id == mVideoRatioForwardView.getId()) {//快进按纽
 			 * mMediaPlayerController.onMoviePlayRatioUp(); show(); } else if
 			 * (id == mVideoRatioBackView.getId()) {//快退按钮
 			 * mMediaPlayerController.onMoviePlayRatioDown(); show();
-			 */
-        } else if (id == mScreenModeImageView.getId()) { // 切换大小屏幕
+			 *//*
+        }*/ else if (id == mScreenModeImageView.getId()) { // 切换大小屏幕
             mMediaPlayerController
                     .onRequestPlayMode(MediaPlayMode.PLAYMODE_WINDOW);
 
-        } else if (id == mEpisodeTextView.getId()) { //剧集
-            Log.d(TAG, "id == mEpisodeTextView.getId()  ...");
-            mRelateListview.setVisibility(VISIBLE);
+//        } else if (id == mEpisodeTextView.getId()) { //剧集
+//            Log.d(TAG, "id == mEpisodeTextView.getId()  ...");
+//            mRelateListview.setVisibility(VISIBLE);
         } else if(id == video_top_setting.getId()){
             Toast.makeText(mContext, "setting clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == video_top_camera.getId()) {
+            Toast.makeText(mContext, "cropscreen clicked", Toast.LENGTH_SHORT).show();
+        } else if (id == changeScreenImage.getId()) {
+            mMediaPlayerController
+                    .onRequestPlayMode(MediaPlayMode.PLAYMODE_WINDOW);
+            Log.d("lixp", "video change clicked ..");
+        } else if (id == recentImage.getId()) {
+            Toast.makeText(mContext, "recent clicked", Toast.LENGTH_SHORT).show();
+            Log.d("lixp", "video recent clicked ..");
+        } else if (id == hdImage.getId()) {
+            Toast.makeText(mContext, "hd clicked", Toast.LENGTH_SHORT).show();
+            Log.d("lixp", "video hd clicked ..");
         }
 
     }
@@ -560,7 +581,7 @@ public class VideoMediaPlayerLargeControllerView extends
 //		int height = (MediaPlayerUtils.dip2px(getContext(), 50) + MediaPlayerUtils
 //				.dip2px(getContext(), 2)) * qualityList.size();
 
-        int width = mQualityLayout.getMeasuredWidth() + widthExtra;
+      /*  int width = mQualityLayout.getMeasuredWidth() + widthExtra;
         int height = (MediaPlayerUtils.dip2px(getContext(), 30) + MediaPlayerUtils
                 .dip2px(getContext(), 2)) * qualityList.size();
 
@@ -569,7 +590,7 @@ public class VideoMediaPlayerLargeControllerView extends
         int y = MediaPlayerUtils.getYLocationOnScreen(mQualityLayout) - height;
         mQualityPopup.show(mQualityLayout, qualityList, this.mCurrentQuality,
                 x, y, width, height);
-        mQualityLayout.setSelected(true);
+        mQualityLayout.setSelected(true);*/
         show(0);
     }
 
@@ -587,7 +608,7 @@ public class VideoMediaPlayerLargeControllerView extends
 //		int height = (MediaPlayerUtils.dip2px(getContext(), 50) + MediaPlayerUtils
 //				.dip2px(getContext(), 2)) * screenList.size();
 
-        int width = mVideoSizeLayout.getMeasuredWidth() + widthExtra;
+      /*  int width = mVideoSizeLayout.getMeasuredWidth() + widthExtra;
         int height = (MediaPlayerUtils.dip2px(getContext(), 31) + MediaPlayerUtils
                 .dip2px(getContext(), 2)) * screenList.size();
 
@@ -597,10 +618,8 @@ public class VideoMediaPlayerLargeControllerView extends
         mScreenPopup.show(mVideoSizeLayout, screenList, this.mCurrentMovieRatio,
                 x, y, width, height);
         mVideoSizeLayout.setSelected(true);
-        show(0);
-
+        show(0);*/
     }
-
 
     @Override
     public void onScreenShow() {

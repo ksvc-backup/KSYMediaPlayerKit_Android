@@ -25,7 +25,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
-            android:src="@drawable/live_close"
+            android:src="@drawable/live_close_image"
             android:layout_marginLeft="@dimen/live_person_margin"
             android:layout_marginRight="@dimen/live_person_margin"
             android:gravity="center_vertical" />
@@ -99,6 +99,7 @@
         android:text="@string/live_back_home"
         android:id="@+id/button_replay"
         android:layout_marginTop="@dimen/live_margin_left"
+        android:textColor="@color/white"
         android:background="@color/lightblue"
         android:layout_below="@+id/textView6"
         android:layout_centerHorizontal="true" />

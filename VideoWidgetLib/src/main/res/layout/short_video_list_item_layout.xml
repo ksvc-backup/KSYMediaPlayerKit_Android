@@ -6,13 +6,13 @@
 
     <ImageView
         android:id="@+id/icon_img"
-        android:layout_width="36dp"
-        android:layout_height="36dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="24dp"
-        android:src="@drawable/ic_account_circle_grey600_36dp" />
+        android:layout_marginLeft="@dimen/live_person_margin"
+        android:src="@drawable/shortvideo_list_item_image" />
 
     <TextView
         android:id="@+id/info_tv"
@@ -20,12 +20,24 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginRight="50dp"
+        android:layout_marginRight="@dimen/live_bottom_height"
         android:textColor="@color/ksy_color_font"
         android:layout_marginTop="@dimen/list_item_margin"
         android:layout_toEndOf="@+id/icon_img"
         android:layout_toRightOf="@+id/icon_img"
         android:text="info_tv"
+        android:textAppearance="?android:attr/textAppearanceSmall" />
+
+    <TextView
+        android:id="@+id/info_time"
+        android:layout_marginLeft="@dimen/list_item_large_margin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/ksy_color_font"
+        android:layout_marginTop="@dimen/list_item_margin"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="@dimen/live_margin_left"
+        android:text="info_time"
         android:textAppearance="?android:attr/textAppearanceSmall" />
 
     <TextView

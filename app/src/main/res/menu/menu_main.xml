@@ -1,6 +1,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".main.DemoActivity">
-
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+<item
+    android:id="@+id/action_pop"
+    android:icon="@mipmap/short_overflow_image"
+    android:title="@string/short_title"
+    app:showAsAction="ifRoom" />
 </menu>

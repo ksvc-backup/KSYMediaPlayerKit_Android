@@ -32,8 +32,8 @@ import com.ksy.mediaPlayer.widget.R;
 public class HeartView extends ImageView {
 
     private static final Paint sPaint = new Paint(Paint.ANTI_ALIAS_FLAG | Paint.FILTER_BITMAP_FLAG);
-    private int mHeartResId = R.drawable.live_favorite;
-    private int mHeartBorderResId = R.drawable.live_favorite;
+    private int mHeartResId = R.drawable.live_favorite_image;
+    private int mHeartBorderResId = R.drawable.live_favorite_image;
 
     private static Bitmap sHeart;
     private static Bitmap sHeartBorder;

@@ -26,6 +26,11 @@
             android:singleLine="true"
             android:layout_centerVertical="true"
             android:hint="@string/live_comment"
+            android:textColorHint="@color/live_edit_content"
+            android:textColor="@color/white"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:backgroundTint="@color/live_edit_frame"
             android:layout_toRightOf="@+id/live_information_switch_bt"
             android:layout_marginRight="@dimen/live_margin_left" />
 
@@ -35,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_toRightOf="@+id/video_comment_text"
-            android:src="@drawable/live_extension"
+            android:src="@drawable/live_extension_image"
             android:layout_marginRight="@dimen/live_margin_left" />
     </RelativeLayout>
 </RelativeLayout>

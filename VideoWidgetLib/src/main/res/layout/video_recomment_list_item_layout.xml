@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
+    android:layout_height="@dimen/live_margin_one_hundred"
     android:background="@color/ksy_color_card_bg">
 
     <ImageView
@@ -16,8 +16,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/list_item_large_margin"
-        android:layout_marginRight="100dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginRight="@dimen/live_margin_one_hundred"
+        android:layout_marginTop="@dimen/video_margin_right"
         android:layout_toRightOf="@+id/icon_img"
         android:text="title_tv"
         android:textAppearance="?android:attr/textAppearanceSmall"
@@ -30,7 +30,7 @@
         android:layout_alignLeft="@+id/title_tv"
         android:layout_below="@+id/title_tv"
         android:layout_toRightOf="@+id/icon_img"
-        android:src="@drawable/ic_visibility_grey600_24dp" />
+        android:src="@drawable/short_eye_image" />
 
     <TextView
         android:id="@+id/watch_tv"
@@ -39,7 +39,7 @@
         android:layout_alignBottom="@+id/watch_img"
         android:layout_below="@+id/title_tv"
         android:layout_marginLeft="@dimen/list_item_margin"
-        android:layout_marginRight="8dp"
+        android:layout_marginRight="@dimen/list_item_margin"
         android:layout_toRightOf="@+id/watch_img"
         android:gravity="center"
         android:text="Text"
@@ -53,7 +53,7 @@
         android:layout_alignBottom="@+id/watch_img"
         android:layout_below="@+id/title_tv"
         android:layout_toRightOf="@+id/watch_tv"
-        android:src="@drawable/ic_query_builder_grey600_24dp" />
+        android:src="@drawable/live_report_image" />
 
     <TextView
         android:id="@+id/time_tv"

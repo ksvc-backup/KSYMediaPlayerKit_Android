@@ -46,7 +46,7 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="@dimen/live_margin_left"
             android:layout_marginRight="@dimen/live_margin_left"
-            android:src="@drawable/live_person_count"/>
+            android:src="@drawable/short_head_image_n"/>
 
         <TextView
             android:id="@+id/live_person_count_textview"
@@ -83,7 +83,7 @@
 
         <ImageView
             android:id="@+id/live_image_heart_bt"
-            android:src="@drawable/live_favorite"
+            android:src="@drawable/live_favorite_image"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/live_image_heart"
             android:layout_width="wrap_content"
