@@ -59,57 +59,34 @@ import java.util.Locale;
 public class ShortVideoMediaPlayerView extends RelativeLayout implements
         IPowerStateListener {
     private static final int QUALITY_BEST = 100;
-    private static final String CAPUTRE_SCREEN_PATH = "KSY_SDK_SCREENSHOT";
+    private static final String CAPTURE_SCREEN_PATH = "KSY_SDK_SCREENSHOT";
     private Activity mActivity;
     private LayoutInflater mLayoutInflater;
     private Window mWindow;
-    private volatile boolean mWindowActived = false;
-
     private ViewGroup mRootView;
     private MediaPlayerTextureVideoView mMediaPlayerVideoView;
-
     private ShortVideoMediaPlayerControllerView mMediaPlayerSmallControllerView;
     private MediaPlayerBufferingView mMediaPlayerBufferingView;
     private MediaPlayerLoadingView mMediaPlayerLoadingView;
     private MediaPlayerEventActionView mMediaPlayerEventActionView;
-
     private PlayerViewCallback mPlayerViewCallback;
-
     private volatile int mPlayMode = MediaPlayMode.PLAYMODE_FULLSCREEN;
-    private volatile boolean mLockMode = false;
     private volatile boolean mScreenLockMode = false;
     private volatile boolean mScreenshotPreparing = false;
-
     private boolean mVideoReady = false;
-
-    private boolean mStartAfterPause = false;
     private PlayConfig playConfig = PlayConfig.getInstance();
-
     private int mPausePosition = 0;
-
     private LayoutParams mMediaPlayerControllerViewSmallParams;
-
     private boolean mDeviceNavigationBarExist;
-
-    private int mDisplaySizeMode = MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_16_9;
-
     private NetReceiver mNetReceiver;
     private NetStateChangedListener mNetChangedListener;
     private boolean mIsComplete = false;
-
-    private float mCurrentPlayingRatio = 1f;
     private float mCurrentPlayingVolumeRatio = 1f;
-    public static float MAX_PLAYING_RATIO = 4f;
     public static float MAX_PLAYING_VOLUME_RATIO = 3.0f;
     // add for replay
     private boolean mRecyclePlay = false;
-
-//    private DRMRetrieverManager mDrmManager;
-//    private DRMRetrieverResponseHandler mDrmHandler;
-
     private RelativeLayout layoutPop;
     private Handler mHandler = new Handler();
-
     private Context mContext;
     private IPowerStateListener powerStateListener;
     private boolean mIsTextureViewVisible = true;
@@ -146,11 +123,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         setPowerStateListener(this);
         TypedArray typedArray = context.obtainStyledAttributes(attrs,
                 R.styleable.PlayerView);
-
-        this.mLockMode = typedArray.getBoolean(R.styleable.PlayerView_lockmode,
-                false);
         typedArray.recycle();
-
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mActivity = (Activity) context;
         this.mWindow = mActivity.getWindow();
@@ -184,10 +157,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         this.mMediaPlayerVideoView
                 .setOnCompletionListener(mOnCompletionListener);
         this.mMediaPlayerVideoView.setOnInfoListener(mOnInfoListener);
-//        this.mMediaPlayerVideoView
-//                .setOnDRMRequiredListener(mOnDRMRequiredListener);
         this.mMediaPlayerVideoView.setOnErrorListener(mOnErrorListener);
-//        this.mMediaPlayerVideoView.setOnSurfaceListener(mOnSurfaceListener);
         this.mMediaPlayerVideoView
                 .setMediaPlayerController(mMediaPlayerController);
         this.mMediaPlayerVideoView.setFocusable(false);
@@ -316,7 +286,6 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         addView(mMediaPlayerLoadingView, mediaPlayerLoadingViewParams);
         addView(mMediaPlayerEventActionView, mediaPlayereventActionViewParams);
         addView(layoutPop, mediaPlayerPopViewParams);
-//        addView(mTextViewSpeed);
         addView(mMediaPlayerSmallControllerView,
                 mMediaPlayerControllerViewSmallParams);
         mMediaPlayerSmallControllerView.hide();
@@ -325,16 +294,6 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         mMediaPlayerEventActionView.hide();
         // Default not use,if need it ,open it
         // initOrientationEventListener(context);
-
-   /*     post(new Runnable() {
-
-            @Override
-            public void run() {
-
-                if (MediaPlayerUtils.isWindowMode(mPlayMode)) {
-                }
-            }
-        });*/
 
         mNetReceiver = NetReceiver.getInstance();
         mNetChangedListener = new NetStateChangedListener() {
@@ -462,14 +421,9 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 
     public void onResume() {
         Log.d(Constants.LOG_TAG, "PlayView onResume");
-
-        mWindowActived = true;
         powerStateListener.onPowerState(Constants.APP_SHOWN);
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
-//        if (mMediaPlayerController.canStart()){
-//            mMediaPlayerController.start();
-//        }
     }
 
     public void onPause() {
@@ -477,17 +431,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         powerStateListener.onPowerState(Constants.APP_HIDEN);
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
-        mWindowActived = false;
-
         mPausePosition = mMediaPlayerController.getCurrentPosition();
-//        if (!isTextureViewVisible()) {
-//            mMediaPlayerController.pause();
-//        }
-
-//        if (mMediaPlayerController.isPlaying()) {
-//            mMediaPlayerController.pause();
-//            mStartAfterPause = true;
-//        }
         WakeLocker.release();
     }
 
@@ -502,21 +446,6 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         mMediaPlayerSmallControllerView.updateVideoTitle(getResources().getString(R.string.short_video_title));
         mMediaPlayerEventActionView.updateVideoTitle(getResources().getString(R.string.short_video_title));
         mMediaPlayerEventActionView.updateVideoTitle(getResources().getString(R.string.short_video_title));
-    }
-
-    private void changeMovieRatio() {
-        /*
-         * if (mDisplaySizeMode >
-		 * MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_ORIGIN) { mDisplaySizeMode
-		 * = MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_16_9; }
-		 */
-
-        if (mDisplaySizeMode > MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_4_3) {
-            mDisplaySizeMode = MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_16_9;
-        }
-
-        mMediaPlayerVideoView.setVideoLayout(mDisplaySizeMode);
-        // mDisplaySizeMode++;
     }
 
     IMediaPlayer.OnPreparedListener mOnPreparedListener = new IMediaPlayer.OnPreparedListener() {
@@ -564,9 +493,6 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                 }
             }
 
-            // mMediaPlayerEventActionView.updateEventMode(
-            // MediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_WAIT,
-            // null);
             mVideoReady = true;
             if (mPlayerViewCallback != null)
                 mPlayerViewCallback.onPrepared();
@@ -609,11 +535,6 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         public boolean onInfo(IMediaPlayer mp, int what, int extra) {
 
             switch (what) {
-//                case IMediaPlayer.MEDIA_INFO_METADATA_SPEED:
-//                    // Log.i(Constants.LOG_TAG, "MEDIA_INFO_METADATA_SPEED:"
-//                    // +extra);
-//                    break;
-                // 视频缓冲开始
                 case IMediaPlayer.MEDIA_INFO_BUFFERING_START:
                     Log.i(Constants.LOG_TAG, "MEDIA_INFO_BUFFERING_START");
                     mMediaPlayerBufferingView.show();
@@ -629,77 +550,6 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             return true;
         }
     };
-
-//    IMediaPlayer.OnDRMRequiredListener mOnDRMRequiredListener = new IMediaPlayer.OnDRMRequiredListener() {
-//
-//        @Override
-//        public void OnDRMRequired(IMediaPlayer mp, int what, int extra,
-//                                  String version) {
-//
-//            Toast.makeText(getContext(),
-//                    "begin drm retriving..version :" + version,
-//                    Toast.LENGTH_SHORT).show();
-//            requestDRMKey(version);
-//        }
-//    };
-//
-//    private void requestDRMKey(final String version) {
-//
-//        if (mDrmManager == null)
-//            mDrmManager = DRMRetrieverManager.getInstance();
-//        if (mDrmHandler == null) {
-//            mDrmHandler = new DRMRetrieverResponseHandler() {
-//
-//                private static final long serialVersionUID = 1L;
-//
-//                @Override
-//                public void onSuccess(String version, String cek) {
-//
-//                    mMediaPlayerVideoView.setDRMKey(version, cek);
-//                    Toast.makeText(
-//                            getContext(),
-//                            "DRM KEY retrieve success,ver :" + version
-//                                    + ", key :" + cek, Toast.LENGTH_SHORT)
-//                            .show();
-//                }
-//
-//                @Override
-//                public void onFailure(int arg0, String arg1, Throwable arg2) {
-//
-//                    Log.e(Constants.LOG_TAG,
-//                            "drm retrieve failed !!!!!!!!!!!!!!");
-//                    Toast.makeText(getContext(), "DRM KEY retrieve failed",
-//                            Toast.LENGTH_SHORT).show();
-//                }
-//
-//            };
-//        }
-//
-//        IDRMRetriverRequest request = new IDRMRetriverRequest(version, url) {
-//
-//            private static final long serialVersionUID = 1L;
-//
-//            @Override
-//            public DRMKey retriveDRMKeyFromAppServer(String cekVersion,
-//                                                     String cekUrl) {
-//
-//                return null;
-//            }
-//
-//            @Override
-//            public DRMFullURL retriveDRMFullUrl(String cekVersion, String cekUrl)
-//                    throws Exception {
-//
-//                DRMFullURL fullURL = new DRMFullURL("2HITWMQXL2VBB3XMAEHQ",
-//                        "ilZQ9p/NHAK1dOYA/dTKKeIqT/t67rO6V2PrXUNr", cekUrl,
-//                        cekVersion);
-//
-//                return fullURL;
-//
-//            }
-//        };
-//        mDrmManager.retrieveDRM(request, mDrmHandler);
-//    }
 
     IMediaPlayer.OnBufferingUpdateListener mOnPlaybackBufferingUpdateListener = new IMediaPlayer.OnBufferingUpdateListener() {
 
@@ -749,41 +599,8 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         return mIsTextureViewVisible;
     }
 
-//    IMediaPlayer.OnSurfaceListener mOnSurfaceListener = new IMediaPlayer.OnSurfaceListener() {
-//
-//        @Override
-//        public void surfaceDestroyed(SurfaceHolder holder) {
-//
-//            Log.i(Constants.LOG_TAG, "surfaceDestroyed");
-//            mVideoReady = false;
-//            mMediaPlayerSmallControllerView.hide();
-//            mMediaPlayerBufferingView.hide();
-//            mMediaPlayerLoadingView.hide();
-//
-//        }
-//
-//        @Override
-//        public void surfaceCreated(SurfaceHolder holder) {
-//
-//            Log.i(Constants.LOG_TAG, "MediaPlayerView surfaceCreated");
-//        }
-//
-//        @Override
-//        public void surfaceChanged(SurfaceHolder holder, int format, int w,
-//                                   int h) {
-//
-//        }
-//    };
-
     public interface PlayerViewCallback {
-
-        void hideViews();
-
-        void restoreViews();
-
         void onPrepared();
-
-        void onQualityChanged();
 
         void onFinish(int playMode);
 
@@ -929,16 +746,6 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         @Override
         public void onRequestLockMode(boolean lockMode) {
 
-            if (mScreenLockMode != lockMode) {
-                mScreenLockMode = lockMode;
-
-                // 加锁:屏幕操作锁
-                if (mScreenLockMode) {
-                }
-                // 解锁:屏幕操作锁
-                else {
-                }
-            }
         }
 
         @Override
@@ -975,52 +782,15 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 
         @Override
         public void onMovieRatioChange(int screenSize) {
-
             mMediaPlayerVideoView.setVideoLayout(screenSize);
-            // changeMovieRatio();
         }
 
         @Override
         public void onMoviePlayRatioUp() {
-
-            Log.d(Constants.LOG_TAG, "speed up");
-            if (mMediaPlayerController != null
-                    && mMediaPlayerController.isPlaying()) {
-                if (mCurrentPlayingRatio == MAX_PLAYING_RATIO) {
-                    Log.d(Constants.LOG_TAG, "current playing ratio is max");
-                    return;
-                } else {
-                    mCurrentPlayingRatio = mCurrentPlayingRatio + 0.5f;
-//                    mMediaPlayerVideoView.setVideoRate(mCurrentPlayingRatio);
-                    Log.d(Constants.LOG_TAG, "set playing ratio to --->"
-                            + mCurrentPlayingRatio);
-                }
-            }
-
-            Log.d(Constants.LOG_TAG,
-                    "current video is not playing , set ratio unsupported");
-
         }
 
         @Override
         public void onMoviePlayRatioDown() {
-
-            if (mMediaPlayerController != null
-                    && mMediaPlayerController.isPlaying()) {
-                if (mCurrentPlayingRatio == 0) {
-                    Log.d(Constants.LOG_TAG, "current playing ratio is 0");
-                    return;
-                } else {
-                    mCurrentPlayingRatio = mCurrentPlayingRatio - 0.5f;
-//                    mMediaPlayerVideoView.setVideoRate(mCurrentPlayingRatio);
-                    Log.d(Constants.LOG_TAG, "set playing ratio to --->"
-                            + mCurrentPlayingRatio);
-                    return;
-                }
-            }
-
-            Log.d(Constants.LOG_TAG,
-                    "current video is not playing , set ratio unsupported");
         }
 
         @Override
@@ -1112,7 +882,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                                                String fileName, int quality) {
 
         File directory = new File(Environment.getExternalStorageDirectory()
-                + File.separator + ShortVideoMediaPlayerView.CAPUTRE_SCREEN_PATH);
+                + File.separator + ShortVideoMediaPlayerView.CAPTURE_SCREEN_PATH);
         if (!directory.exists()) {
             directory.mkdir();
         }

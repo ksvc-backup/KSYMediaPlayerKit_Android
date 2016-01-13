@@ -123,7 +123,7 @@ public class VideoMediaPlayerView extends RelativeLayout implements
     private boolean mDeviceNavigationBarExist;
     private int mFullScreenNavigationBarHeight;
     private int mDeviceNavigationType = MediaPlayerUtils.DEVICE_NAVIGATION_TYPE_UNKNOWN;
-    private int mDisplaySizeMode = MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_16_9;
+    private int mDisplaySizeMode = MediaPlayerVideoView.MOVIE_RATIO_MODE_16_9;
 
     private NetReceiver mNetReceiver;
     private NetStateChangedListener mNetChangedListener;
@@ -851,8 +851,8 @@ public class VideoMediaPlayerView extends RelativeLayout implements
 		 * = MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_16_9; }
 		 */
 
-        if (mDisplaySizeMode > MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_4_3) {
-            mDisplaySizeMode = MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_16_9;
+        if (mDisplaySizeMode > MediaPlayerVideoView.MOVIE_RATIO_MODE_4_3) {
+            mDisplaySizeMode = MediaPlayerVideoView.MOVIE_RATIO_MODE_16_9;
         }
 
         mMediaPlayerVideoView.setVideoLayout(mDisplaySizeMode);

@@ -217,22 +217,7 @@ public class ShortVideoActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void hideViews() {
-
-    }
-
-    @Override
-    public void restoreViews() {
-
-    }
-
-    @Override
     public void onPrepared() {
-
-    }
-
-    @Override
-    public void onQualityChanged() {
 
     }
 

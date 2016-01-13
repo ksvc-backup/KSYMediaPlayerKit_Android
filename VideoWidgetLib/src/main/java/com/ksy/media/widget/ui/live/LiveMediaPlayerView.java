@@ -28,6 +28,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
@@ -46,6 +48,7 @@ import com.ksy.media.widget.util.WakeLocker;
 import com.ksy.media.widget.ui.common.MediaPlayerBufferingView;
 import com.ksy.media.widget.ui.common.MediaPlayerLoadingView;
 import com.ksy.media.widget.videoview.MediaPlayerTextureVideoView;
+import com.ksy.media.widget.videoview.PhoneLiveMediaPlayerTextureVideoView;
 import com.ksy.mediaPlayer.widget.R;
 import com.ksyun.media.player.IMediaPlayer;
 
@@ -59,21 +62,17 @@ import java.util.Locale;
 public class LiveMediaPlayerView extends RelativeLayout implements
         IPowerStateListener {
     private static final int QUALITY_BEST = 100;
-    private static final String CAPUTRE_SCREEN_PATH_LIVE = "KSY_SDK_SCREENSHOT";
+    private static final String CAPTURE_SCREEN_PATH_LIVE = "KSY_SDK_SCREENSHOT";
     private Activity mActivity;
     private LayoutInflater mLayoutInflater;
     private Window mWindow;
-
     private ViewGroup mRootView;
-    private MediaPlayerTextureVideoView mLiveMediaPlayerVideoView;
-
+    private PhoneLiveMediaPlayerTextureVideoView mLiveMediaPlayerVideoView;
     private LiveMediaPlayerControllerView mLiveMediaPlayerControllerView;
     private MediaPlayerBufferingView mMediaPlayerBufferingView;
     private MediaPlayerLoadingView mMediaPlayerLoadingView;
     private LiveMediaPlayerEventActionView mLiveMediaPlayerEventActionView;
-
     private PlayerViewCallback mPlayerViewCallback;
-
     private final int ORIENTATION_UNKNOWN = -2;
     private final int ORIENTATION_HORIZON = -1;
     public static final int ORIENTATION_PORTRAIT_NORMAL = 0;
@@ -81,48 +80,35 @@ public class LiveMediaPlayerView extends RelativeLayout implements
     public static final int ORIENTATION_PORTRAIT_REVERSED = 180;
     public static final int ORIENTATION_LANDSCAPE_NORMAL = 270;
     public static final int ORIENTATION_NONE = -3;
-
     private volatile int mScreenOrientation = ORIENTATION_UNKNOWN;
     private volatile int mPlayMode = MediaPlayMode.PLAYMODE_FULLSCREEN;
-
     private volatile boolean mScreenLockMode = false;
     private volatile boolean mScreenshotPreparing = false;
-
     private boolean mVideoReady = false;
     private int mPausePosition = 0;
-
     private OrientationEventListener mOrientationEventListener;
     private ViewGroup.LayoutParams mLayoutParamWindowMode;
     private LayoutParams mMediaPlayerControllerViewLargeParams;
     private LayoutParams mMediaPlayerControllerViewSmallParams;
-
-    private volatile boolean mWindowActived = false;
-
     private boolean mDeviceNaturalOrientationLandscape;
     private boolean mCanLayoutSystemUI;
     private boolean mDeviceNavigationBarExist;
     private int mFullScreenNavigationBarHeight;
     private int mDeviceNavigationType = MediaPlayerUtils.DEVICE_NAVIGATION_TYPE_UNKNOWN;
-
     private NetReceiver mNetReceiver;
     private NetStateChangedListener mNetChangedListener;
     private boolean mIsComplete = false;
-
     private float mCurrentPlayingRatio = 1f;
     private float mCurrentPlayingVolumeRatio = 1f;
     public static float MAX_PLAYING_RATIO = 4f;
     public static float MAX_PLAYING_VOLUME_RATIO = 3.0f;
-    // add for replay
     private boolean mRecyclePlay = false;
-
-    //    private DRMRetrieverManager mDrmManager;
-//    private DRMRetrieverResponseHandler mDrmHandler;
     private Handler mHandler = new Handler();
-
     private PlayConfig playConfig = PlayConfig.getInstance();
     private Context mContext;
     private IPowerStateListener powerStateListener;
     private View live_share_bt;
+    private EditText liveEditText;
 
     public LiveMediaPlayerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -152,13 +138,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         setPowerStateListener(this);
         TypedArray typedArray = context.obtainStyledAttributes(attrs,
                 R.styleable.PlayerView);
-        int playmode = typedArray.getInt(R.styleable.PlayerView_playmode,
-                MediaPlayMode.PLAYMODE_FULLSCREEN);
-        if (playmode == 0) {
-            this.mPlayMode = MediaPlayMode.PLAYMODE_FULLSCREEN;
-        } else if (playmode == 1) {
-            this.mPlayMode = MediaPlayMode.PLAYMODE_WINDOW;
-        }
+        this.mPlayMode = MediaPlayMode.PLAYMODE_WINDOW;
         typedArray.recycle();
 
         this.mLayoutInflater = LayoutInflater.from(context);
@@ -184,7 +164,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         this.mRootView = (ViewGroup) mLayoutInflater.inflate(
                 R.layout.live_blue_media_player_view, null);
 
-        this.mLiveMediaPlayerVideoView = (MediaPlayerTextureVideoView) mRootView
+        this.mLiveMediaPlayerVideoView = (PhoneLiveMediaPlayerTextureVideoView) mRootView
                 .findViewById(R.id.live_ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);
@@ -196,11 +176,11 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         this.mLiveMediaPlayerControllerView = (LiveMediaPlayerControllerView) mRootView
                 .findViewById(R.id.media_player_controller_view_live);
         live_share_bt = mLiveMediaPlayerControllerView.findViewById(R.id.live_share_bt);
+        liveEditText = (EditText) mLiveMediaPlayerControllerView.findViewById(R.id.video_comment_text);
         live_share_bt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(mContext, "clicked", Toast.LENGTH_SHORT).show();
-//                mLiveMediaPlayerVideoView.doMatrixChange();
             }
         });
         /* 设置播放器监听器 */
@@ -210,8 +190,6 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         this.mLiveMediaPlayerVideoView
                 .setOnCompletionListener(mOnCompletionListener);
         this.mLiveMediaPlayerVideoView.setOnInfoListener(mOnInfoListener);
-//        this.mLiveMediaPlayerVideoView
-//                .setOnDRMRequiredListener(mOnDRMRequiredListener);
         this.mLiveMediaPlayerVideoView.setOnErrorListener(mOnErrorListener);
         this.mLiveMediaPlayerVideoView
                 .setMediaPlayerController(mMediaPlayerController);
@@ -422,6 +400,17 @@ public class LiveMediaPlayerView extends RelativeLayout implements
     }
 
     @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        if (h > oldh && oldw != 0 && oldh != 0) {
+            Log.d("eflake", "hide keyboard,distance = " + (h - oldh) + ", screen = " + h);
+
+        } else if (h < oldh) {
+            Log.d("eflake", "show keyboard,distance = " + (oldh - h) + ", screen = " + oldh);
+        }
+    }
+
+    @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
 
         if (mLiveMediaPlayerEventActionView.isShowing()) {
@@ -450,7 +439,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                 return true;
             }
 
-           if (MediaPlayerUtils.isWindowMode(mPlayMode)) {
+            if (MediaPlayerUtils.isWindowMode(mPlayMode)) {
                 if (mPlayerViewCallback != null) {
                     mPlayerViewCallback.onFinish(mPlayMode);
                 }
@@ -512,7 +501,6 @@ public class LiveMediaPlayerView extends RelativeLayout implements
     public void onResume() {
 
         Log.d("Constants.LOG_TAG", "PlayView onResume");
-        mWindowActived = true;
         powerStateListener.onPowerState(Constants.APP_SHOWN);
         enableOrientationEventListener();
         mNetReceiver.registNetBroadCast(getContext());
@@ -524,7 +512,6 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         powerStateListener.onPowerState(Constants.APP_HIDEN);
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
-        mWindowActived = false;
         mPausePosition = mMediaPlayerController.getCurrentPosition();
 
         disableOrientationEventListener();
@@ -565,17 +552,22 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                         if (!MediaPlayerUtils.checkSystemGravity(getContext()))
                             return;
                         Log.i("eflake", "mScreenOrientation = " + mScreenOrientation);
+                        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+                        if (imm.isActive(liveEditText)) {
+                            Log.d("eflake", "keyboard is active");
+                            imm.hideSoftInputFromWindow(liveEditText.getWindowToken(), 0);
+                        }
                         if (mScreenOrientation == ORIENTATION_LANDSCAPE_NORMAL
                                 || mScreenOrientation == ORIENTATION_LANDSCAPE_REVERSED) {
-                            Log.i("eflake", "Accurate ScreenOrientation = " + ORIENTATION_LANDSCAPE_REVERSED);
+                            Log.i("eflake", "Accurate ScreenOrientation = " + mScreenOrientation);
+                            mLiveMediaPlayerVideoView.setNeedMatrixTransform(true);
                             doScreenOrientationRotate(mScreenOrientation);
                         } else if (mScreenOrientation == ORIENTATION_PORTRAIT_NORMAL) {
-                            Log.i("eflake", "Accurate ScreenOrientation = " + ORIENTATION_PORTRAIT_NORMAL);
-                            doScreenOrientationRotate(mScreenOrientation);
-                        } else if (mScreenOrientation == ORIENTATION_LANDSCAPE_REVERSED) {
-                            Log.i("eflake", "Accurate ScreenOrientation = " + ORIENTATION_LANDSCAPE_REVERSED);
+                            Log.i("eflake", "Accurate ScreenOrientation = " + mScreenOrientation);
+                            mLiveMediaPlayerVideoView.setNeedMatrixTransform(true);
                             doScreenOrientationRotate(mScreenOrientation);
                         }
+
                     }
                 }
             };
@@ -615,7 +607,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
     }
 
     private void doScreenOrientationRotate(int screenOrientation) {
-        mLiveMediaPlayerVideoView.setmTargetOrientaion(mScreenOrientation);
+        mLiveMediaPlayerVideoView.setTargetOrientation(mScreenOrientation);
         switch (screenOrientation) {
             case ORIENTATION_PORTRAIT_NORMAL:
                 mActivity
@@ -657,7 +649,6 @@ public class LiveMediaPlayerView extends RelativeLayout implements
     }
 
     private void updateVideoInfo2Controller() {
-
 //        mLiveMediaPlayerControllerView.updateVideoTitle(url);
         mLiveMediaPlayerEventActionView.updateVideoTitle(url);
     }
@@ -746,10 +737,6 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         public boolean onInfo(IMediaPlayer mp, int what, int extra) {
 
             switch (what) {
-//                case IMediaPlayer.MEDIA_INFO_METADATA_SPEED:
-//                    // Log.i(Constants.LOG_TAG, "MEDIA_INFO_METADATA_SPEED:"
-//                    // +extra);
-//                    break;
                 // 视频缓冲开始
                 case IMediaPlayer.MEDIA_INFO_BUFFERING_START:
                     Log.i(Constants.LOG_TAG, "MEDIA_INFO_BUFFERING_START");
@@ -766,74 +753,6 @@ public class LiveMediaPlayerView extends RelativeLayout implements
             return true;
         }
     };
-
-//    IMediaPlayer.OnDRMRequiredListener mOnDRMRequiredListener = new IMediaPlayer.OnDRMRequiredListener() {
-//        @Override
-//        public void OnDRMRequired(IMediaPlayer mp, int what, int extra,
-//                                  String version) {
-//
-//            Toast.makeText(getContext(),
-//                    "begin drm retriving..version :" + version,
-//                    Toast.LENGTH_SHORT).show();
-//            requestDRMKey(version);
-//        }
-//    };
-//
-//    private void requestDRMKey(final String version) {
-//
-//        if (mDrmManager == null)
-//            mDrmManager = DRMRetrieverManager.getInstance();
-//        if (mDrmHandler == null) {
-//            mDrmHandler = new DRMRetrieverResponseHandler() {
-//
-//                private static final long serialVersionUID = 1L;
-//
-//                @Override
-//                public void onSuccess(String version, String cek) {
-//                    mLiveMediaPlayerVideoView.setDRMKey(version, cek);
-//                    Toast.makeText(
-//                            getContext(),
-//                            "DRM KEY retrieve success,ver :" + version
-//                                    + ", key :" + cek, Toast.LENGTH_SHORT)
-//                            .show();
-//                }
-//
-//                @Override
-//                public void onFailure(int arg0, String arg1, Throwable arg2) {
-//                    Log.e(Constants.LOG_TAG,
-//                            "drm retrieve failed !!!!!!!!!!!!!!");
-//                    Toast.makeText(getContext(), "DRM KEY retrieve failed",
-//                            Toast.LENGTH_SHORT).show();
-//                }
-//
-//            };
-//        }
-//
-//        IDRMRetriverRequest request = new IDRMRetriverRequest(version, url) {
-//
-//            private static final long serialVersionUID = 1L;
-//
-//            @Override
-//            public DRMKey retriveDRMKeyFromAppServer(String cekVersion,
-//                                                     String cekUrl) {
-//
-//                return null;
-//            }
-//
-//            @Override
-//            public DRMFullURL retriveDRMFullUrl(String cekVersion, String cekUrl)
-//                    throws Exception {
-//
-//                DRMFullURL fullURL = new DRMFullURL("2HITWMQXL2VBB3XMAEHQ",
-//                        "ilZQ9p/NHAK1dOYA/dTKKeIqT/t67rO6V2PrXUNr", cekUrl,
-//                        cekVersion);
-//
-//                return fullURL;
-//
-//            }
-//        };
-//        mDrmManager.retrieveDRM(request, mDrmHandler);
-//    }
 
     IMediaPlayer.OnBufferingUpdateListener mOnPlaybackBufferingUpdateListener = new IMediaPlayer.OnBufferingUpdateListener() {
         @Override
@@ -870,7 +789,6 @@ public class LiveMediaPlayerView extends RelativeLayout implements
     }
 
     public void ConfigurationChanged(Configuration newConfig) {
-        Log.d("eflake", "*** onConfigurationChanged");
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
 
@@ -1021,10 +939,6 @@ public class LiveMediaPlayerView extends RelativeLayout implements
 
         @Override
         public void onBackPress(int playMode) {
-            Log.i(Constants.LOG_TAG,
-                    "========playerview back pressed ==============playMode :"
-                            + playMode + ", mPlayerViewCallback is null "
-                            + (mPlayerViewCallback == null));
             if (MediaPlayerUtils.isWindowMode(playMode)) {
                 if (mPlayerViewCallback != null)
                     mPlayerViewCallback.onFinish(playMode);
@@ -1044,16 +958,6 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         @Override
         public void onRequestLockMode(boolean lockMode) {
 
-            if (mScreenLockMode != lockMode) {
-                mScreenLockMode = lockMode;
-
-                // 加锁:屏幕操作锁
-                if (mScreenLockMode) {
-                }
-                // 解锁:屏幕操作锁
-                else {
-                }
-            }
         }
 
         @Override
@@ -1086,49 +990,16 @@ public class LiveMediaPlayerView extends RelativeLayout implements
 
         @Override
         public void onMovieRatioChange(int screenSize) {
-            mLiveMediaPlayerVideoView.setVideoLayout(screenSize);
         }
 
         @Override
         public void onMoviePlayRatioUp() {
 
-            Log.d(Constants.LOG_TAG, "speed up");
-            if (mMediaPlayerController != null
-                    && mMediaPlayerController.isPlaying()) {
-                if (mCurrentPlayingRatio == MAX_PLAYING_RATIO) {
-                    Log.d(Constants.LOG_TAG, "current playing ratio is max");
-                    return;
-                } else {
-                    mCurrentPlayingRatio = mCurrentPlayingRatio + 0.5f;
-//                    mLiveMediaPlayerVideoView.setVideoRate(mCurrentPlayingRatio);
-                    Log.d(Constants.LOG_TAG, "set playing ratio to --->"
-                            + mCurrentPlayingRatio);
-                }
-            }
-
-            Log.d(Constants.LOG_TAG,
-                    "current video is not playing , set ratio unsupported");
         }
 
         @Override
         public void onMoviePlayRatioDown() {
 
-            if (mMediaPlayerController != null
-                    && mMediaPlayerController.isPlaying()) {
-                if (mCurrentPlayingRatio == 0) {
-                    Log.d(Constants.LOG_TAG, "current playing ratio is 0");
-                    return;
-                } else {
-                    mCurrentPlayingRatio = mCurrentPlayingRatio - 0.5f;
-//                    mLiveMediaPlayerVideoView.setVideoRate(mCurrentPlayingRatio);
-                    Log.d(Constants.LOG_TAG, "set playing ratio to --->"
-                            + mCurrentPlayingRatio);
-                    return;
-                }
-            }
-
-            Log.d(Constants.LOG_TAG,
-                    "current video is not playing , set ratio unsupported");
         }
 
         @Override
@@ -1155,39 +1026,12 @@ public class LiveMediaPlayerView extends RelativeLayout implements
 
         @Override
         public void onVolumeDown() {
-            Log.d(Constants.LOG_TAG, "audio down");
-            if (mMediaPlayerController != null
-                    && mMediaPlayerController.isPlaying()) {
-                if (mCurrentPlayingVolumeRatio == 0) {
-                    Log.d(Constants.LOG_TAG, "current playing volume is 0");
-                    return;
-                } else {
-                    mCurrentPlayingVolumeRatio = mCurrentPlayingVolumeRatio - 0.5f;
-//                    mLiveMediaPlayerVideoView
-//                            .setAudioAmplify(mCurrentPlayingVolumeRatio);
-                    Log.d(Constants.LOG_TAG, "set playing volume to --->"
-                            + mCurrentPlayingVolumeRatio);
-                    return;
-                }
-            }
+
         }
 
         @Override
         public void onVolumeUp() {
-            Log.d(Constants.LOG_TAG, "audio up");
-            if (mMediaPlayerController != null
-                    && mMediaPlayerController.isPlaying()) {
-                if (mCurrentPlayingVolumeRatio == MAX_PLAYING_VOLUME_RATIO) {
-                    Log.d(Constants.LOG_TAG, "current playing ratio is max");
-                    return;
-                } else {
-                    mCurrentPlayingVolumeRatio = mCurrentPlayingVolumeRatio + 0.5f;
-//                    mLiveMediaPlayerVideoView
-//                            .setAudioAmplify(mCurrentPlayingVolumeRatio);
-                    Log.d(Constants.LOG_TAG, "set playing volume to --->"
-                            + mCurrentPlayingVolumeRatio);
-                }
-            }
+
         }
     };
 
@@ -1213,7 +1057,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                                                String fileName, int quality) {
 
         File directory = new File(Environment.getExternalStorageDirectory()
-                + File.separator + LiveMediaPlayerView.CAPUTRE_SCREEN_PATH_LIVE);
+                + File.separator + LiveMediaPlayerView.CAPTURE_SCREEN_PATH_LIVE);
         if (!directory.exists()) {
             directory.mkdir();
         }

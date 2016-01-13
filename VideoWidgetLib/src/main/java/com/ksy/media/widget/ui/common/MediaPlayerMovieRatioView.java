@@ -13,6 +13,7 @@ import android.view.animation.Animation.AnimationListener;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.ksy.media.widget.videoview.MediaPlayerTextureVideoView;
 import com.ksy.mediaPlayer.widget.R;
 
 /**
@@ -28,10 +29,6 @@ public class MediaPlayerMovieRatioView extends RelativeLayout {
 	private static final int MSG_SHOW = 0;
 	private static final int MSG_HIDE = MSG_SHOW + 1;
 	private static final int MSG_PARAM_HIDE_NO_ANIMATION = 100;
-	public static final int MOVIE_RATIO_MODE_16_9 = 0;
-	public static final int MOVIE_RATIO_MODE_4_3 = 1;
-//	public static final int MOVIE_RATIO_MODE_FULLSCREEN = 2;
-//	public static final int MOVIE_RATIO_MODE_ORIGIN = 3;
 	private TextView mCurrentRatioTv;
 	private Animation mAnimationHide;
 	private MoiveRatioChangeListener movieRatioChangeListener;
@@ -121,7 +118,7 @@ public class MediaPlayerMovieRatioView extends RelativeLayout {
 		show(DEFAULT_TIMEOUT);
 		mCurrentRatioTv.setText(mRatios[mCurrentIndex]);
 		mCurrentIndex++;
-		if (mCurrentIndex > MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_4_3) {
+		if (mCurrentIndex > MediaPlayerTextureVideoView.MOVIE_RATIO_MODE_4_3) {
 			mCurrentIndex = 0;
 		}
 	}

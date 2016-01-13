@@ -35,12 +35,14 @@
         <activity
             android:name=".live.PhoneLiveActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:label="@string/title_activity_phone_live"
             android:screenOrientation="nosensor"
             android:theme="@style/FullscreenTheme" />
         <activity
             android:name=".livereplay.PhoneLiveReplayActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="adjustResize|stateHidden"
             android:label="@string/title_activity_phone_live_replay"
             android:screenOrientation="nosensor"
             android:theme="@style/FullscreenTheme" />

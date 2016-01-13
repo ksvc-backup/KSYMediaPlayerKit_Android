@@ -11,7 +11,8 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:hint="Please Input Video Path or URL..."
-        android:text="rtmp://live.hkstv.hk.lxdns.com/live/hks">
+        android:text="rtmp://test.live.ksyun.com/live/androidtest12345"
+        >
         <requestFocus />
     </EditText>
 

@@ -40,74 +40,59 @@ import com.ksyun.media.player.MediaInfo;
 
 import android.view.TextureView.SurfaceTextureListener;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 public class MediaPlayerTextureVideoView extends TextureView implements
         IMediaPlayerControl, IPowerStateListener, SurfaceTextureListener {
 
-    private Uri mUri;
-    private long mDuration;
-    private MediaInfo mMediaInfo;
-    private static final int STATE_ERROR = -1;
-    private static final int STATE_IDLE = 0;
-    private static final int STATE_PREPARING = 1;
-    private static final int STATE_PREPARED = 2;
-    public static final int STATE_PLAYING = 3;
-    private static final int STATE_PAUSED = 4;
-    private static final int STATE_PLAYBACK_COMPLETED = 5;
-    private static final int STATE_SUSPEND = 6;
-    private static final int STATE_RESUME = 7;
-    private static final int STATE_SUSPEND_UNSUPPORTED = 8;
+    protected Uri mUri;
+    protected long mDuration;
+    protected MediaInfo mMediaInfo;
+    protected static final int STATE_ERROR = -1;
+    protected static final int STATE_IDLE = 0;
+    protected static final int STATE_PREPARING = 1;
+    protected static final int STATE_PREPARED = 2;
+    protected static final int STATE_PLAYING = 3;
+    protected static final int STATE_PAUSED = 4;
+    protected static final int STATE_PLAYBACK_COMPLETED = 5;
 
     public int mCurrentState = STATE_IDLE;
-    private int mTargetState = STATE_IDLE;
+    public int mTargetState = STATE_IDLE;
 
-    private int mVideoLayout = VIDEO_LAYOUT_SCALE;
-    public static final int VIDEO_LAYOUT_ORIGIN = 0;
-    public static final int VIDEO_LAYOUT_SCALE = 1;
-    public static final int VIDEO_LAYOUT_STRETCH = 2;
-    public static final int VIDEO_LAYOUT_ZOOM = 3;
+    protected int mVideoLayout = MOVIE_RATIO_MODE_DEFAULT;
+    public static final int MOVIE_RATIO_MODE_DEFAULT = -1;
+    public static final int MOVIE_RATIO_MODE_16_9 = 0;
+    public static final int MOVIE_RATIO_MODE_4_3 = 1;
+    public static final int MOVIE_RATIO_MODE_FULLSCREEN = 2;
+    public static final int MOVIE_RATIO_MODE_ORIGIN = 3;
 
-    protected static final String KEY_SOUCE_IP = "source_ip";
-
-    private SurfaceTexture mSurfaceTexture = null;
-    private IMediaPlayer mMediaPlayer = null;
-    private int mVideoWidth;
-    private int mVideoHeight;
-    private int mVideoSarNum;
-    private int mVideoSarDen;
-    private int mSurfaceWidth;
-    private int mSurfaceHeight;
-    private IMediaPlayer.OnCompletionListener mOnCompletionListener;
-    private IMediaPlayer.OnPreparedListener mOnPreparedListener;
-    private IMediaPlayer.OnErrorListener mOnErrorListener;
-    private IMediaPlayer.OnSeekCompleteListener mOnSeekCompleteListener;
-    private IMediaPlayer.OnInfoListener mOnInfoListener;
-    private IMediaPlayer.OnBufferingUpdateListener mOnBufferingUpdateListener;
-    //    private OnDebugInfoListener mOnDebugInfoListener;
-    //    private OnDRMRequiredListener mOnDRMRequiredListener;
-    //    private OnSurfaceListener mOnSurfaceListener;
-    private MediaPlayerController mMediaPlayerController;
-    private int mCurrentBufferPercentage;
-    // private long mSeekWhenPrepared;
-    private Context mContext;
+    protected SurfaceTexture mSurfaceTexture = null;
+    protected IMediaPlayer mMediaPlayer = null;
+    protected int mVideoWidth;
+    protected int mVideoHeight;
+    protected int mVideoSarNum;
+    protected int mVideoSarDen;
+    protected int mSurfaceWidth;
+    protected int mSurfaceHeight;
+    protected IMediaPlayer.OnCompletionListener mOnCompletionListener;
+    protected IMediaPlayer.OnPreparedListener mOnPreparedListener;
+    protected IMediaPlayer.OnErrorListener mOnErrorListener;
+    protected IMediaPlayer.OnSeekCompleteListener mOnSeekCompleteListener;
+    protected IMediaPlayer.OnInfoListener mOnInfoListener;
+    protected IMediaPlayer.OnBufferingUpdateListener mOnBufferingUpdateListener;
+    protected MediaPlayerController mMediaPlayerController;
+    protected int mCurrentBufferPercentage;
+    protected Context mContext;
     KSYMediaPlayer ksyMediaPlayer = null;
-
-    private boolean mHasPrepared = false;
-    private PlayConfig playConfig = PlayConfig.getInstance();
-
-    private Surface mSurface;
-    private boolean misTexturePowerEvent;
-    private boolean mNeedUnlock;
+    protected PlayConfig playConfig = PlayConfig.getInstance();
+    protected Surface mSurface;
+    protected boolean misTexturePowerEvent;
+    protected boolean mNeedUnlock;
     public boolean mNeedPauseAfterLeave;
-    private int mLastWidth;
-    private int mLastHeight;
-    private boolean mMethodControl;
-    public int mTargetOrientaion;
-    public int mLastOrientaion;
 
     public MediaPlayerTextureVideoView(Context context) {
         super(context);
-        initVideoView(context);
+        initTextureView(context);
     }
 
     public MediaPlayerTextureVideoView(Context context, AttributeSet attrs) {
@@ -117,7 +102,7 @@ public class MediaPlayerTextureVideoView extends TextureView implements
     public MediaPlayerTextureVideoView(Context context, AttributeSet attrs,
                                        int defStyle) {
         super(context, attrs, defStyle);
-        initVideoView(context);
+        initTextureView(context);
     }
 
     @Override
@@ -146,7 +131,7 @@ public class MediaPlayerTextureVideoView extends TextureView implements
             mSurfaceHeight = mVideoHeight;
             mSurfaceWidth = mVideoWidth;
 
-            if (layout == MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_16_9) {
+            if (layout == MediaPlayerTextureVideoView.MOVIE_RATIO_MODE_16_9) {
                 // 16:9
                 float target_ratio = 16.0f / 9.0f;
                 float dh = windowHeight;
@@ -159,7 +144,7 @@ public class MediaPlayerTextureVideoView extends TextureView implements
                 lp.width = (int) dw;
                 lp.height = (int) dh;
 
-            } else if (layout == MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_4_3) {
+            } else if (layout == MediaPlayerTextureVideoView.MOVIE_RATIO_MODE_4_3) {
                 // 4:3
                 float target_ratio = 4.0f / 3.0f;
                 float source_height = windowHeight;
@@ -171,27 +156,32 @@ public class MediaPlayerTextureVideoView extends TextureView implements
                 }
                 lp.width = (int) source_width;
                 lp.height = (int) source_height;
+            } else if (layout ==
+                    MediaPlayerTextureVideoView.MOVIE_RATIO_MODE_ORIGIN &&
+                    mSurfaceWidth < windowWidth && mSurfaceHeight < windowHeight) {
+                // origin
+                lp.width = (int) (mSurfaceHeight * videoRatio);
+                lp.height = mSurfaceHeight;
+            } else if (layout ==
+                    MediaPlayerTextureVideoView.MOVIE_RATIO_MODE_FULLSCREEN) {
+                // fullscreen
+                lp.width = (windowRatio < videoRatio) ? windowWidth :
+                        (int) (videoRatio * windowHeight);
+                lp.height = (windowRatio >
+                        videoRatio) ? windowHeight : (int) (windowWidth / videoRatio);
             }
-            /*
-             * else if (layout ==
-			 * MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_ORIGIN &&
-			 * mSurfaceWidth < windowWidth && mSurfaceHeight < windowHeight) {
-			 * // origin lp.width = (int) (mSurfaceHeight * videoRatio);
-			 * lp.height = mSurfaceHeight; } else if (layout ==
-			 * MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_FULLSCREEN) { //
-			 * fullscreen lp.width = (windowRatio < videoRatio) ? windowWidth :
-			 * (int) (videoRatio * windowHeight); lp.height = (windowRatio >
-			 * videoRatio) ? windowHeight : (int) (windowWidth / videoRatio); }
-			 */
             setLayoutParams(lp);
             getSurfaceTexture().setDefaultBufferSize(mSurfaceWidth,
                     mSurfaceHeight);
-
         }
         mVideoLayout = layout;
     }
 
-    private void initVideoView(Context ctx) {
+    public int getVideoLayoutMode() {
+        return mVideoLayout;
+    }
+
+    protected void initTextureView(Context ctx) {
 
         mContext = ctx;
         mVideoWidth = 0;
@@ -226,25 +216,15 @@ public class MediaPlayerTextureVideoView extends TextureView implements
 
     public void stopPlayback() {
         Log.i(Constants.LOG_TAG, "on stop ");
-        long current = System.currentTimeMillis();
         if (mMediaPlayer != null) {
             mMediaPlayer.release();
             mMediaPlayer = null;
             mCurrentState = STATE_IDLE;
             mTargetState = STATE_IDLE;
         }
-        Log.e(Constants.LOG_TAG,
-                "textureview stopPlayback release cost :"
-                        + String.valueOf(System.currentTimeMillis() - current));
-        Toast.makeText(
-                mContext.getApplicationContext(),
-                "textureview stopPlayback release cost :"
-                        + String.valueOf(System.currentTimeMillis() - current),
-                Toast.LENGTH_SHORT).show();
-
     }
 
-    private void openVideo() {
+    protected void openVideo() {
         Log.i(Constants.LOG_TAG, "openVideo");
         if (mUri == null) {
             return;
@@ -284,18 +264,9 @@ public class MediaPlayerTextureVideoView extends TextureView implements
             mMediaPlayer.setOnBufferingUpdateListener(mBufferingUpdateListener);
             mMediaPlayer.setOnInfoListener(mInfoListener);
             mMediaPlayer.setOnSeekCompleteListener(mSeekCompleteListener);
-            //            mMediaPlayer.setOnNetSpeedUpdateListener(mNetSpeedListener);
-            //            mMediaPlayer.setOnDRMRequiredListener(mDRMRequiredListener);
-            // For test add header
-            // Map<String, String> headers = new HashMap<String, String>();
-            // headers.put("User-Agent", "Android");
-            // headers.put("User-Password", "Password");
-            // if (mUri != null)
-            // mMediaPlayer.setDataSource(mUri.toString(), headers);
             String url = mUri.toString();
-            Log.d(Constants.LOG_TAG, "final url =" + url);
             if (!misTexturePowerEvent) {
-                if (mSurfaceTexture != null) {
+                if (isValid()) {
                     mSurface = new Surface(mSurfaceTexture);
                 } else {
                     mSurface = new Surface(getSurfaceTexture());
@@ -306,11 +277,11 @@ public class MediaPlayerTextureVideoView extends TextureView implements
             mMediaPlayer.setSurface(mSurface);
             mMediaPlayer.setScreenOnWhilePlaying(true);
             if (mUri != null) {
+                Log.d(Constants.LOG_TAG, "final url =" + url);
                 mMediaPlayer.setDataSource(url);
             }
             mMediaPlayer.prepareAsync();
             if (mMediaPlayerController != null) {
-                Log.d("lixp", "311 ....mMediaPlayerController.onVideoPreparing()......");
                 mMediaPlayerController.onVideoPreparing();
             }
             mCurrentState = STATE_PREPARING;
@@ -331,7 +302,7 @@ public class MediaPlayerTextureVideoView extends TextureView implements
         }
     }
 
-    private void stopMusicService() {
+    protected void stopMusicService() {
         Intent i = new Intent("com.android.music.musicservicecommand");
         i.putExtra("command", "pause");
         mContext.sendBroadcast(i);
@@ -343,27 +314,24 @@ public class MediaPlayerTextureVideoView extends TextureView implements
         public void onVideoSizeChanged(IMediaPlayer mp, int width, int height,
                                        int sarNum, int sarDen) {
 
-            Log.d(Constants.LOG_TAG, "OnSizeChanged");
+            Log.d("eflake", "OnVideoSizeChangedListener,width = " + mp.getVideoWidth() + ",height = " + mp.getVideoHeight());
             mVideoWidth = mp.getVideoWidth();
             mVideoHeight = mp.getVideoHeight();
-
-            Log.d("eflake", "OnSizeChanged,width = " + mp.getVideoWidth() + ",height = " + mp.getVideoHeight());
-            fixPreviewFrame(mVideoWidth, mVideoHeight, mSurfaceWidth,
-                    mSurfaceHeight);
-            if (mVideoWidth > mVideoHeight) {
-//                applyMatrixRotation(90);
-            }
             mVideoSarNum = sarNum;
             mVideoSarDen = sarDen;
+            // For override
+            onParentVideoSizeChanged();
         }
     };
+
+    protected void onParentVideoSizeChanged() {
+    }
 
     IMediaPlayer.OnPreparedListener mPreparedListener = new IMediaPlayer.OnPreparedListener() {
 
         @Override
         public void onPrepared(IMediaPlayer mp) {
             Log.d(Constants.LOG_TAG, "OnPrepared");
-            mHasPrepared = true;
             mCurrentState = STATE_PREPARED;
             mTargetState = STATE_PLAYING;
 
@@ -372,15 +340,10 @@ public class MediaPlayerTextureVideoView extends TextureView implements
 
             mVideoWidth = mp.getVideoWidth();
             mVideoHeight = mp.getVideoHeight();
-            // For test source ip
-//            Bundle bundle = mp.getMediaMeta();
-//            String source_ip = bundle
-//                    .getString(MediaPlayerTexutureVideoView.KEY_SOUCE_IP);
-//            Log.d(Constants.LOG_TAG, "Source IP = " + source_ip);
         }
     };
 
-    private final IMediaPlayer.OnCompletionListener mCompletionListener = new IMediaPlayer.OnCompletionListener() {
+    protected final IMediaPlayer.OnCompletionListener mCompletionListener = new IMediaPlayer.OnCompletionListener() {
 
         @Override
         public void onCompletion(IMediaPlayer mp) {
@@ -394,7 +357,7 @@ public class MediaPlayerTextureVideoView extends TextureView implements
         }
     };
 
-    private final IMediaPlayer.OnErrorListener mErrorListener = new IMediaPlayer.OnErrorListener() {
+    protected final IMediaPlayer.OnErrorListener mErrorListener = new IMediaPlayer.OnErrorListener() {
 
         @Override
         public boolean onError(IMediaPlayer mp, int framework_err, int impl_err) {
@@ -413,7 +376,7 @@ public class MediaPlayerTextureVideoView extends TextureView implements
         }
     };
 
-    private final IMediaPlayer.OnBufferingUpdateListener mBufferingUpdateListener = new IMediaPlayer.OnBufferingUpdateListener() {
+    protected final IMediaPlayer.OnBufferingUpdateListener mBufferingUpdateListener = new IMediaPlayer.OnBufferingUpdateListener() {
 
         @Override
         public void onBufferingUpdate(IMediaPlayer mp, int percent) {
@@ -424,7 +387,7 @@ public class MediaPlayerTextureVideoView extends TextureView implements
         }
     };
 
-    private final IMediaPlayer.OnInfoListener mInfoListener = new IMediaPlayer.OnInfoListener() {
+    protected final IMediaPlayer.OnInfoListener mInfoListener = new IMediaPlayer.OnInfoListener() {
 
         @Override
         public boolean onInfo(IMediaPlayer mp, int what, int extra) {
@@ -436,19 +399,7 @@ public class MediaPlayerTextureVideoView extends TextureView implements
         }
     };
 
-//    private final OnDRMRequiredListener mDRMRequiredListener = new OnDRMRequiredListener() {
-//
-//        @Override
-//        public void OnDRMRequired(IMediaPlayer mp, int what, int extra,
-//                                  String version) {
-//
-//            if (mOnDRMRequiredListener != null) {
-//                mOnDRMRequiredListener.OnDRMRequired(mp, what, extra, version);
-//            }
-//        }
-//    };
-
-    private final IMediaPlayer.OnSeekCompleteListener mSeekCompleteListener = new IMediaPlayer.OnSeekCompleteListener() {
+    protected final IMediaPlayer.OnSeekCompleteListener mSeekCompleteListener = new IMediaPlayer.OnSeekCompleteListener() {
 
         @Override
         public void onSeekComplete(IMediaPlayer mp) {
@@ -495,20 +446,10 @@ public class MediaPlayerTextureVideoView extends TextureView implements
         mOnInfoListener = l;
     }
 
-//    public void setOnDRMRequiredListener(OnDRMRequiredListener l) {
-//
-//        mOnDRMRequiredListener = l;
-//    }
-
-//    public void setOnSurfaceListener(OnSurfaceListener l) {
-//
-//        mOnSurfaceListener = l;
-//    }
-
-    private boolean mIsDismiss;
-    private KeyguardManager km;
-    private KeyguardLock mKeyguardLock;
-    private boolean isAppShowing;
+    protected boolean mIsDismiss;
+    protected KeyguardManager km;
+    protected KeyguardLock mKeyguardLock;
+    protected boolean isAppShowing;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
     public void release(final boolean cleartargetstate) {
@@ -521,14 +462,8 @@ public class MediaPlayerTextureVideoView extends TextureView implements
                 mTargetState = STATE_IDLE;
         }
         Log.e(Constants.LOG_TAG,
-                "videoview release cost :"
+                "textureView release cost :"
                         + String.valueOf(System.currentTimeMillis() - current));
-        Toast.makeText(
-                mContext.getApplicationContext(),
-                "videoview release cost :"
-                        + String.valueOf(System.currentTimeMillis() - current),
-                Toast.LENGTH_SHORT).show();
-
     }
 
     @Override
@@ -804,11 +739,11 @@ public class MediaPlayerTextureVideoView extends TextureView implements
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-    private boolean isKeyGuard() {
+    protected boolean isKeyGuard() {
         km = (KeyguardManager) mContext
                 .getSystemService(Context.KEYGUARD_SERVICE);
         if (km.isKeyguardSecure() || km.isKeyguardLocked()) {
-            Log.d(Constants.LOG_TAG, "locked");
+            Log.d(Constants.LOG_TAG, "isKeyguardLocked");
             return true;
         } else {
             return false;
@@ -850,41 +785,15 @@ public class MediaPlayerTextureVideoView extends TextureView implements
     @Override
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width,
                                             int height) {
-//        Log.d("eflake", "** onSurfaceTextureSizeChanged");
-        mLastWidth = getWidth();
-        mLastHeight = getHeight();
-//        Log.d("eflake", "onSurfaceTextureSizeChanged :surface width = " + width + ",surface height =" + height);
-//        Log.d("eflake", "onSurfaceTextureSizeChanged: view width = " + mLastWidth + "view height = " + mLastHeight);
+        Log.d(Constants.LOG_TAG, "** onSurfaceTextureSizeChanged");
+        Log.d(Constants.LOG_TAG, "onSurfaceTextureSizeChanged :surface width = " + width + ",surface height =" + height);
         mSurfaceWidth = width;
         mSurfaceHeight = height;
-        if (mTargetOrientaion == LiveMediaPlayerView.ORIENTATION_LANDSCAPE_REVERSED) {
-//            Log.d("eflake", "**ORIENTATION_LANDSCAPE_REVERSED");
-            if (mLastOrientaion == LiveMediaPlayerView.ORIENTATION_LANDSCAPE_NORMAL) {
-                // Skip portrait mode
-//                Log.d("eflake", "270-90");
-                resetMatrix();
-            }
-            doMatrixChange(mTargetOrientaion);
-            setmLastOrientaion(mTargetOrientaion);
-        } else if (mTargetOrientaion == LiveMediaPlayerView.ORIENTATION_LANDSCAPE_NORMAL) {
-//            Log.d("eflake", "**ORIENTATION_LANDSCAPE_NORMAL");
-            if (mLastOrientaion == LiveMediaPlayerView.ORIENTATION_LANDSCAPE_REVERSED) {
-                // Skip portrait mode
-//                Log.d("eflake", "90-270");
-                resetMatrix();
-            }
-            doMatrixChange(mTargetOrientaion);
-            setmLastOrientaion(mTargetOrientaion);
-        } else if (mTargetOrientaion == LiveMediaPlayerView.ORIENTATION_PORTRAIT_NORMAL) {
-//            Log.d("eflake", "**ORIENTATION_PORTRAIT_NORMAL");
-            resetMatrix();
-            setmLastOrientaion(mTargetOrientaion);
-        } else if (mTargetOrientaion == LiveMediaPlayerView.ORIENTATION_PORTRAIT_REVERSED) {
-//            Log.d("eflake", "**ORIENTATION_PORTRAIT_REVERSED");
-            resetMatrix();
-            setmLastOrientaion(mTargetOrientaion);
-        }
-        setmTargetOrientaion(LiveMediaPlayerView.ORIENTATION_NONE);
+        onParentSurfaceTextureSizeChanged(surface,width,height);
+    }
+
+    private void onParentSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+
     }
 
     @Override
@@ -915,83 +824,6 @@ public class MediaPlayerTextureVideoView extends TextureView implements
 
     public void getCurrentFrame(Bitmap bitmap) {
         ksyMediaPlayer.getCurrentFrame(bitmap);
-    }
-
-    private void fixPreviewFrame(int videoWidth, int videoHeight,
-                                 int surfaceWidth, int surfaceHeight) {
-        if (videoWidth == 0 || videoHeight == 0 || surfaceWidth == 0
-                || surfaceHeight == 0) {
-            return;
-        }
-        Matrix matrix = new Matrix();
-        getTransform(matrix);
-
-        float scaleWid = (float) surfaceWidth / videoWidth;
-        float scaleHei = (float) surfaceHeight / videoHeight;
-
-//        Log.e(Constants.LOG_TAG, "fixPreviewFrame 33 surfaceWidth="
-//                + surfaceWidth + " surfaceHeight=" + surfaceHeight);
-//        Log.e(Constants.LOG_TAG, "fixPreviewFrame videoWidth=" + videoWidth
-//                + " videoHeight=" + videoHeight);
-//        Log.e(Constants.LOG_TAG, "fixPreviewFrame scaleWid " + scaleWid
-//                + " scaleHei=" + scaleHei);
-        float fixFactor = 1f;
-        if (scaleWid < scaleHei) {
-            fixFactor = scaleHei;
-        } else {
-            fixFactor = scaleWid;
-        }
-
-        matrix.setScale(1f / scaleWid * fixFactor, 1f / scaleHei * fixFactor,
-                videoWidth / 2, videoHeight / 2);
-
-        setTransform(matrix);
-    }
-
-    @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
-    public void doMatrixChange(int mTargetOrientaion) {
-//        Log.d("eflake", "on SetMatrix");
-        Matrix matrix = new Matrix();
-        getTransform(matrix);
-//        Log.d("eflake", "matrix default = " + matrix.toString());
-//        Log.d("eflake", "matrix use: mSurfaceWidth = " + mSurfaceWidth + ",nSurfaceHeight = " + mSurfaceHeight);
-        if (mTargetOrientaion == LiveMediaPlayerView.ORIENTATION_LANDSCAPE_REVERSED) {
-            float scaleW = (float) mSurfaceHeight / mSurfaceWidth;
-            float scaleH = 1 / scaleW;
-            matrix.setScale(scaleW, scaleH, mSurfaceWidth / 2, mSurfaceHeight / 2);
-            matrix.postRotate(90, mSurfaceWidth / 2, mSurfaceHeight / 2);
-        } else {
-            float scaleW = (float) mSurfaceHeight / mSurfaceWidth;
-            float scaleH = 1 / scaleW;
-            matrix.setScale(scaleW, scaleH, mSurfaceWidth / 2, mSurfaceHeight / 2);
-            matrix.postRotate(-90, mSurfaceWidth / 2, mSurfaceHeight / 2);//
-        }
-//        Log.d("eflake", "matrix changed = " + matrix.toString());
-        setTransform(matrix);
-//        Log.d("eflake", "matrix changed: view width =" + getWidth() + ",height = " + getHeight());
-        mMethodControl = true;
-    }
-
-    public void resetMatrix() {
-        Matrix matrix = new Matrix();
-        getTransform(matrix);
-        matrix.reset();
-        setTransform(matrix);
-    }
-
-    public void applyMatrixRotation(int degree) {
-        Matrix matrix = new Matrix();
-        getTransform(matrix);
-        matrix.setRotate(degree, mSurfaceWidth / 2, mSurfaceHeight / 2);
-        setTransform(matrix);
-    }
-
-    public void setmTargetOrientaion(int mTargetOrientaion) {
-        this.mTargetOrientaion = mTargetOrientaion;
-    }
-
-    public void setmLastOrientaion(int mLastOrientaion) {
-        this.mLastOrientaion = mLastOrientaion;
     }
 
 }

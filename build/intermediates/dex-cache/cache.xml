@@ -2,67 +2,11 @@
 <items version="2" >
 
     <item
-        jar="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\exploded-aar\KSYMediaPlayer-Android-SDK-LIBRARY-AS\VideoWidgetLib\unspecified\jars\libs\libksyplayer.jar"
+        jar="/Users/eflakemac/Documents/Git/KsyMediaPlayer-Android-Library-as/KSYMediaPlayer-Android-SDK-LIBRARY-AS/app/build/intermediates/exploded-aar/KSYMediaPlayer-Android-SDK-LIBRARY-AS/VideoWidgetLib/unspecified/jars/classes.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="65f882c9e9509ebe5f441fdb489b4acd6dba6bc4">
-        <dex dex="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\pre-dexed\debug\libksyplayer-e89dd7b24d6384f00578eab52430d8a94264abd2.jar" />
-    </item>
-    <item
-        jar="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="57ae0d750ff83f0c738d21720224ac7ea866a094">
-        <dex dex="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\pre-dexed\debug\classes-7627da97644e7fe3b711104354acc3d9315302a3.jar" />
-    </item>
-    <item
-        jar="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\exploded-aar\com.android.support\design\23.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="19026d31f5d3ae868db81319671a642be5fbba08">
-        <dex dex="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\pre-dexed\debug\classes-e04247b36a4036e5dafb1f6e123bb43c4e063fc1.jar" />
-    </item>
-    <item
-        jar="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="d96886efea7cc74fbb3abd0e3b51d5638fc57be0">
-        <dex dex="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\pre-dexed\debug\classes-92c9e48e2015898d4f66dc9c3e8b1569d243035f.jar" />
-    </item>
-    <item
-        jar="D:\AndroidStudioSDK\extras\android\m2repository\com\android\support\support-annotations\23.1.0\support-annotations-23.1.0.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="92e3fc113ec3ee36b64603a38857b95700025633">
-        <dex dex="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\pre-dexed\debug\support-annotations-23.1.0-f88ae34c1cdad23c055520d86d3b3f89e35debd6.jar" />
-    </item>
-    <item
-        jar="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\libs\internal_impl-23.1.0.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="8716243bf04bae8d6c9ca94d27b9a9be7236f0a3">
-        <dex dex="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\pre-dexed\debug\internal_impl-23.1.0-b9b50b2a85b1292652e2d19eb506620bdfbe8182.jar" />
-    </item>
-    <item
-        jar="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="ddde541c289c8b816a8f8fd6c325d80788c522a6">
-        <dex dex="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\pre-dexed\debug\classes-331116c1acd6af6c654604f1e2e063d82c6a07cb.jar" />
-    </item>
-    <item
-        jar="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\exploded-aar\KSYMediaPlayer-Android-SDK-LIBRARY-AS\VideoWidgetLib\unspecified\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="68118f5edc3d75ae096be22cbf6d7c00c999c40a">
-        <dex dex="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\pre-dexed\debug\classes-860166759d29f8f458dc9fab6bdf18b21f661c89.jar" />
-    </item>
-    <item
-        jar="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.2"
-        sha1="3f151e49c316a5ab2c065969a3b3b55ef9b393fc">
-        <dex dex="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\pre-dexed\debug\classes-5857c660b7aa43a29bfffe2216c458cdf7c8159a.jar" />
+        sha1="e21f41c757ebece9bfa7370be8b49942fb1e78b5">
+        <dex dex="/Users/eflakemac/Documents/Git/KsyMediaPlayer-Android-Library-as/KSYMediaPlayer-Android-SDK-LIBRARY-AS/app/build/intermediates/pre-dexed/debug/classes-27d89de85fd80316b09d85b8a02a1d3f1dea655a.jar" />
     </item>
 
 </items>

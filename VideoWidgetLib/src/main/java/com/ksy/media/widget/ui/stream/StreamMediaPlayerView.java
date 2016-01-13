@@ -53,6 +53,7 @@ import com.ksy.media.widget.util.drm.IDRMRetriverRequest;
 import com.ksy.media.widget.util.NetworkUtil;
 import com.ksy.media.widget.util.PlayConfig;
 import com.ksy.media.widget.util.IPowerStateListener;
+import com.ksy.media.widget.videoview.MediaPlayerTextureVideoView;
 import com.ksy.media.widget.videoview.MediaPlayerVideoView;
 import com.ksy.mediaPlayer.widget.R;
 import com.ksyun.media.player.IMediaPlayer;
@@ -122,7 +123,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
     private boolean mDeviceNavigationBarExist;
     private int mFullScreenNavigationBarHeight;
     private int mDeviceNavigationType = MediaPlayerUtils.DEVICE_NAVIGATION_TYPE_UNKNOWN;
-    private int mDisplaySizeMode = MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_16_9;
+    private int mDisplaySizeMode = MediaPlayerTextureVideoView.MOVIE_RATIO_MODE_16_9;
 
     private NetReceiver mNetReceiver;
     private NetStateChangedListener mNetChangedListener;
@@ -879,8 +880,8 @@ public class StreamMediaPlayerView extends RelativeLayout implements
 		 * = MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_16_9; }
 		 */
 
-        if (mDisplaySizeMode > MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_4_3) {
-            mDisplaySizeMode = MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_16_9;
+        if (mDisplaySizeMode > MediaPlayerTextureVideoView.MOVIE_RATIO_MODE_4_3) {
+            mDisplaySizeMode = MediaPlayerTextureVideoView.MOVIE_RATIO_MODE_16_9;
         }
 
         mMediaPlayerVideoView.setVideoLayout(mDisplaySizeMode);
