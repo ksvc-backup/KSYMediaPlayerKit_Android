@@ -20,11 +20,11 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/video_margin_right"
         android:maxHeight="@dimen/livereplay_controller_seekbar_height"
         android:minHeight="@dimen/livereplay_controller_seekbar_height"
         android:progressDrawable="@drawable/blue_ksy_video_progress_seekbar_style_selector"
         android:thumb="@drawable/blue_ksy_video_progress_seekbar_thumb_selector"
-        android:thumbOffset="16dp" />
+        android:thumbOffset="8dp" />
 
 </RelativeLayout>

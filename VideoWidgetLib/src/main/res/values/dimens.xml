@@ -41,7 +41,8 @@
     <dimen name="live_item_margin">3dp</dimen>
     <dimen name="live_margin_left">10dp</dimen>
     <dimen name="live_margin_top">15dp</dimen>
-    <dimen name="live_anchor_margin_left">65dp</dimen>
+    <dimen name="live_anchor_margin_left">75dp</dimen>
+    <dimen name="short_margin_left">70dp</dimen>
     <dimen name="live_anchor_margin">35dp</dimen>
     <dimen name="live_dialog_width">190dp</dimen>
     <dimen name="live_dialog_height">45dp</dimen>

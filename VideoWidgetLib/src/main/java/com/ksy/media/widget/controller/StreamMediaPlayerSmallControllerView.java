@@ -112,7 +112,6 @@ public class StreamMediaPlayerSmallControllerView extends MediaPlayerBaseControl
 
         // 播放中
         if (isStart) {
-
             mPlaybackImageView.setImageResource(R.drawable.blue_ksy_pause);
 
             if (mMediaPlayerController.canPause()) {

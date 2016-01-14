@@ -3,119 +3,78 @@
     android:id="@+id/event_action_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/transparent">
-
-    <!--<RelativeLayout
-        android:id="@+id/title_layout"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/controller_large_top"
-        android:layout_alignParentTop="true"
-        android:alpha="0.9"
-        android:background="@color/balck"
-        android:visibility="visible">
-
-        <ImageView
-            android:id="@+id/back_image_view"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginLeft="@dimen/small_margin_left"
-            android:layout_marginRight="@dimen/small_margin_left"
-            android:src="@drawable/blue_ksy_back" />
-
-        <ImageView
-            android:id="@+id/image_logo"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/small_margin_left"
-            android:layout_toRightOf="@id/back_image_view"
-            android:src="@drawable/ic_movie_white_48dp" />
-
-        <TextView
-            android:id="@+id/title_text_view"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerVertical="true"
-            android:layout_toRightOf="@id/image_logo"
-            android:ellipsize="end"
-            android:gravity="left|center_vertical"
-            android:singleLine="true"
-            android:text="@string/video_small_title_tv_default"
-            android:textColor="@color/white"
-            android:textSize="14sp" />
-    </RelativeLayout>-->
-    <!-- Actions Area -->
+    android:alpha="0.9"
+    android:background="@color/black">
 
     <RelativeLayout
         android:id="@+id/action_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        >
+        android:layout_height="match_parent">
 
         <!-- Wait -->
-
         <RelativeLayout
             android:id="@+id/wait_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
-            android:background="@drawable/player_controller_action_play"></RelativeLayout>
+            android:background="@drawable/player_controller_action_play"/>
 
         <!-- Complete -->
-
         <RelativeLayout
             android:id="@+id/complete_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            >
+            android:layout_centerInParent="true">
 
             <!-- Complete Normal -->
-
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/complete_replay_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:alpha="0.8"
-                android:background="@color/black"
-                android:clickable="true"
-                android:gravity="center_vertical|center_horizontal"
-                android:orientation="vertical"
-                android:paddingBottom="@dimen/small_margin_left"
-                android:paddingLeft="@dimen/event_action_padding"
-                android:paddingRight="@dimen/event_action_padding"
-                android:paddingTop="@dimen/small_margin_left"
                 android:visibility="visible">
 
-               <!-- <ImageView
-                    android:id="@+id/complete_replay_image_view"
+                <ImageView
+                    android:id="@+id/back_image_view"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/player_controller_action_replay" />-->
+                    android:layout_marginLeft="@dimen/small_margin_left"
+                    android:layout_marginRight="@dimen/small_margin_left"
+                    android:layout_marginTop="@dimen/small_margin_left"
+                    android:src="@drawable/blue_ksy_back" />
 
                 <TextView
-                    android:text="视频播放已经结束"
+                    android:text="@string/short_video_content"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:layout_marginTop="@dimen/small_margin_left"
+                    android:layout_toRightOf="@+id/back_image_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:id="@+id/finish_layout"
+                    android:text="@string/short_video_end"
                     android:textColor="@color/white"
                     android:textSize="20sp"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
                 <Button
                     android:id="@+id/complete_replay_bt"
-                    android:layout_width="100dp"
-                    android:layout_height="40dp"
-                    android:layout_marginLeft="@dimen/event_action_padding_left"
+                    android:layout_width="@dimen/live_margin_one_hundred"
+                    android:layout_height="@dimen/live_bottom_edit_height"
+                    android:layout_centerVertical="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_below="@+id/finish_layout"
                     android:layout_marginTop="@dimen/event_action_padding_left"
-                    android:gravity="center"
-                    android:singleLine="true"
                     android:text="@string/replay"
                     android:background="@color/lightblue"
                     android:textColor="@color/white" />
-            </LinearLayout>
+            </RelativeLayout>
         </RelativeLayout>
 
         <!-- Error -->
-
         <LinearLayout
             android:id="@+id/error_layout"
             android:layout_width="match_parent"
@@ -140,7 +99,7 @@
                 android:id="@+id/error_replay_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:alpha="0.5"
+                android:alpha="0.8"
                 android:background="@color/black"
                 android:clickable="true"
                 android:gravity="center_vertical"

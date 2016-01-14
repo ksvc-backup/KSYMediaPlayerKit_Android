@@ -35,7 +35,7 @@
     <string name="consumption_flow">消耗流量: </string>
     <string name="play_net">所用网络: </string>
     <string name="short_video_play_title">播放99 赞153 踩223 分享1002 评论23</string>
-    <string name="short_video_item_comment">评评论内容评论内容评论内容评论</string>
+    <string name="short_video_item_comment">评论内容评论内容评论内容评论内容评论内容</string>
     <string name="short_video_item_fav">22</string>
     <string name="short_video_item_info">用户名ID</string>
     <string name="short_video_item_time">4:09PM</string>
@@ -43,7 +43,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="short_video_fav_title">赞</string>
-    <string name="short_video_comment_hint">发表评论</string>
     <string name="short_video_comment_commit">评论</string>
     <string name="video_commment_item_comment">评论评论评论评论评论评论评论评论评论评论</string>
     <string name="video_comment_item_time">4:09 PM</string>
@@ -85,9 +84,9 @@
     <string name="live_replay_current_time">00:00:00</string>
     <string name="live_replay_line">/</string>
     <string name="live_replay_total_time">00:00:00</string>
-    <string name="live_replay_net_error">12月1日 09:00:00</string>
+    <string name="live_replay_net_error">09:00:00</string>
     <string name="live_replay_notice">路飞路飞     来了</string>
-    <string name="live_fans_count">222人</string>
+    <string name="live_fans_count">222</string>
     <string name="live_favarite_count">0</string>
     <string name="live_anchor_releat_count">100</string>
 
@@ -95,22 +94,25 @@
     <string name="video_detail_focus">+关注</string>
     <string name="video_detail_title">直播间信息</string>
     <string name="video_detail_content">As far as I know this is the method you would use for LOCAL dependencies, ie dependencies where the code is actually in the project structure. In my example I\'m using remote dependencies pulled from mavencentral and a custom maven repo. My goal is to avoid local code in my project so that I don\'t need submodules to update them</string>
-    <string name="video_recommend_item_time">22:10:59</string>
-    <string name="video_recommend_item_title">视频标题视频标题</string>
-    <string name="video_recommend_item_watch">1299次</string>
+    <string name="video_recommend_item_time">09:11:11</string>
+    <string name="video_recommend_item_title">直播名称</string>
+    <string name="video_recommend_item_watch">222222人正在观看</string>
+    <string name="video_recommend_item_content">播放内容播放内容播放内容</string>
+
     <string name="video_detail_user">用户名ID</string>
     <string name="video_detail_description">个人签名个人签名个人签名个人签名个人签名</string>
     <string name="stream_small_controller_title">直播视频标题</string>
-    <string name="stream_watch_tv_default">2222人</string>
+    <string name="stream_watch_tv_default">2222</string>
     <string name="stream_pop_share">分享</string>
     <string name="stream_pop_alarm">举报</string>
     <string name="stream_pop_setting">设置</string>
-    <string name="stream_comment_default">说点什么吧....</string>
     <string name="stream_controller_send">发送</string>
     <string name="video_small_current_time_tv_default">当前时间</string>
     <string name="video_small_duration_time_tv_default">总时间</string>
     <string name="video_small_title_tv_default">点播视频标题</string>
     <string name="short_video_title">短视频标题</string>
+    <string name="short_video_end">视频播放已经结束</string>
+    <string name="short_video_content">视频播放内容</string>
     <string name="short_video_watch_count_tv_default">1232</string>
     <string name="short_video_comment_count_tv_default">12</string>
     <string name="short_video_favourate__tv_default">2210</string>

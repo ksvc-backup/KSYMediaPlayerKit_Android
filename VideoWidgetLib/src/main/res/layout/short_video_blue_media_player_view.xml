@@ -31,16 +31,16 @@
             layout="@layout/blue_media_player_loading_view" />
     </com.ksy.media.widget.ui.common.MediaPlayerLoadingView>
 
-    <com.ksy.media.widget.ui.common.MediaPlayerEventActionView
-        android:id="@+id/ks_camera_event_action_view"
+    <com.ksy.media.widget.ui.shortvideo.ShortVideoMediaPlayerEventActionView
+        android:id="@+id/short_camera_event_action_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
 
         <include
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            layout="@layout/blue_media_player_event_action_view" />
-    </com.ksy.media.widget.ui.common.MediaPlayerEventActionView>
+            layout="@layout/short_video_media_player_event_action_view" />
+    </com.ksy.media.widget.ui.shortvideo.ShortVideoMediaPlayerEventActionView>
 
     <com.ksy.media.widget.controller.ShortVideoMediaPlayerControllerView
         android:id="@+id/media_player_controller_view_small"

@@ -58,7 +58,7 @@
             android:id="@+id/textViewCurrentTime"
             android:layout_toLeftOf="@+id/textViewLine"
             android:textColor="@color/white"
-            android:layout_below="@+id/live_replay_share_bt" />
+            android:layout_below="@+id/seekbar_video_progress" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -66,7 +66,7 @@
             android:text="@string/live_replay_line"
             android:id="@+id/textViewLine"
             android:textColor="@color/white"
-            android:layout_below="@+id/live_replay_share_bt"
+            android:layout_below="@+id/seekbar_video_progress"
             android:layout_toLeftOf="@+id/textViewTotalTime" />
 
         <TextView
@@ -75,8 +75,8 @@
             android:text="@string/live_replay_total_time"
             android:id="@+id/textViewTotalTime"
             android:textColor="@color/white"
-            android:layout_below="@+id/live_replay_share_bt"
-            android:layout_toLeftOf="@+id/live_replay_share_bt"
-            android:layout_toStartOf="@+id/live_replay_share_bt" />
+            android:layout_marginRight="@dimen/live_margin_top"
+            android:layout_below="@+id/seekbar_video_progress"
+            android:layout_toLeftOf="@+id/live_replay_share_bt" />
     </RelativeLayout>
 </RelativeLayout>

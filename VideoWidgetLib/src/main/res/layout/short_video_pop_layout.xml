@@ -12,13 +12,12 @@
         android:layout_alignParentLeft="true"
         android:layout_centerVertical="true"
         android:layout_width="@dimen/live_person_three_handred"
-        android:layout_height="@dimen/live_anchor_margin"
-        android:layout_margin="@dimen/list_margin"
+        android:layout_height="@dimen/live_bottom_edit_height"
+        android:backgroundTint="@color/live_edit_frame"
+        android:hint="@string/live_comment"
+        android:paddingLeft="@dimen/small_margin_left"
         android:textColor="@color/ksy_color_font"
         android:textColorHint="@color/ksy_color_font_alpha"
-        android:background="@drawable/short_video_edittext_bg"
-        android:textCursorDrawable="@null"
-        android:hint="@string/short_video_comment_hint"
         android:singleLine="true" />
 
     <ImageView

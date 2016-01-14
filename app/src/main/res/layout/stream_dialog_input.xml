@@ -15,21 +15,4 @@
         <requestFocus />
     </EditText>
 
-    <!--
-    -->
-
-    <!--
-        android:text="rtmp://test.live.ksyun.com/live/test1234567
-    -->
-
-    <!--  <EditText
-         android:id="@+id/input_two"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_below="@+id/input"
-         android:layout_marginTop="18dp"
-         android:hint="Please Input Video Path or URL 2..." >
-         <requestFocus />
-     </EditText> -->
-
 </RelativeLayout>

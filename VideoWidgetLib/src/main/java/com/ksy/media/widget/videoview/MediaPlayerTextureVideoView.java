@@ -241,6 +241,8 @@ public class MediaPlayerTextureVideoView extends TextureView implements
                 String timeSec = String.valueOf(System.currentTimeMillis() / 1000);
                 String skSign = MD5Util.md5("sb56661c74aabc0df83d723a8d3eba69" + timeSec);
                 ksyMediaPlayer = new KSYMediaPlayer.Builder(mContext.getApplicationContext()).setAppId("QYA0788DA337D2E0EC45").setAccessKey("a8b4dff4665f6e69ba6cbeb8ebadc9a3").setSecretKeySign(skSign).setTimeSec(timeSec).build();
+//                ksyMediaPlayer = new KSYMediaPlayer.Builder(mContext.getApplicationContext()).build();
+
                 ksyMediaPlayer
                         .setBufferSize(Constants.MEDIA_BUFFERSIZE_DEFAULT);
 //                ksyMediaPlayer.setTimeout(Constants.MEDIA_TIME_OUT_DEFAULT);

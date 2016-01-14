@@ -61,7 +61,7 @@
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/small_margin_left"
                 android:layout_toRightOf="@+id/stream_watch_tv"
-                android:hint="@string/stream_comment_default"
+                android:hint="@string/live_comment"
                 android:paddingLeft="@dimen/small_margin_left"
                 android:textColor="@color/white"
                 android:backgroundTint="@color/live_edit_frame"

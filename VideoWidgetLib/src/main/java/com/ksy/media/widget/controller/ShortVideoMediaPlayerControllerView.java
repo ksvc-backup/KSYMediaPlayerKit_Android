@@ -3,6 +3,7 @@ package com.ksy.media.widget.controller;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,6 +31,7 @@ public class ShortVideoMediaPlayerControllerView extends MediaPlayerBaseControll
     private TextView mCurrentTimeTextView;
     private TextView mTotalTimeTextView;
     private TextView short_video_add_focus;
+
 
     public ShortVideoMediaPlayerControllerView(Context context, AttributeSet attrs, int defStyle) {
 
@@ -68,8 +70,9 @@ public class ShortVideoMediaPlayerControllerView extends MediaPlayerBaseControll
     @Override
     protected void initListeners() {
 
-        mBackLayout.setOnClickListener(this);
-        mTitleTextView.setOnClickListener(this);
+//        mBackLayout.setOnClickListener(this);
+//        mTitleTextView.setOnClickListener(this);
+        short_video_add_focus.setOnClickListener(this);
         mPlaybackImageView.setOnClickListener(this);
         mSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 
@@ -193,7 +196,7 @@ public class ShortVideoMediaPlayerControllerView extends MediaPlayerBaseControll
 
         if (id == mBackLayout.getId() || id == mTitleTextView.getId()) {
 
-            mMediaPlayerController.onBackPress(MediaPlayMode.PLAYMODE_WINDOW);
+//            mMediaPlayerController.onBackPress(MediaPlayMode.PLAYMODE_WINDOW);
 
         } else if (id == mPlaybackImageView.getId()) {
 
@@ -205,11 +208,7 @@ public class ShortVideoMediaPlayerControllerView extends MediaPlayerBaseControll
                 show();
             }
 
-        } else if (id == short_video_add_focus.getId()) {
-
-            short_video_add_focus.setText("已关注");
         }
-
     }
 
 }

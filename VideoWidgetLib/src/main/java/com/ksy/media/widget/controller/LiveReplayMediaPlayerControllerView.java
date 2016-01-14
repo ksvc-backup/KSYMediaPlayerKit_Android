@@ -148,7 +148,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 				LivePersonDialog dialogPerson = new LivePersonDialog(mContext);
 
 				WindowManager.LayoutParams lp = dialogPerson.getWindow().getAttributes();
-				lp.alpha = 0.5f;
+				lp.alpha = 0.8f;
 				dialogPerson.getWindow().setAttributes(lp);
 
 				dialogPerson.show();
@@ -426,7 +426,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 			LiveAnchorDialog dialogPerson = new LiveAnchorDialog(mContext);
 
 			WindowManager.LayoutParams lp=dialogPerson.getWindow().getAttributes();
-			lp.alpha=0.5f;
+			lp.alpha=0.8f;
 			dialogPerson.getWindow().setAttributes(lp);
 
 			dialogPerson.show();
