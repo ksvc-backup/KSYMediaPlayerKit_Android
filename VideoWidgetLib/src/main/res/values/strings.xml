@@ -27,8 +27,7 @@
     <string name="replay">重新播放</string>
     <string name="play_error">哎呀，播放错误啦 </string>
     <string name="connect_failed">连接失败，请重新连接</string>
-    <string name="video_test">DEMO</string>
-    <string name="loading">加载中，请稍后...</string>
+    <string name="video_test">视频加载中...</string>
     <string name="gongfu">功夫</string>
     <string name="cropscreen_success">截图成功</string>
     <string name="net_speed">网速: </string>
