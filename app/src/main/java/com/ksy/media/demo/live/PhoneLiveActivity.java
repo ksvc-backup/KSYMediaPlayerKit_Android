@@ -72,12 +72,6 @@ public class PhoneLiveActivity extends AppCompatActivity implements LiveMediaPla
     }
 
     @Override
-    public void onConfigurationChanged(Configuration newConfig) {
-        super.onConfigurationChanged(newConfig);
-        playerViewLive.ConfigurationChanged(newConfig);
-    }
-
-    @Override
     protected void onPause() {
         super.onPause();
         playerViewLive.onPause();
@@ -95,23 +89,9 @@ public class PhoneLiveActivity extends AppCompatActivity implements LiveMediaPla
         playerViewLive.play(url);
     }
 
-    @Override
-    public void hideViews() {
-
-    }
-
-    @Override
-    public void restoreViews() {
-
-    }
 
     @Override
     public void onPrepared() {
-
-    }
-
-    @Override
-    public void onQualityChanged() {
 
     }
 

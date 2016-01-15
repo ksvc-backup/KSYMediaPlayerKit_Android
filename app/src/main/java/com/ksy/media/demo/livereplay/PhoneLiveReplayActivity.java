@@ -91,25 +91,10 @@ public class PhoneLiveReplayActivity extends AppCompatActivity implements LiveRe
     }
 
     @Override
-    public void hideViews() {
-
-    }
-
-    @Override
-    public void restoreViews() {
-
-    }
-
-    @Override
     public void onPrepared() {
 
     }
-
-    @Override
-    public void onQualityChanged() {
-
-    }
-
+    
     @Override
     public void onFinish(int playMode) {
         Log.i(Constants.LOG_TAG, "activity on finish ===========");
