@@ -49,6 +49,7 @@ public class RecommendListAdapter extends BaseAdapter {
             holder.title_tv = (TextView) convertView.findViewById(R.id.title_tv);
             holder.watch_tv = (TextView) convertView.findViewById(R.id.watch_tv);
             holder.time_tv = (TextView) convertView.findViewById(R.id.time_tv);
+            holder.content_tv = (TextView) convertView.findViewById(R.id.content_tv);
             holder.headImg = (ImageView) convertView.findViewById(R.id.icon_img);
             convertView.setTag(holder);
         } else {
@@ -57,6 +58,7 @@ public class RecommendListAdapter extends BaseAdapter {
         holder.title_tv.setText(getItem(position).title);
         holder.time_tv.setText(getItem(position).time);
         holder.watch_tv.setText(getItem(position).watch);
+        holder.content_tv.setText(getItem(position).content);
         return convertView;
     }
 
@@ -64,6 +66,7 @@ public class RecommendListAdapter extends BaseAdapter {
         public TextView title_tv;
         public TextView time_tv;
         public TextView watch_tv;
+        public TextView content_tv;
         public ImageView headImg;
 
     }

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -75,7 +76,7 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 	private Animation hideLiveAudienceAnimation;
 	private Timer mLiveAudienceComeTimer = new Timer();
 	private Timer mLiveAudienceComeTimerGoneTimer = new Timer();
-
+    private boolean isRemoveData;
 
 	public LiveMediaPlayerControllerView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
@@ -140,7 +141,7 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 				LivePersonDialog dialogPerson = new LivePersonDialog(mContext);
 
 				WindowManager.LayoutParams lp=dialogPerson.getWindow().getAttributes();
-				lp.alpha=0.5f;
+				lp.alpha=0.8f;
 				dialogPerson.getWindow().setAttributes(lp);
 
 				dialogPerson.show();
@@ -159,15 +160,22 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 			public void run() {
 				if(data.size() >= 8){
 					data.remove(0);
-					data.add(7, map);
+					isRemoveData = false;
 				}else{
 					data.add(map);
+					isRemoveData = true;
 				}
 
 				liveHandler.post(new Runnable() {
 					@Override
 					public void run() {
-						adapter.notifyDataSetChanged();
+						if (isRemoveData) {
+							adapter.notifyDataSetChanged();
+						} else{
+							adapter.notifyDataSetChanged();
+							data.add(7, map);
+							adapter.notifyDataSetChanged();
+						}
 					}
 				});
 			}
@@ -282,7 +290,7 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 			LiveAnchorDialog dialogPerson = new LiveAnchorDialog(mContext);
 
 			WindowManager.LayoutParams lp=dialogPerson.getWindow().getAttributes();
-			lp.alpha=0.5f;
+			lp.alpha=0.8f;
 			dialogPerson.getWindow().setAttributes(lp);
 
 			dialogPerson.show();

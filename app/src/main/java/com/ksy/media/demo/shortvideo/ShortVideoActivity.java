@@ -74,6 +74,7 @@ public class ShortVideoActivity extends AppCompatActivity implements
     private View stream_alarm_tv;
     private View stream_setting_tv;
     private ImageView viewFlowImage;
+    private boolean isClicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -177,7 +178,7 @@ public class ShortVideoActivity extends AppCompatActivity implements
     }
 
     private void showPopWindow() {
-        if (!shortVideoPopupWindow.isShowing()) { //getResources().getDimensionPixelSize(R.dimen.short_pop_bottom)
+        if (!shortVideoPopupWindow.isShowing()) {
             shortVideoPopupWindow.showAsDropDown(viewFlowImage, 0, getResources().getDimensionPixelSize(com.ksy.mediaPlayer.widget.R.dimen.stream_pop_offset));
             stream_share_tv.setOnClickListener(this);
             stream_alarm_tv.setOnClickListener(this);
@@ -202,7 +203,6 @@ public class ShortVideoActivity extends AppCompatActivity implements
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
             mToolbar.setTitle(getResources().getString(R.string.short_video_title));
-//            mToolbar.setTitleTextColor(Color.BLACK);
             mToolbar.setNavigationIcon(R.drawable.short_navigate_before);
 
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -379,7 +379,15 @@ public class ShortVideoActivity extends AppCompatActivity implements
                 }
                 break;
             case R.id.short_video_add_focus:
-                Toast.makeText(ShortVideoActivity.this, "follow clicked", Toast.LENGTH_SHORT).show();
+
+                if (isClicked) {
+                    short_video_add_focus.setText("+ 关注");
+                    isClicked = false;
+                } else {
+                    short_video_add_focus.setText("已关注");
+                    isClicked = true;
+                }
+
                 break;
 
             case R.id.image_overflow:

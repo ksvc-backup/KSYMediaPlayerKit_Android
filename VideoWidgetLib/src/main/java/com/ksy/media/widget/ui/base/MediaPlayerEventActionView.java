@@ -61,9 +61,7 @@ public class MediaPlayerEventActionView extends RelativeLayout {
     private void initViews() {
 
         mRootView = (RelativeLayout) findViewById(R.id.event_action_layout);
-
-//        mBackImageView = (ImageView) findViewById(R.id.back_image_view);
-//        mTitleTextView = (TextView) findViewById(R.id.title_text_view);
+        mBackImageView = (ImageView) findViewById(R.id.back_image_view);
 
         mWaitLayout = (RelativeLayout) findViewById(R.id.wait_layout);
 
@@ -75,15 +73,13 @@ public class MediaPlayerEventActionView extends RelativeLayout {
         mErrorReplayLayout = (LinearLayout) findViewById(R.id.error_replay_layout);
         mErrorTextView = (TextView) findViewById(R.id.error_info_title_text_view);
 
-       /* mBackImageView.setOnClickListener(new OnClickListener() {
-
+        mBackImageView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (mCallback != null)
                     mCallback.onActionBack();
             }
-        });*/
+        });
 
         mWaitLayout.setOnClickListener(new OnClickListener() {
 
@@ -105,7 +101,6 @@ public class MediaPlayerEventActionView extends RelativeLayout {
         });
 
         mErrorReplayLayout.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
 

@@ -13,8 +13,6 @@ import com.ksy.mediaPlayer.widget.R;
 public class MediaPlayerLoadingView extends RelativeLayout {
 
     private TextView mLoadingTitleTextView;
-    private TextView mLoadingTipTextView;
-    
     
     public MediaPlayerLoadingView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -33,7 +31,6 @@ public class MediaPlayerLoadingView extends RelativeLayout {
     
     private void initViews(){
         mLoadingTitleTextView = (TextView) findViewById(R.id.loading_title_text_view);
-        mLoadingTipTextView = (TextView) findViewById(R.id.loading_tip_text_view);
     }
     
     @Override
@@ -44,14 +41,14 @@ public class MediaPlayerLoadingView extends RelativeLayout {
     
     public void setLoadingTitle(String loadingTitle){        
         if(loadingTitle == null) loadingTitle = "";       
-        mLoadingTitleTextView.setText(loadingTitle);        
+        mLoadingTitleTextView.setText(loadingTitle);
     }
     
     public void setLoadingTip(String loadingTip){
         
         if(loadingTip == null) loadingTip = "";
-        
-        mLoadingTipTextView.setText(loadingTip);
+
+//        mLoadingTipTextView.setText(loadingTip);
         
     }
     

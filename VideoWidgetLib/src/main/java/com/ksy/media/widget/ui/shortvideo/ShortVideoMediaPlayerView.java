@@ -8,10 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.Color;
-import android.os.Environment;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -19,38 +16,29 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ksy.media.widget.controller.shortvideo.IShortVideoController;
-import com.ksy.media.widget.controller.video.IVideoController;
 import com.ksy.media.widget.controller.shortvideo.ShortVideoMediaPlayerControllerView;
 import com.ksy.media.widget.model.MediaPlayMode;
 import com.ksy.media.widget.player.IMediaPlayerPlus;
+import com.ksy.media.widget.ui.base.MediaPlayerBufferingView;
+import com.ksy.media.widget.ui.base.MediaPlayerLoadingView;
+import com.ksy.media.widget.util.Constants;
+import com.ksy.media.widget.util.IPowerStateListener;
 import com.ksy.media.widget.util.MediaPlayerUtils;
 import com.ksy.media.widget.util.NetReceiver;
 import com.ksy.media.widget.util.NetReceiver.NetState;
 import com.ksy.media.widget.util.NetReceiver.NetStateChangedListener;
-import com.ksy.media.widget.util.WakeLocker;
-import com.ksy.media.widget.ui.base.MediaPlayerBufferingView;
-import com.ksy.media.widget.ui.base.MediaPlayerEventActionView;
-import com.ksy.media.widget.ui.base.MediaPlayerLoadingView;
-import com.ksy.media.widget.util.IPowerStateListener;
-import com.ksy.media.widget.util.PlayConfig;
-import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.NetworkUtil;
+import com.ksy.media.widget.util.PlayConfig;
+import com.ksy.media.widget.util.WakeLocker;
 import com.ksy.media.widget.videoview.MediaPlayerTextureView;
 import com.ksy.mediaPlayer.widget.R;
 import com.ksyun.media.player.IMediaPlayer;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 public class ShortVideoMediaPlayerView extends RelativeLayout implements
         IPowerStateListener {
@@ -64,7 +52,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
     private ShortVideoMediaPlayerControllerView mMediaPlayerSmallControllerView;
     private MediaPlayerBufferingView mMediaPlayerBufferingView;
     private MediaPlayerLoadingView mMediaPlayerLoadingView;
-    private MediaPlayerEventActionView mMediaPlayerEventActionView;
+    private ShortVideoMediaPlayerEventActionView mMediaPlayerEventActionView;
     private PlayerViewCallback mPlayerViewCallback;
     private volatile int mPlayMode = MediaPlayMode.PLAY_MODE_FULLSCREEN;
     private volatile boolean mScreenLockMode = false;
@@ -141,8 +129,8 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                 .findViewById(R.id.ks_camera_buffering_view);
         this.mMediaPlayerLoadingView = (MediaPlayerLoadingView) mRootView
                 .findViewById(R.id.ks_camera_loading_view);
-        this.mMediaPlayerEventActionView = (MediaPlayerEventActionView) mRootView
-                .findViewById(R.id.ks_camera_event_action_view);
+        this.mMediaPlayerEventActionView = (ShortVideoMediaPlayerEventActionView) mRootView
+                .findViewById(R.id.short_camera_event_action_view);
         this.mMediaPlayerSmallControllerView = (ShortVideoMediaPlayerControllerView) mRootView
                 .findViewById(R.id.media_player_controller_view_small);
 
@@ -191,7 +179,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 
 		/* 设置eventActionView callback */
         this.mMediaPlayerEventActionView
-                .setCallback(new MediaPlayerEventActionView.EventActionViewCallback() {
+                .setCallback(new ShortVideoMediaPlayerEventActionView.EventActionViewCallback() {
 
                     @Override
                     public void onActionPlay() {
@@ -453,7 +441,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                 mMediaPlayerSmallControllerView.hide();
                 mMediaPlayerEventActionView
                         .updateEventMode(
-                                MediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_COMPLETE,
+                                ShortVideoMediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_COMPLETE,
                                 null);
                 mMediaPlayerEventActionView.show();
                 WakeLocker.release();
@@ -510,7 +498,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                 mMediaPlayerSmallControllerView.hide();
                 mMediaPlayerEventActionView
                         .updateEventMode(
-                                MediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_COMPLETE,
+                                ShortVideoMediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_COMPLETE,
                                 null);
                 mMediaPlayerEventActionView.show();
                 WakeLocker.release();
@@ -564,7 +552,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             mMediaPlayerBufferingView.hide();
             mMediaPlayerLoadingView.hide();
             mMediaPlayerEventActionView.updateEventMode(
-                    MediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_ERROR,
+                    ShortVideoMediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_ERROR,
                     what + "," + extra);
             mMediaPlayerEventActionView.show();
             return true;

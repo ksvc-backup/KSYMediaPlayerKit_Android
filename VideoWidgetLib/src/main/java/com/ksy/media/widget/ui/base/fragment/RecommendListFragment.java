@@ -53,6 +53,7 @@ public class RecommendListFragment extends Fragment implements AdapterView.OnIte
             item.setTime(getString(R.string.video_recommend_item_time));
             item.setTitle(getString(R.string.video_recommend_item_title));
             item.setWatch(getString(R.string.video_recommend_item_watch));
+            item.setContent(getString(R.string.video_recommend_item_content));
             items.add(item);
         }
         mRecommendListAdapter = new RecommendListAdapter(getActivity(), items);

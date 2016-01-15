@@ -70,14 +70,14 @@
     <RelativeLayout
         android:id="@+id/live_layout_bottom_heart"
         android:layout_alignParentBottom="true"
-        android:layout_above="@+id/controller_bottom_layout"
         android:layout_toRightOf="@+id/live_person_list"
-        android:layout_marginBottom="@dimen/live_anchor_margin"
+        android:layout_marginBottom="@dimen/live_bottom_height"
         android:layout_width="@dimen/live_heart_margin"
         android:layout_height="@dimen/live_heart_margin_height">
 
         <com.ksy.media.widget.ui.base.HeartLayout
             android:id="@+id/live_image_heart"
+            android:layout_marginBottom="@dimen/live_margin_left"
             android:layout_width="@dimen/live_heart_margin"
             android:layout_height="@dimen/live_person_three_handred" />
 
