@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:clipChildren="false">
 
-    <com.ksy.media.widget.videoview.PhoneLiveMediaPlayerTextureVideoView
+    <com.ksy.media.widget.videoview.PhoneLiveMediaPlayerTextureView
         android:id="@+id/live_ks_camera_video_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <com.ksy.media.widget.ui.common.MediaPlayerBufferingView
+    <com.ksy.media.widget.ui.base.MediaPlayerBufferingView
         android:id="@+id/ks_camera_buffering_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -18,9 +18,9 @@
             layout="@layout/blue_media_player_buffering_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </com.ksy.media.widget.ui.common.MediaPlayerBufferingView>
+    </com.ksy.media.widget.ui.base.MediaPlayerBufferingView>
 
-    <com.ksy.media.widget.ui.common.MediaPlayerLoadingView
+    <com.ksy.media.widget.ui.base.MediaPlayerLoadingView
         android:id="@+id/ks_camera_loading_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -29,7 +29,7 @@
             layout="@layout/blue_media_player_loading_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </com.ksy.media.widget.ui.common.MediaPlayerLoadingView>
+    </com.ksy.media.widget.ui.base.MediaPlayerLoadingView>
 
     <com.ksy.media.widget.ui.live.LiveMediaPlayerEventActionView
         android:id="@+id/ks_camera_event_action_view_live"
@@ -42,7 +42,7 @@
             android:layout_height="match_parent" />
     </com.ksy.media.widget.ui.live.LiveMediaPlayerEventActionView>
 
-    <com.ksy.media.widget.controller.LiveMediaPlayerControllerView
+    <com.ksy.media.widget.controller.live.LiveMediaPlayerControllerView
         android:id="@+id/media_player_controller_view_live"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -51,7 +51,7 @@
                 layout="@layout/blue_media_player_controller_live"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-    </com.ksy.media.widget.controller.LiveMediaPlayerControllerView>
+    </com.ksy.media.widget.controller.live.LiveMediaPlayerControllerView>
 
 </RelativeLayout>
 

@@ -20,14 +20,12 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.ViewGroup.LayoutParams;
-import android.widget.Toast;
 
+import com.ksy.media.widget.player.IMediaPlayerPlus;
 import com.ksy.media.widget.util.Constants;
-import com.ksy.media.widget.controller.MediaPlayerController;
-import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
 import com.ksy.media.widget.util.auth.MD5Util;
 import com.ksy.media.widget.util.PlayConfig;
-import com.ksy.media.widget.controller.IMediaPlayerControl;
+import com.ksy.media.widget.controller.base.IMediaPlayerBaseControl;
 import com.ksy.media.widget.util.IPowerStateListener;
 import com.ksy.media.widget.util.ScreenResolution;
 import com.ksyun.media.player.IMediaPlayer;
@@ -40,7 +38,7 @@ import java.io.IOException;
 
 
 public class MediaPlayerVideoView extends SurfaceView implements
-        IMediaPlayerControl, IPowerStateListener {
+        IMediaPlayerBaseControl, IPowerStateListener {
 
     private static final String TAG = MediaPlayerVideoView.class.getName();
     private Uri mUri;
@@ -82,7 +80,7 @@ public class MediaPlayerVideoView extends SurfaceView implements
     private OnSeekCompleteListener mOnSeekCompleteListener;
     private OnInfoListener mOnInfoListener;
     private OnBufferingUpdateListener mOnBufferingUpdateListener;
-    private MediaPlayerController mMediaPlayerController;
+    private IMediaPlayerPlus mMediaPlayerController;
     private int mCurrentBufferPercentage;
     private Context mContext;
     private boolean mHasPrepared = false;
@@ -237,7 +235,7 @@ public class MediaPlayerVideoView extends SurfaceView implements
                 String skSign = MD5Util.md5("sb56661c74aabc0df83d723a8d3eba69" + timeSec);
                 ksyMediaPlayer = new KSYMediaPlayer.Builder(mContext.getApplicationContext()).setAppId("QYA0788DA337D2E0EC45").setAccessKey("a8b4dff4665f6e69ba6cbeb8ebadc9a3").setSecretKeySign(skSign).setTimeSec(timeSec).build();
                 ksyMediaPlayer
-                        .setBufferSize(Constants.MEDIA_BUFFERSIZE_DEFAULT);
+                        .setBufferSize(Constants.MEDIA_BUFFER_SIZE_DEFAULT);
 //                ksyMediaPlayer.setTimeout(Constants.MEDIA_TIME_OUT_DEFAULT);
                 Log.d(Constants.LOG_TAG, "isStream = "
                         + playConfig.isStream());
@@ -401,7 +399,7 @@ public class MediaPlayerVideoView extends SurfaceView implements
     };
 
     public void setMediaPlayerController(
-            MediaPlayerController mediaPlayerController) {
+            IMediaPlayerPlus mediaPlayerController) {
 
         mMediaPlayerController = mediaPlayerController;
     }
@@ -695,16 +693,6 @@ public class MediaPlayerVideoView extends SurfaceView implements
     }
 
     @Override
-    public void onPlay() {
-
-    }
-
-    @Override
-    public void onPause() {
-
-    }
-
-    @Override
     public void onPowerState(int state) {
         switch (state) {
             case Constants.POWER_OFF:
@@ -781,7 +769,7 @@ public class MediaPlayerVideoView extends SurfaceView implements
             case Constants.APP_SHOWN:
                 isAppShowing = true;
                 break;
-            case Constants.APP_HIDEN:
+            case Constants.APP_HIDDEN:
                 isAppShowing = false;
                 break;
             default:

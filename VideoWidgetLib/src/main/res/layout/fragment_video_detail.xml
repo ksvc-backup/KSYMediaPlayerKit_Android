@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.ksy.media.widget.ui.common.fragment.DetailFragment">
+    tools:context="com.ksy.media.widget.ui.base.fragment.DetailFragment">
 
         <RelativeLayout
             android:layout_width="match_parent"

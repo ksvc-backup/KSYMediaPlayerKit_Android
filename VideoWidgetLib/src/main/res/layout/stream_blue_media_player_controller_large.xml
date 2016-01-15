@@ -99,7 +99,7 @@
         </RelativeLayout>
     </RelativeLayout>
 
-    <com.ksy.media.widget.ui.common.MediaPlayerSeekView
+    <com.ksy.media.widget.ui.base.MediaPlayerSeekView
         android:id="@+id/widget_seek_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -111,7 +111,7 @@
         android:visibility="gone" />
 
     <!-- 新添加亮度调节 -->
-    <com.ksy.media.widget.ui.common.MediaPlayerControllerBrightView
+    <com.ksy.media.widget.ui.base.MediaPlayerControllerBrightView
         android:id="@+id/widge_control_light_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -121,7 +121,7 @@
         android:layout_marginLeft="@dimen/bright_margin_left"/>
 
     <!-- 屏幕锁 -->
-    <com.ksy.media.widget.ui.common.MediaPlayerLockView
+    <com.ksy.media.widget.ui.base.MediaPlayerLockView
         android:id="@+id/widget_lock_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -138,10 +138,10 @@
             android:layout_centerVertical="true"
             android:duplicateParentState="true"
             android:src="@drawable/blue_ksy_lock_selector" />
-    </com.ksy.media.widget.ui.common.MediaPlayerLockView>
+    </com.ksy.media.widget.ui.base.MediaPlayerLockView>
 
     <!-- 音量 -->
-    <com.ksy.media.widget.ui.common.MediaPlayerControllerVolumeView
+    <com.ksy.media.widget.ui.base.MediaPlayerControllerVolumeView
         android:id="@+id/widget_controller_volume"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

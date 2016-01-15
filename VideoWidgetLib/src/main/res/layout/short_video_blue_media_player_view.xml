@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:clipChildren="false" >
 
-    <com.ksy.media.widget.videoview.MediaPlayerTextureVideoView
+    <com.ksy.media.widget.videoview.MediaPlayerTextureView
         android:id="@+id/ks_camera_video_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <com.ksy.media.widget.ui.common.MediaPlayerBufferingView
+    <com.ksy.media.widget.ui.base.MediaPlayerBufferingView
         android:id="@+id/ks_camera_buffering_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -18,9 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             layout="@layout/blue_media_player_buffering_view" />
-    </com.ksy.media.widget.ui.common.MediaPlayerBufferingView>
+    </com.ksy.media.widget.ui.base.MediaPlayerBufferingView>
 
-    <com.ksy.media.widget.ui.common.MediaPlayerLoadingView
+    <com.ksy.media.widget.ui.base.MediaPlayerLoadingView
         android:id="@+id/ks_camera_loading_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -29,9 +29,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             layout="@layout/blue_media_player_loading_view" />
-    </com.ksy.media.widget.ui.common.MediaPlayerLoadingView>
+    </com.ksy.media.widget.ui.base.MediaPlayerLoadingView>
 
-    <com.ksy.media.widget.ui.common.MediaPlayerEventActionView
+    <com.ksy.media.widget.ui.base.MediaPlayerEventActionView
         android:id="@+id/ks_camera_event_action_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -40,9 +40,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             layout="@layout/blue_media_player_event_action_view" />
-    </com.ksy.media.widget.ui.common.MediaPlayerEventActionView>
+    </com.ksy.media.widget.ui.base.MediaPlayerEventActionView>
 
-    <com.ksy.media.widget.controller.ShortVideoMediaPlayerControllerView
+    <com.ksy.media.widget.controller.shortvideo.ShortVideoMediaPlayerControllerView
         android:id="@+id/media_player_controller_view_small"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             layout="@layout/short_video_blue_media_player_controller_small" />
-    </com.ksy.media.widget.controller.ShortVideoMediaPlayerControllerView>
+    </com.ksy.media.widget.controller.shortvideo.ShortVideoMediaPlayerControllerView>
     
     <!-- 截图成功layout -->
     <RelativeLayout

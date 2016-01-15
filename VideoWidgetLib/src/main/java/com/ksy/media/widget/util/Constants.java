@@ -6,14 +6,8 @@ public class Constants {
 	public static final int POWER_ON = 1;
 	public static final int USER_PRESENT = 2;
 	public static final int APP_SHOWN = 3;
-	public static final int APP_HIDEN = 4;
-	public static final int MEDIA_BUFFERSIZE_DEFAULT = 2 * 10;
+	public static final int APP_HIDDEN = 4;
+	public static final int MEDIA_BUFFER_SIZE_DEFAULT = 2 * 10;
 	public static final int MEDIA_TIME_OUT_DEFAULT = 40 * 1000;
-
-
-	// public static String LOG_SERVER_URL =
-	// "http://logcloud.ksyun.com/push/single/my/123"; //single
-
-	public static String LOG_SERVER_URL = "http://logcloud.ksyun.com/push/gzip/";
 
 }

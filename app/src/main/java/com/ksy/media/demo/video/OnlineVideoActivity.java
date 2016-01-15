@@ -1,10 +1,13 @@
 package com.ksy.media.demo.video;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -16,8 +19,8 @@ import android.widget.Toast;
 import com.ksy.media.demo.R;
 import com.ksy.media.widget.ui.video.VideoMediaPlayerPagerAdapter;
 import com.ksy.media.widget.ui.video.VideoMediaPlayerView;
-import com.ksy.media.widget.ui.common.fragment.CommentListFragment;
-import com.ksy.media.widget.ui.common.fragment.RecommendListFragment;
+import com.ksy.media.widget.ui.base.fragment.CommentListFragment;
+import com.ksy.media.widget.ui.base.fragment.RecommendListFragment;
 import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.PlayConfig;
 
@@ -62,10 +65,10 @@ public class OnlineVideoActivity extends AppCompatActivity implements
         final EditText editInput = (EditText) dialogView
                 .findViewById(R.id.input);
 
-        String inputString = editInput.getText().toString();
-        startPlayer(inputString);
+//        String inputString = editInput.getText().toString();
+//        startPlayer(inputString);
 
-        /*new AlertDialog.Builder(this).setTitle("User Input")
+        new AlertDialog.Builder(this).setTitle("User Input")
                 .setView(dialogView)
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
 
@@ -86,7 +89,7 @@ public class OnlineVideoActivity extends AppCompatActivity implements
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
-        }).show();*/
+        }).show();
     }
 
     @Override

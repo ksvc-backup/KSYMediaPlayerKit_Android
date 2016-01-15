@@ -60,7 +60,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.ksy.media.widget.ui.common.HorizontalListView
+        <com.ksy.media.widget.ui.base.HorizontalListView
             android:id="@+id/live_horizon"
             android:layout_toRightOf="@+id/live_person_image"
             android:layout_width="match_parent"
@@ -76,7 +76,7 @@
         android:layout_width="@dimen/live_heart_margin"
         android:layout_height="@dimen/live_heart_margin_height">
 
-        <com.ksy.media.widget.ui.common.HeartLayout
+        <com.ksy.media.widget.ui.base.HeartLayout
             android:id="@+id/live_image_heart"
             android:layout_width="@dimen/live_heart_margin"
             android:layout_height="@dimen/live_person_three_handred" />

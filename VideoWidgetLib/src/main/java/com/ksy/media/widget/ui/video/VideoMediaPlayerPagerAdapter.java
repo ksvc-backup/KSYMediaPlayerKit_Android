@@ -5,9 +5,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.ksy.media.widget.ui.common.fragment.CommentListFragment;
-import com.ksy.media.widget.ui.common.fragment.DetailFragment;
-import com.ksy.media.widget.ui.common.fragment.RecommendListFragment;
+import com.ksy.media.widget.ui.base.fragment.CommentListFragment;
+import com.ksy.media.widget.ui.base.fragment.DetailFragment;
+import com.ksy.media.widget.ui.base.fragment.RecommendListFragment;
 import com.ksy.mediaPlayer.widget.R;
 
 public class VideoMediaPlayerPagerAdapter extends FragmentPagerAdapter {

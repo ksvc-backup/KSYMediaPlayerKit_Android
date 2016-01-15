@@ -15,7 +15,7 @@
         android:layout_marginBottom="@dimen/volume_margin_bottom"
         android:src="@drawable/video_light_image" />
 
-    <com.ksy.media.widget.ui.common.MediaPlayerBrightSeekBar
+    <com.ksy.media.widget.ui.base.MediaPlayerBrightSeekBar
         android:id="@+id/seekbar_bright_progress"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

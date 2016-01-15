@@ -84,7 +84,7 @@
             android:layout_marginRight="@dimen/small_margin_left"
             android:src="@drawable/video_change_big" />
 
-        <com.ksy.media.widget.ui.common.MediaPlayerVideoSeekBar
+        <com.ksy.media.widget.ui.base.MediaPlayerVideoSeekBar
             android:id="@+id/seekbar_video_progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

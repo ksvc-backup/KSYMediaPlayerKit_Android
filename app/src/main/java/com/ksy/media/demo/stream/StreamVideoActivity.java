@@ -19,8 +19,8 @@ import android.widget.Toast;
 import com.ksy.media.demo.R;
 import com.ksy.media.widget.ui.stream.StreamMediaPlayerPagerAdapter;
 import com.ksy.media.widget.ui.stream.StreamMediaPlayerView;
-import com.ksy.media.widget.ui.common.fragment.CommentListFragment;
-import com.ksy.media.widget.ui.common.fragment.RecommendListFragment;
+import com.ksy.media.widget.ui.base.fragment.CommentListFragment;
+import com.ksy.media.widget.ui.base.fragment.RecommendListFragment;
 import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.PlayConfig;
 
@@ -125,11 +125,6 @@ public class StreamVideoActivity extends AppCompatActivity implements
 
     @Override
     public void onPrepared() {
-
-    }
-
-    @Override
-    public void onQualityChanged() {
 
     }
 

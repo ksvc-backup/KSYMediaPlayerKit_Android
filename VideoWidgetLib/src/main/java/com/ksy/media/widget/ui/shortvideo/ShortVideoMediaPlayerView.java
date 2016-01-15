@@ -7,14 +7,10 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
 import android.graphics.Color;
-import android.net.TrafficStats;
 import android.os.Environment;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -27,26 +23,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ksy.media.widget.controller.MediaPlayerController;
-import com.ksy.media.widget.controller.ShortVideoMediaPlayerControllerView;
+import com.ksy.media.widget.controller.shortvideo.IShortVideoController;
+import com.ksy.media.widget.controller.video.IVideoController;
+import com.ksy.media.widget.controller.shortvideo.ShortVideoMediaPlayerControllerView;
 import com.ksy.media.widget.model.MediaPlayMode;
+import com.ksy.media.widget.player.IMediaPlayerPlus;
 import com.ksy.media.widget.util.MediaPlayerUtils;
 import com.ksy.media.widget.util.NetReceiver;
 import com.ksy.media.widget.util.NetReceiver.NetState;
 import com.ksy.media.widget.util.NetReceiver.NetStateChangedListener;
 import com.ksy.media.widget.util.WakeLocker;
-import com.ksy.media.widget.ui.common.MediaPlayerBufferingView;
-import com.ksy.media.widget.ui.common.MediaPlayerEventActionView;
-import com.ksy.media.widget.ui.common.MediaPlayerLoadingView;
-import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
+import com.ksy.media.widget.ui.base.MediaPlayerBufferingView;
+import com.ksy.media.widget.ui.base.MediaPlayerEventActionView;
+import com.ksy.media.widget.ui.base.MediaPlayerLoadingView;
 import com.ksy.media.widget.util.IPowerStateListener;
 import com.ksy.media.widget.util.PlayConfig;
 import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.NetworkUtil;
-import com.ksy.media.widget.videoview.MediaPlayerTextureVideoView;
+import com.ksy.media.widget.videoview.MediaPlayerTextureView;
 import com.ksy.mediaPlayer.widget.R;
 import com.ksyun.media.player.IMediaPlayer;
 
@@ -64,13 +60,13 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
     private LayoutInflater mLayoutInflater;
     private Window mWindow;
     private ViewGroup mRootView;
-    private MediaPlayerTextureVideoView mMediaPlayerVideoView;
+    private MediaPlayerTextureView mMediaPlayerVideoView;
     private ShortVideoMediaPlayerControllerView mMediaPlayerSmallControllerView;
     private MediaPlayerBufferingView mMediaPlayerBufferingView;
     private MediaPlayerLoadingView mMediaPlayerLoadingView;
     private MediaPlayerEventActionView mMediaPlayerEventActionView;
     private PlayerViewCallback mPlayerViewCallback;
-    private volatile int mPlayMode = MediaPlayMode.PLAYMODE_FULLSCREEN;
+    private volatile int mPlayMode = MediaPlayMode.PLAY_MODE_FULLSCREEN;
     private volatile boolean mScreenLockMode = false;
     private volatile boolean mScreenshotPreparing = false;
     private boolean mVideoReady = false;
@@ -139,7 +135,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         this.layoutPop = (RelativeLayout) mRootView
                 .findViewById(R.id.layoutPop);
 
-        this.mMediaPlayerVideoView = (MediaPlayerTextureVideoView) mRootView
+        this.mMediaPlayerVideoView = (MediaPlayerTextureView) mRootView
                 .findViewById(R.id.ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);
@@ -159,10 +155,9 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         this.mMediaPlayerVideoView.setOnInfoListener(mOnInfoListener);
         this.mMediaPlayerVideoView.setOnErrorListener(mOnErrorListener);
         this.mMediaPlayerVideoView
-                .setMediaPlayerController(mMediaPlayerController);
+                .setMediaPlayerController(mMediaPlayerPlus);
         this.mMediaPlayerVideoView.setFocusable(false);
         setPowerStateListener(this.mMediaPlayerVideoView);
-
 
         /* 设置playerVideoView UI 参数 */
         LayoutParams mediaPlayerVideoViewParams = new LayoutParams(
@@ -180,11 +175,6 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                 LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         mediaPlayerLoadingViewParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         this.mMediaPlayerLoadingView.hide();
-
-        // 截图成功layout
-        // RelativeLayout.LayoutParams mediaPlayerPopViewParams = new
-        // LayoutParams(
-        // LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
 
         LayoutParams mediaPlayerPopViewParams = new LayoutParams(
                 240, 230);
@@ -429,7 +419,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 
     public void onPause() {
         Log.d(Constants.LOG_TAG, "PlayView OnPause");
-        powerStateListener.onPowerState(Constants.APP_HIDEN);
+        powerStateListener.onPowerState(Constants.APP_HIDDEN);
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
         mPausePosition = mMediaPlayerController.getCurrentPosition();
@@ -608,9 +598,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         void onError(int errorCode, String errorMsg);
     }
 
-    private final MediaPlayerController mMediaPlayerController = new MediaPlayerController() {
-
-        private Bitmap bitmap;
+    private final IShortVideoController mMediaPlayerController = new IShortVideoController() {
 
         @Override
         public void start() {
@@ -695,36 +683,6 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         }
 
         @Override
-        public boolean supportQuality() {
-
-            return true;
-        }
-
-        @Override
-        public boolean supportVolume() {
-
-            return true;
-        }
-
-        @Override
-        public boolean playVideo(String url) {
-
-            mMediaPlayerVideoView.setVideoPath(url);
-            return true;
-        }
-
-        @Override
-        public int getPlayMode() {
-
-            return mPlayMode;
-        }
-
-        @Override
-        public void onRequestPlayMode(int requestPlayMode) {
-            Log.d("Constants.LOG_TAG", "onRequestPlayMode" + requestPlayMode);
-        }
-
-        @Override
         public void onBackPress(int playMode) {
             Log.i(Constants.LOG_TAG,
                     "========playerview back pressed ==============playMode :"
@@ -736,38 +694,33 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 
         @Override
         public void onControllerShow(int playMode) {
-
+            Log.d(Constants.LOG_TAG,"onControllerShow");
         }
 
         @Override
         public void onControllerHide(int playMode) {
-
+            Log.d(Constants.LOG_TAG,"onControllerHide");
         }
 
         @Override
-        public void onRequestLockMode(boolean lockMode) {
-
+        public boolean canStart() {
+            Log.i(Constants.LOG_TAG,
+                    "can Start ? " + mMediaPlayerVideoView.canStart());
+            return mMediaPlayerVideoView.canStart();
         }
+    };
+
+    private IMediaPlayerPlus mMediaPlayerPlus = new IMediaPlayerPlus() {
 
         @Override
         public void onVideoPreparing() {
-
             Log.i(Constants.LOG_TAG, "on video preparing");
             mMediaPlayerLoadingView.setLoadingTip("loading ...");
             mMediaPlayerLoadingView.show();
         }
 
         @Override
-        public boolean canStart() {
-
-            Log.i(Constants.LOG_TAG,
-                    "can Start ? " + mMediaPlayerVideoView.canStart());
-            return mMediaPlayerVideoView.canStart();
-        }
-
-        @Override
         public void onPlay() {
-
             Log.i(Constants.LOG_TAG, "on play called");
             mMediaPlayerEventActionView.hide();
             mMediaPlayerSmallControllerView.updateVideoPlaybackState(true);
@@ -780,132 +733,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             mMediaPlayerEventActionView.hide();
             mMediaPlayerSmallControllerView.updateVideoPlaybackState(false);
         }
-
-        @Override
-        public void onMovieRatioChange(int screenSize) {
-            mMediaPlayerVideoView.setVideoLayout(screenSize);
-        }
-
-        @Override
-        public void onMoviePlayRatioUp() {
-        }
-
-        @Override
-        public void onMoviePlayRatioDown() {
-        }
-
-        @Override
-        public void onMovieCrop() {
-            if (!mScreenshotPreparing) {
-                mScreenshotPreparing = true;
-                bitmap = Bitmap.createBitmap(
-                        mMediaPlayerVideoView.getVideoWidth(),
-                        mMediaPlayerVideoView.getVideoHeight(),
-                        Config.ARGB_8888);
-                if (bitmap != null) {
-                    mMediaPlayerVideoView.getCurrentFrame(bitmap);
-                    compressAndSaveBitmapToSDCard(bitmap, getCurrentTime(),
-                            ShortVideoMediaPlayerView.QUALITY_BEST);
-                    /*
-                     * Toast.makeText( getContext(),
-					 * "screenshoot saved in path :/storage/emulated/0/KSY_SDK_SCREENSHOT"
-					 * , Toast.LENGTH_SHORT).show();
-					 */
-
-                    layoutPop.setVisibility(View.VISIBLE);
-                    mHandler.postDelayed(runnableCrop, 1000);
-
-                    mScreenshotPreparing = false;
-                } else {
-                    Log.d(Constants.LOG_TAG, "bitmap is null");
-                }
-            }
-
-        }
-
-        @Override
-        public void onVolumeDown() {
-            Log.d(Constants.LOG_TAG, "audio down");
-            if (mMediaPlayerController != null
-                    && mMediaPlayerController.isPlaying()) {
-                if (mCurrentPlayingVolumeRatio == 0) {
-                    Log.d(Constants.LOG_TAG, "current playing volume is 0");
-                    return;
-                } else {
-                    mCurrentPlayingVolumeRatio = mCurrentPlayingVolumeRatio - 0.5f;
-//                    mMediaPlayerVideoView
-//                            .setAudioAmplify(mCurrentPlayingVolumeRatio);
-                    Log.d(Constants.LOG_TAG, "set playing volume to --->"
-                            + mCurrentPlayingVolumeRatio);
-                    return;
-                }
-            }
-        }
-
-        @Override
-        public void onVolumeUp() {
-            Log.d(Constants.LOG_TAG, "audio up");
-            if (mMediaPlayerController != null
-                    && mMediaPlayerController.isPlaying()) {
-                if (mCurrentPlayingVolumeRatio == MAX_PLAYING_VOLUME_RATIO) {
-                    Log.d(Constants.LOG_TAG, "current playing ratio is max");
-                    return;
-                } else {
-                    mCurrentPlayingVolumeRatio = mCurrentPlayingVolumeRatio + 0.5f;
-//                    mMediaPlayerVideoView
-//                            .setAudioAmplify(mCurrentPlayingVolumeRatio);
-                    Log.d(Constants.LOG_TAG, "set playing volume to --->"
-                            + mCurrentPlayingVolumeRatio);
-                }
-            }
-        }
     };
-
-    // 延迟操作
-    Runnable runnableCrop = new Runnable() {
-        @Override
-        public void run() {
-            layoutPop.setVisibility(View.GONE);
-        }
-    };
-
-    private String getCurrentTime() {
-
-        StringBuffer buffer = new StringBuffer();
-        SimpleDateFormat sDateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd_hh:mm:ss", Locale.US);
-        buffer.append(sDateFormat.format(new java.util.Date())).append(".")
-                .append("png");
-        return buffer.toString();
-    }
-
-    private void compressAndSaveBitmapToSDCard(Bitmap rawBitmap,
-                                               String fileName, int quality) {
-
-        File directory = new File(Environment.getExternalStorageDirectory()
-                + File.separator + ShortVideoMediaPlayerView.CAPTURE_SCREEN_PATH);
-        if (!directory.exists()) {
-            directory.mkdir();
-        }
-        File saveFile = new File(directory, fileName);
-        if (!saveFile.exists()) {
-            try {
-                FileOutputStream fileOutputStream = new FileOutputStream(
-                        saveFile);
-                if (fileOutputStream != null) {
-                    rawBitmap.compress(Bitmap.CompressFormat.PNG, quality,
-                            fileOutputStream);
-                }
-                fileOutputStream.flush();
-                fileOutputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-
-            }
-        } else {
-            Log.d(Constants.LOG_TAG, "too frequently screen shot");
-        }
-    }
 
     @Override
     public void onPowerState(int state) {

@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.ksy.media.widget.ui.common.fragment.CommentListFragment">
+    tools:context="com.ksy.media.widget.ui.base.fragment.CommentListFragment">
 
     <GridView
         android:id="@android:id/list"

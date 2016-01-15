@@ -36,7 +36,7 @@ public class PhoneLiveReplayActivity extends AppCompatActivity implements LiveRe
         playerViewLiveReplay.setPlayerViewCallback(this);
 
         final View dialogView = LayoutInflater.from(this).inflate(
-                R.layout.dialog_input, null);
+                R.layout.livereplay_dialog_input, null);
         final EditText editInput = (EditText) dialogView
                 .findViewById(R.id.input);
         // startPlayer("");

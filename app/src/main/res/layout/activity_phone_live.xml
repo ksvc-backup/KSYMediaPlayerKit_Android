@@ -13,5 +13,6 @@
         android:id="@+id/player_view_live"
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
-        app:playmode="window" />
+        app:playmode="window">
+    </com.ksy.media.widget.ui.live.LiveMediaPlayerView>
 </RelativeLayout>
