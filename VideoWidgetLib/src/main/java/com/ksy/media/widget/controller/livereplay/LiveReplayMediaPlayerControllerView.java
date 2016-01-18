@@ -1,7 +1,6 @@
 package com.ksy.media.widget.controller.livereplay;
 
 import android.content.Context;
-import android.content.res.Configuration;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -16,8 +15,6 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
-
-import com.ksy.media.widget.controller.video.IVideoController;
 import com.ksy.media.widget.ui.base.LiveAnchorDialog;
 import com.ksy.media.widget.ui.base.MediaPlayerVideoSeekBar;
 import com.ksy.media.widget.ui.base.HeartLayout;
@@ -508,17 +505,6 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 
 	private int randomColor() {
 		return  Color.rgb(mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255));
-	}
-
-	@Override
-	public void onConfigurationChanged(Configuration newConfig) {
-		super.onConfigurationChanged(newConfig);
-
-		if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
-			// land do nothing is ok
-		} else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-			// port do nothing is ok
-		}
 	}
 
 }

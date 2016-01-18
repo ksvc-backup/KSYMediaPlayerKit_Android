@@ -3,7 +3,6 @@ package com.ksy.media.widget.controller.shortvideo;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -12,7 +11,6 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.ksy.media.widget.controller.base.MediaPlayerBaseControllerView;
-import com.ksy.media.widget.controller.video.IVideoController;
 import com.ksy.media.widget.model.MediaPlayMode;
 import com.ksy.media.widget.util.MediaPlayerUtils;
 import com.ksy.media.widget.ui.base.MediaPlayerVideoSeekBar;

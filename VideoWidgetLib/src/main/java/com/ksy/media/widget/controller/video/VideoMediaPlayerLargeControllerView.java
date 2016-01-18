@@ -143,7 +143,6 @@ public class VideoMediaPlayerLargeControllerView extends
 //        mRelateListview = (ListView) findViewById(R.id.relatedlistview);
 
         mLockView = (MediaPlayerLockView) findViewById(R.id.widget_lock_view);
-
         mVideoProgressLayout = (RelativeLayout) findViewById(R.id.video_progress_layout);
         mSeekBar = (MediaPlayerVideoSeekBar) findViewById(R.id.video_seekbar);
         mCurrentTimeTextView = (TextView) findViewById(R.id.video_current_time_text_view);
@@ -164,7 +163,6 @@ public class VideoMediaPlayerLargeControllerView extends
         // mWidgetVolumeView = (MediaPlayerVolumeView)
         // findViewById(R.id.widget_volume_view); //声音调节 进度条相关
         mWidgetVolumeControl = (MediaPlayerControllerVolumeView) findViewById(R.id.widget_controller_volume);
-
         mWidgetSeekView = (MediaPlayerSeekView) findViewById(R.id.widget_seek_view);
 
         // mWidgetControllerVolumeView = (MediaPlayerControllerVolumeView)
@@ -536,35 +534,12 @@ public class VideoMediaPlayerLargeControllerView extends
         } else if (id == changeScreenImage.getId()) {
             ((IVideoController) mMediaPlayerController)
                     .onRequestPlayMode(MediaPlayMode.PLAY_MODE_WINDOW);
-            Log.d("lixp", "video change clicked ..");
         } else if (id == recentImage.getId()) {
             Toast.makeText(mContext, "recent clicked", Toast.LENGTH_SHORT).show();
-            Log.d("lixp", "video recent clicked ..");
         } else if (id == hdImage.getId()) {
             Toast.makeText(mContext, "hd clicked", Toast.LENGTH_SHORT).show();
-            Log.d("lixp", "video hd clicked ..");
         }
 
-    }
-
-    /**
-     * 由于拖动引起的视图变化的回调
-     */
-    public interface OnGuestureChangeListener {
-        /**
-         * 亮度有变化回调
-         */
-        void onLightChanged();
-
-        /**
-         * 声音有变化回调
-         */
-        void onVolumeChanged();
-
-        /**
-         * 播放进度有变化回调
-         */
-        void onPlayProgressChanged();
     }
 
     /**

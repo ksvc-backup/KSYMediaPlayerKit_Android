@@ -20,7 +20,6 @@ public class StreamMediaPlayerSmallControllerView extends MediaPlayerBaseControl
 
     private Context mContext;
     private RelativeLayout mControllerTopView;
-//    private RelativeLayout mBackLayout;
     private ImageView backImage;
     private TextView mTitleTextView;
     private RelativeLayout mControllerBottomView;

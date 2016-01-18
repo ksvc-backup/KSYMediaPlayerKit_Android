@@ -120,6 +120,18 @@ public class StreamMediaPlayerLargeControllerView extends
 //        mQualityTextView = (TextView) findViewById(R.id.tv_definition); // 分辨率切换
 
         stream_controller_comment = (EditText) findViewById(R.id.stream_controller_comment);
+        stream_controller_comment.setOnFocusChangeListener(new android.view.View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+
+                if(hasFocus) {
+                    show(0);
+                } else {
+                    show();
+                }
+            }
+        });
+
         mLockView = (MediaPlayerLockView) findViewById(R.id.widget_lock_view);
 
         mVideoProgressLayout = (RelativeLayout) findViewById(R.id.video_progress_layout);
@@ -361,26 +373,6 @@ public class StreamMediaPlayerLargeControllerView extends
             Toast.makeText(mContext, "hd clicked", Toast.LENGTH_SHORT).show();
         }
 
-    }
-
-    /**
-     * 由于拖动引起的视图变化的回调
-     */
-    public interface OnGuestureChangeListener {
-        /**
-         * 亮度有变化回调
-         */
-        void onLightChanged();
-
-        /**
-         * 声音有变化回调
-         */
-        void onVolumeChanged();
-
-        /**
-         * 播放进度有变化回调
-         */
-        void onPlayProgressChanged();
     }
 
     /**

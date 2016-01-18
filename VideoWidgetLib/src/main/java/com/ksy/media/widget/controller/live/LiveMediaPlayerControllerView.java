@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -27,7 +26,6 @@ import com.ksy.media.widget.ui.base.LivePersonDialog;
 import com.ksy.media.widget.ui.live.LiveChatAdapter;
 import com.ksy.media.widget.ui.live.LiveHeadListAdapter;
 import com.ksy.mediaPlayer.widget.R;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -340,7 +338,6 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 				liveShareButton.setVisibility(GONE);
 				liveEditText.setVisibility(GONE);
 				liveImageView.setVisibility(GONE);
-//				liveSwitchButton.setText(getResources().getString(R.string.live_info_quiet));
 				liveSwitchButton.setImageResource(R.drawable.live_quiet_model_image);
 				livePersonCountTextView.setVisibility(GONE);
 				livePraiseCountTextView.setVisibility(GONE);
@@ -349,7 +346,7 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 				isSwitch = true;
 			}
 		} else if (id == liveImageView.getId()) {
-            //TODO
+
 			livePraiseCount ++;
 			livePraiseCountTextView.setText(String.valueOf(livePraiseCount));
 		}

@@ -70,19 +70,6 @@
                 android:textColor="@color/white"
                 android:textSize="14sp" />
 
-            <EditText
-                android:id="@+id/video_controller_comment"
-                android:layout_width="@dimen/live_person_three_handred"
-                android:layout_height="@dimen/live_dialog_height"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/small_margin_left"
-                android:layout_toRightOf="@+id/video_total_time_text_view"
-                android:hint="@string/live_comment"
-                android:paddingLeft="@dimen/small_margin_left"
-                android:textColor="@color/white"
-                android:backgroundTint="@color/live_edit_frame"
-                android:textColorHint="@color/live_edit_content" />
-
             <ImageView
                 android:id="@+id/video_recent_image"
                 android:layout_width="wrap_content"

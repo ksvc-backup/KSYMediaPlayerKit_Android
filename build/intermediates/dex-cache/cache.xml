@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\exploded-aar\KSYMediaPlayer-Android-SDK-LIBRARY-AS\VideoWidgetLib\unspecified\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="2dab04ad87c6f3deb9768c185be7beef0ff1f7a8">
+        <dex dex="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\pre-dexed\debug\classes-860166759d29f8f458dc9fab6bdf18b21f661c89.jar" />
+    </item>
+
+</items>

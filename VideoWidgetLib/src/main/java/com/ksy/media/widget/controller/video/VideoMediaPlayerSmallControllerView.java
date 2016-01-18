@@ -260,6 +260,4 @@ public class VideoMediaPlayerSmallControllerView extends MediaPlayerBaseControll
         }
     }
 
-
-
 }

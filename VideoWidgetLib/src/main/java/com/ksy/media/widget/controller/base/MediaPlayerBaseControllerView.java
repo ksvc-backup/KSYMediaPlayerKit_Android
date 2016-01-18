@@ -13,12 +13,6 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
-
-import com.ksy.media.widget.controller.video.IVideoController;
-import com.ksy.media.widget.ui.base.MediaPlayerControllerBrightView;
-import com.ksy.media.widget.ui.base.MediaPlayerControllerVolumeView;
-import com.ksy.media.widget.ui.base.MediaPlayerScreenSizePopupView;
-import com.ksy.media.widget.ui.base.MediaPlayerSeekView;
 import com.ksy.media.widget.model.MediaPlayerMovieRatio;
 import com.ksy.media.widget.util.MediaPlayerUtils;
 import com.ksy.media.widget.model.MediaPlayerVideoQuality;
