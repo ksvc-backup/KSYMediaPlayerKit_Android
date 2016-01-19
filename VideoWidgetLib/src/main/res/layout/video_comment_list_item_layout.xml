@@ -54,7 +54,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:layout_marginRight="@dimen/list_item_margin"
+        android:layout_marginTop="@dimen/list_item_margin"
         android:text="Text"
-        android:textColor="@color/ksy_color_font"
+        android:textColor="@color/ksy_color_font_alpha"
         android:textSize="@dimen/small_text_size" />
 </RelativeLayout>

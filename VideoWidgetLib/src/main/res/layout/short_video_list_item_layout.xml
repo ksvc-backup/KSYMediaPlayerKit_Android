@@ -32,7 +32,7 @@
         android:layout_marginLeft="@dimen/list_item_large_margin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/ksy_color_font"
+        android:textColor="@color/ksy_color_font_alpha"
         android:layout_marginTop="@dimen/small_margin_left"
         android:layout_alignParentRight="true"
         android:layout_marginRight="@dimen/live_margin_left"
@@ -49,5 +49,6 @@
         android:layout_toEndOf="@+id/icon_img"
         android:layout_toRightOf="@+id/icon_img"
         android:text="comment_tv"
+        android:layout_marginBottom="@dimen/small_margin_left"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 </RelativeLayout>

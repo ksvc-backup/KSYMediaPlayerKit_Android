@@ -12,6 +12,7 @@
         android:headerDividersEnabled="false"
         android:stackFromBottom="true"
         android:dividerHeight="@dimen/live_margin"
+        android:divider="@null"
         android:layout_marginLeft="@dimen/live_margin_left"
         android:layout_width="@dimen/live_person_two_hundred"
         android:layout_height="@dimen/live_person_three_handred">
