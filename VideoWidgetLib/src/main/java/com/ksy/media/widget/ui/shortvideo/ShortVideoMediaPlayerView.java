@@ -281,48 +281,27 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             public void onNetStateChanged(NetState netCode) {
 
                 switch (netCode) {
-
                     case NET_NO:
                         Log.i(Constants.LOG_TAG, "网络断了");
-
-                        // Toast.makeText(getContext(), "网络变化了:没有网络连接",
-                        // Toast.LENGTH_LONG).show();
                         break;
                     case NET_2G:
                         Log.i(Constants.LOG_TAG, "2g网络");
-
-                        // Toast.makeText(getContext(), "网络变化了:2g网络",
-                        // Toast.LENGTH_LONG).show();
                         break;
                     case NET_3G:
                         Log.i(Constants.LOG_TAG, "3g网络");
-
-                        // Toast.makeText(getContext(), "网络变化了:3g网络",
-                        // Toast.LENGTH_LONG).show();
                         break;
                     case NET_4G:
                         Log.i(Constants.LOG_TAG, "4g网络");
-
-                        // Toast.makeText(getContext(), "网络变化了:4g网络",
-                        // Toast.LENGTH_LONG).show();
                         break;
                     case NET_WIFI:
                         Log.i(Constants.LOG_TAG, "WIFI网络");
-
-                        // Toast.makeText(getContext(), "网络变化了:WIFI网络",
-                        // Toast.LENGTH_LONG).show();
                         break;
 
                     case NET_UNKNOWN:
                         Log.i(Constants.LOG_TAG, "未知网络");
-
-                        // Toast.makeText(getContext(), "网络变化了:未知网络",
-                        // Toast.LENGTH_LONG).show();
                         break;
                     default:
                         Log.i(Constants.LOG_TAG, "不知道什么情况~>_<~");
-                        // Toast.makeText(getContext(), "网络变化了:不知道什么情况~>_<~",
-                        // Toast.LENGTH_LONG).show();
                 }
             }
         };

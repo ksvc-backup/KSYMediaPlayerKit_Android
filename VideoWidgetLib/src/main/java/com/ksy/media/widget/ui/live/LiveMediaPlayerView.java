@@ -43,7 +43,8 @@ import com.ksy.media.widget.util.NetReceiver.NetStateChangedListener;
 import com.ksy.media.widget.util.NetworkUtil;
 import com.ksy.media.widget.util.PlayConfig;
 import com.ksy.media.widget.util.WakeLocker;
-import com.ksy.media.widget.videoview.PhoneLiveMediaPlayerTextureView;
+
+import com.ksy.media.widget.videoview.MediaPlayerTextureView;
 import com.ksy.mediaPlayer.widget.R;
 import com.ksyun.media.player.IMediaPlayer;
 
@@ -55,7 +56,8 @@ public class LiveMediaPlayerView extends RelativeLayout implements
     private LayoutInflater mLayoutInflater;
     private Window mWindow;
     private ViewGroup mRootView;
-    private PhoneLiveMediaPlayerTextureView mLiveMediaPlayerVideoView;
+//    private PhoneLiveMediaPlayerTextureView mLiveMediaPlayerVideoView;
+    private MediaPlayerTextureView mLiveMediaPlayerVideoView;
     private LiveMediaPlayerControllerView mLiveMediaPlayerControllerView;
     private MediaPlayerBufferingView mMediaPlayerBufferingView;
     private MediaPlayerLoadingView mMediaPlayerLoadingView;
@@ -146,7 +148,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         this.mRootView = (ViewGroup) mLayoutInflater.inflate(
                 R.layout.live_blue_media_player_view, null);
 
-        this.mLiveMediaPlayerVideoView = (PhoneLiveMediaPlayerTextureView) mRootView
+        this.mLiveMediaPlayerVideoView = (MediaPlayerTextureView) mRootView
                 .findViewById(R.id.live_ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);
@@ -333,7 +335,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         });
 
         // Default not use,if need it ,open it
-        initOrientationEventListener(context);
+//        initOrientationEventListener(context);
 
         mNetReceiver = NetReceiver.getInstance();
         mNetChangedListener = new NetStateChangedListener() {
@@ -461,7 +463,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
         mPausePosition = mMediaPlayerController.getCurrentPosition();
-
+        mLiveMediaPlayerControllerView.stopLiveTimer();
         disableOrientationEventListener();
         WakeLocker.release();
     }
@@ -508,12 +510,12 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                         if (mScreenOrientation == ORIENTATION_LANDSCAPE_NORMAL
                                 || mScreenOrientation == ORIENTATION_LANDSCAPE_REVERSED) {
                             Log.i("eflake", "Accurate ScreenOrientation = " + mScreenOrientation);
-                            mLiveMediaPlayerVideoView.setNeedMatrixTransform(true);
-                            doScreenOrientationRotate(mScreenOrientation);
+//                            mLiveMediaPlayerVideoView.setNeedMatrixTransform(true);
+//                            doScreenOrientationRotate(mScreenOrientation);
                         } else if (mScreenOrientation == ORIENTATION_PORTRAIT_NORMAL) {
                             Log.i("eflake", "Accurate ScreenOrientation = " + mScreenOrientation);
-                            mLiveMediaPlayerVideoView.setNeedMatrixTransform(true);
-                            doScreenOrientationRotate(mScreenOrientation);
+//                            mLiveMediaPlayerVideoView.setNeedMatrixTransform(true);
+//                            doScreenOrientationRotate(mScreenOrientation);
                         }
                     }
                 }
@@ -554,7 +556,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
     }
 
     private void doScreenOrientationRotate(int screenOrientation) {
-        mLiveMediaPlayerVideoView.setTargetOrientation(mScreenOrientation);
+//        mLiveMediaPlayerVideoView.setTargetOrientation(mScreenOrientation);
         switch (screenOrientation) {
             case ORIENTATION_PORTRAIT_NORMAL:
                 mActivity
