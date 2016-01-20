@@ -24,8 +24,6 @@ import com.ksy.media.widget.ui.base.MediaPlayerControllerVolumeView;
 import com.ksy.media.widget.ui.base.MediaPlayerScreenSizePopupView;
 import com.ksy.media.widget.util.MediaPlayerUtils;
 import com.ksy.media.widget.model.MediaPlayerVideoQuality;
-import com.ksy.media.widget.ui.video.VideoRelateVideoInfo;
-import com.ksy.media.widget.ui.video.VideoRelatedVideoAdapter;
 import com.ksy.media.widget.ui.base.MediaPlayerLockView;
 import com.ksy.media.widget.ui.base.MediaPlayerSeekView;
 import com.ksy.media.widget.ui.base.MediaPlayerVolumeSeekBar.onScreenShowListener;
@@ -53,11 +51,7 @@ public class StreamMediaPlayerLargeControllerView extends
 
     private LinearLayout mQualityLayout; // 视频清晰度切换
     private TextView mQualityTextView;
-
-    private List<VideoRelateVideoInfo> relationList;
-    private VideoRelatedVideoAdapter relatedAdapter;
     private Context mContext;
-
     private RelativeLayout mVideoProgressLayout;
     private ImageView mScreenModeImageView;
 
@@ -139,14 +133,9 @@ public class StreamMediaPlayerLargeControllerView extends
 
         mWidgetVolumeControl = (MediaPlayerControllerVolumeView) findViewById(R.id.widget_controller_volume);
         mControllerBrightView = (MediaPlayerControllerBrightView) findViewById(R.id.widge_control_light_view); // 新亮度调节
-
 //        mQualityPopup = new MediaPlayerQualityPopupView(getContext());
-
         mWidgetSeekView = (MediaPlayerSeekView) findViewById(R.id.widget_seek_view);
         setOnSystemUiVisibilityChangeListener(this);
-        //相关数据加载,没有数据，设置本地测试数据
-        relationList = new ArrayList<VideoRelateVideoInfo>();
-        relatedAdapter = new VideoRelatedVideoAdapter(relationList, mContext);
     }
 
     @Override

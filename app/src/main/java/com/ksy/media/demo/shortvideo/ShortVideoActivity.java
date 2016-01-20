@@ -110,11 +110,25 @@ public class ShortVideoActivity extends AppCompatActivity implements
         shortVideoPopupWindow.setTouchable(true);
         shortVideoPopupWindow.setBackgroundDrawable(new BitmapDrawable());
 
+        setupInputHide();
         setupFunctionIcon();
         setupCommentList();
         setupDialog();
         setupAnimation();
         setupToolbar();
+    }
+
+    private void setupInputHide() {
+        pop_edittext_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    pop_edittext_et.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(pop_edittext_et.getWindowToken(), 0);
+                }
+            }
+        });
     }
 
     private void setupFunctionIcon() {
@@ -302,7 +316,7 @@ public class ShortVideoActivity extends AppCompatActivity implements
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         if (scrollFlag) {
-//            Log.d(Constants.LOG_TAG, "firstVisibleItem = " + firstVisibleItem + ",visibleItemCount = " + visibleItemCount + ",totalItemCount = " + totalItemCount);
+//            Log.d("lixp", "firstVisibleItem = " + firstVisibleItem + ",visibleItemCount = " + visibleItemCount + ",totalItemCount = " + totalItemCount);
             if (firstVisibleItem == 0) {
                 if (!playerViewShortMovie.isTextureViewVisible()) {
                     playerViewShortMovie.setTextureViewVisible(true);
@@ -318,11 +332,13 @@ public class ShortVideoActivity extends AppCompatActivity implements
             if (firstVisibleItem > lastVisibleItemPosition) {
                 //Up
                 currentState = STATE_UP;
+
             }
             if (firstVisibleItem < lastVisibleItemPosition) {
                 //Down
                 currentState = STATE_DOWN;
             }
+
             if (lastState > currentState) {
                 hideCommentLayout();
             } else if (lastState < currentState) {

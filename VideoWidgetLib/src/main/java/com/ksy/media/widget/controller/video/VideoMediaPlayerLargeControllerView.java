@@ -58,10 +58,6 @@ public class VideoMediaPlayerLargeControllerView extends
 //    private LinearLayout mQualityLayout; // 视频清晰度切换
 //    private TextView mQualityTextView;
 
-    //    private TextView mEpisodeTextView; //剧集
-//    private ListView mRelateListview; //剧集相关
-//    private List<VideoRelateVideoInfo> relationList;
-//    private VideoRelatedVideoAdapter relatedAdapter;
     private Context mContext;
 
     private RelativeLayout mVideoProgressLayout;
@@ -128,9 +124,7 @@ public class VideoMediaPlayerLargeControllerView extends
         recentImage = (ImageView) findViewById(R.id.video_recent_image);
         hdImage = (ImageView) findViewById(R.id.video_hq_image);
 
-
 //		mVideoSizeImageView = (ImageView) findViewById(R.id.video_size_image_view); // 视频尺寸切换
-
         // mVideoRatioBackView = (ImageView) findViewById(R.id.video_fast_back_view);
         // mVideoRatioForwardView = (ImageView)findViewById(R.id.video_fast_forward_view);
 
@@ -155,7 +149,6 @@ public class VideoMediaPlayerLargeControllerView extends
         mQualityPopup = new MediaPlayerQualityPopupView(getContext());
 
 //        mScreenPopup = new MediaPlayerScreenSizePopupView(getContext()/*, mMediaPlayerController*/);
-
         // mWidgetLightView = (MediaPlayerBrightView) findViewById(R.id.widget_light_view); //亮度调节
 
         mControllerBrightView = (MediaPlayerControllerBrightView) findViewById(R.id.widge_control_light_view); // 新亮度调节
@@ -170,14 +163,6 @@ public class VideoMediaPlayerLargeControllerView extends
         // Log.d(Constants.LOG_TAG, " listener set in L C");
         // mWidgetControllerVolumeView.setOnScreenShowListener(this);
         setOnSystemUiVisibilityChangeListener(this);
-
-
-        //相关数据加载,没有数据，设置本地测试数据
-//        relationList = new ArrayList<VideoRelateVideoInfo>();
-//        relatedAdapter = new VideoRelatedVideoAdapter(relationList, mContext);
-//		Log.d(Constants.LOG_TAG, "170 mContext =" + relationList + ">>relationList=" + relationList);
-//        mRelateListview.setAdapter(relatedAdapter);
-//		mRelateListview.setCacheColorHint(Color.TRANSPARENT);
     }
 
     @Override
@@ -194,7 +179,6 @@ public class VideoMediaPlayerLargeControllerView extends
 //        mQualityLayout.setOnClickListener(this);
 //        mVideoSizeLayout.setOnClickListener(this);
         mTitleTextView.setOnClickListener(this);
-//        mEpisodeTextView.setOnClickListener(this);//剧集
 
 //		mVideoSizeImageView.setOnClickListener(this);
 
@@ -523,10 +507,6 @@ public class VideoMediaPlayerLargeControllerView extends
         }*/ else if (id == mScreenModeImageView.getId()) { // 切换大小屏幕
             ((IVideoController) mMediaPlayerController)
                     .onRequestPlayMode(MediaPlayMode.PLAY_MODE_WINDOW);
-
-//        } else if (id == mEpisodeTextView.getId()) { //剧集
-//            Log.d(TAG, "id == mEpisodeTextView.getId()  ...");
-//            mRelateListview.setVisibility(VISIBLE);
         } else if (id == video_top_setting.getId()) {
             Toast.makeText(mContext, "setting clicked", Toast.LENGTH_SHORT).show();
         } else if (id == video_top_camera.getId()) {

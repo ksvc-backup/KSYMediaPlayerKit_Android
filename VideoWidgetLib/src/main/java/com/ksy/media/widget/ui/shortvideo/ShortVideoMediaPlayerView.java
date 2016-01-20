@@ -410,13 +410,16 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 
         @Override
         public void onPrepared(IMediaPlayer mp) {
-            Log.d(Constants.LOG_TAG,
-                    "IMediaPlayer.OnPreparedListener onPrepared");
+            Log.e(Constants.LOG_TAG,
+                    "IMediaPlayer.OnPreparedListener onPrepared 11 ");
             int duration = 0;
             if (mMediaPlayerController != null)
                 duration = mMediaPlayerController.getDuration();
 
+            Log.e("Constants.LOG_TAG", "mIsComplete =" + mIsComplete);
             if (mIsComplete) {
+                Log.e(Constants.LOG_TAG,
+                        "IMediaPlayer.OnPreparedListener onPrepared 22");
                 mMediaPlayerSmallControllerView.hide();
                 mMediaPlayerEventActionView
                         .updateEventMode(
@@ -426,6 +429,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                 WakeLocker.release();
             }
             if (mPausePosition > 0 && duration > 0) {
+                Log.e("Constants.LOG_TAG", "mPausePosition =" + mPausePosition);
                 if (!mIsComplete) {
                     mMediaPlayerController.pause();
                     mMediaPlayerController.seekTo(mPausePosition);
@@ -443,16 +447,19 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             mMediaPlayerLoadingView.hide();
 
             if (!mIsComplete) {
+                Log.e(Constants.LOG_TAG, "mOnPreparedListener ingore start  11");
                 if (!mMediaPlayerVideoView.mNeedPauseAfterLeave) {
+                    Log.e(Constants.LOG_TAG, "mOnPreparedListener ingore start  22");
                     mMediaPlayerVideoView.start();
                 } else {
-                    Log.d(Constants.LOG_TAG, "mOnPreparedListener ingore start for last paused state");
+                    Log.e(Constants.LOG_TAG, "mOnPreparedListener ingore start for last paused state");
                     mMediaPlayerVideoView.mNeedPauseAfterLeave = false;
                 }
             }
 
             mVideoReady = true;
             if (mPlayerViewCallback != null)
+                Log.e(Constants.LOG_TAG, "mPlayerViewCallback ");
                 mPlayerViewCallback.onPrepared();
         }
 
@@ -463,7 +470,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         @Override
         public void onCompletion(IMediaPlayer mp) {
 
-            Log.i(Constants.LOG_TAG, "================onCompletion============");
+            Log.i(Constants.LOG_TAG, "=========11=======onCompletion============");
             if (mRecyclePlay) {
                 Log.i(Constants.LOG_TAG, "==replay==");
                 mMediaPlayerEventActionView.hide();
@@ -473,6 +480,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                     mMediaPlayerVideoView.start();
                 }
             } else {
+                Log.i(Constants.LOG_TAG, "===========22=====onCompletion============");
                 mIsComplete = true;
                 mMediaPlayerSmallControllerView.hide();
                 mMediaPlayerEventActionView

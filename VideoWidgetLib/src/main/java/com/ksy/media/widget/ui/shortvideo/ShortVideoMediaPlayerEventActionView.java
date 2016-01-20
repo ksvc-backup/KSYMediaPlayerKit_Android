@@ -21,16 +21,14 @@ public class ShortVideoMediaPlayerEventActionView extends RelativeLayout {
 
     private RelativeLayout mRootView;
     private ImageView mBackImageView;
-
-
     private RelativeLayout mWaitLayout;
-
     private RelativeLayout mxCompleteLayout;
 //    private LinearLayout mCompeteReplayLayout;
 
     private Button mCompletaReplayButton;
     private LinearLayout mErrorLayout;
-    private LinearLayout mErrorReplayLayout;
+    private Button mErrorReplayButton;
+
     private TextView mErrorTextView;
 
     private EventActionViewCallback mCallback;
@@ -68,11 +66,10 @@ public class ShortVideoMediaPlayerEventActionView extends RelativeLayout {
 
         mCompletaReplayButton = (Button)findViewById(R.id.complete_replay_bt);
         mErrorLayout = (LinearLayout) findViewById(R.id.error_layout);
-        mErrorReplayLayout = (LinearLayout) findViewById(R.id.error_replay_layout);
+        mErrorReplayButton = (Button) findViewById(R.id.short_error_replay_bt);
         mErrorTextView = (TextView) findViewById(R.id.error_info_title_text_view);
 
         mWaitLayout.setOnClickListener(new OnClickListener() {
-
             @Override
             public void onClick(View v) {
 
@@ -90,7 +87,7 @@ public class ShortVideoMediaPlayerEventActionView extends RelativeLayout {
             }
         });
 
-        mErrorReplayLayout.setOnClickListener(new OnClickListener() {
+        mErrorReplayButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 

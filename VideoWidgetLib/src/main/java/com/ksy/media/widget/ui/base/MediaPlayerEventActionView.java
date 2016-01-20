@@ -27,10 +27,9 @@ public class MediaPlayerEventActionView extends RelativeLayout {
 
     private RelativeLayout mxCompleteLayout;
 //    private LinearLayout mCompeteReplayLayout;
-
     private Button mCompletaReplayButton;
     private LinearLayout mErrorLayout;
-    private LinearLayout mErrorReplayLayout;
+    private Button mErrorReplayBt;
     private TextView mErrorTextView;
 
     private EventActionViewCallback mCallback;
@@ -70,7 +69,7 @@ public class MediaPlayerEventActionView extends RelativeLayout {
 
         mCompletaReplayButton = (Button)findViewById(R.id.complete_replay_bt);
         mErrorLayout = (LinearLayout) findViewById(R.id.error_layout);
-        mErrorReplayLayout = (LinearLayout) findViewById(R.id.error_replay_layout);
+        mErrorReplayBt = (Button) findViewById(R.id.video_error_replay_bt);
         mErrorTextView = (TextView) findViewById(R.id.error_info_title_text_view);
 
         mBackImageView.setOnClickListener(new OnClickListener() {
@@ -100,7 +99,7 @@ public class MediaPlayerEventActionView extends RelativeLayout {
             }
         });
 
-        mErrorReplayLayout.setOnClickListener(new OnClickListener() {
+        mErrorReplayBt.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 

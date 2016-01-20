@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -88,6 +89,18 @@ public class CommentListFragment extends Fragment implements AbsListView.OnItemC
         commentLayout = LayoutInflater.from(getActivity()).inflate(
                 R.layout.video_pop_layout, null);
         pop_edittext_et = (EditText) commentLayout.findViewById(R.id.pop_edittext_et);
+
+        pop_edittext_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    pop_edittext_et.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(pop_edittext_et.getWindowToken(), 0);
+                }
+            }
+        });
+
         pop_comment_btn = commentLayout.findViewById(R.id.pop_comment_btn);
         pop_comment_btn.setOnClickListener(this);
         return view;
@@ -186,6 +199,5 @@ public class CommentListFragment extends Fragment implements AbsListView.OnItemC
         params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
         view_container.addView(commentLayout, params);
     }
-
 
 }

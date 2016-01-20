@@ -26,7 +26,7 @@ public class LiveReplayMediaPlayerEventActionView extends RelativeLayout {
 	private RelativeLayout mxCompleteLayout;
 
 	private LinearLayout mErrorLayout;
-	private LinearLayout mErrorReplayLayout;
+	private Button mErrorReplayBt;
 	private TextView mErrorTextView;
 
 	private EventActionViewCallback mCallback;
@@ -60,7 +60,7 @@ public class LiveReplayMediaPlayerEventActionView extends RelativeLayout {
 		mxCompleteLayout = (RelativeLayout) findViewById(R.id.layout_live_replay_finish);
 
 		mErrorLayout = (LinearLayout) findViewById(R.id.live_replay_error_layout);
-		mErrorReplayLayout = (LinearLayout) findViewById(R.id.live_error_replay_layout);
+		mErrorReplayBt = (Button) findViewById(R.id.livereplay_error_replay_bt);
 		mErrorTextView = (TextView) findViewById(R.id.error_info_title_text_view);
 
 		closeTextView.setOnClickListener(new OnClickListener() {
@@ -81,7 +81,7 @@ public class LiveReplayMediaPlayerEventActionView extends RelativeLayout {
 			}
 		});
 
-		mErrorReplayLayout.setOnClickListener(new OnClickListener() {
+		mErrorReplayBt.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (mCallback != null)

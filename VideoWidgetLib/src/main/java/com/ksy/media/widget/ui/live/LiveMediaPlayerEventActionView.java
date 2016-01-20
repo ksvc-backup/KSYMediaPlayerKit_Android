@@ -27,9 +27,8 @@ public class LiveMediaPlayerEventActionView extends RelativeLayout implements Vi
 
 	private RelativeLayout mxCompleteLayout;
 	private EventActionViewCallback mCallback;
-
 	private LinearLayout mErrorLayout;
-	private LinearLayout mErrorReplayLayout;
+	private Button mErrorReplayBt;
 	private TextView mErrorTextView;
 
 
@@ -61,7 +60,7 @@ public class LiveMediaPlayerEventActionView extends RelativeLayout implements Vi
 
 		mxCompleteLayout = (RelativeLayout) findViewById(R.id.layout_live_finish);
 		mErrorLayout = (LinearLayout) findViewById(R.id.error_layout);
-		mErrorReplayLayout = (LinearLayout) findViewById(R.id.error_replay_layout);
+		mErrorReplayBt = (Button) findViewById(R.id.live_error_replay_bt);
 		mErrorTextView = (TextView) findViewById(R.id.error_info_title_text_view);
 
 		closeTextView.setOnClickListener(new OnClickListener() {
@@ -71,7 +70,7 @@ public class LiveMediaPlayerEventActionView extends RelativeLayout implements Vi
 			}
 		});
 
-		mErrorReplayLayout.setOnClickListener(new OnClickListener() {
+		mErrorReplayBt.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				if (mCallback != null)

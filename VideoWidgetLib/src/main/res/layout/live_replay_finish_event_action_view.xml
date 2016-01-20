@@ -199,6 +199,8 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:gravity="center_horizontal"
+        android:alpha="0.9"
+        android:background="@color/black"
         android:orientation="vertical"
         android:visibility="gone">
 
@@ -206,7 +208,6 @@
             android:id="@+id/error_info_title_text_view"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/event_action_padding_left"
             android:ellipsize="end"
             android:gravity="center"
             android:singleLine="true"
@@ -214,37 +215,15 @@
             android:textColor="@color/white"
             android:textSize="14sp" />
 
-        <LinearLayout
-            android:id="@+id/live_error_replay_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:alpha="0.5"
-            android:background="@color/black"
-            android:clickable="true"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingBottom="@dimen/small_margin_left"
-            android:paddingLeft="@dimen/event_action_padding"
-            android:paddingRight="@dimen/event_action_padding"
-            android:paddingTop="@dimen/small_margin_left">
-
-            <ImageView
-                android:id="@+id/error_replay_image_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/player_controller_action_replay" />
-
-            <TextView
-                android:id="@+id/error_replay_text_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/event_action_padding_left"
-                android:gravity="center"
-                android:singleLine="true"
-                android:text="@string/connect_failed"
-                android:textColor="@color/white"
-                android:textSize="14sp" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/livereplay_error_replay_bt"
+            android:layout_width="@dimen/live_heart_margin"
+            android:layout_height="@dimen/live_bottom_edit_height"
+            android:layout_marginTop="@dimen/event_action_padding_left"
+            android:background="@color/lightblue"
+            android:singleLine="true"
+            android:text="@string/replay"
+            android:textColor="@color/white" />
     </LinearLayout>
 
 </RelativeLayout>

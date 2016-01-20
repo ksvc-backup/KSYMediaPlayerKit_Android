@@ -343,6 +343,8 @@ public class MediaPlayerTextureView extends TextureView implements
         @Override
         public void onCompletion(IMediaPlayer mp) {
 
+//            playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_STAY_PLAYING);
+
             Log.d(Constants.LOG_TAG, "onCompletion");
             mCurrentState = STATE_PLAYBACK_COMPLETED;
             mTargetState = STATE_PLAYBACK_COMPLETED;
@@ -356,7 +358,7 @@ public class MediaPlayerTextureView extends TextureView implements
 
         @Override
         public boolean onError(IMediaPlayer mp, int framework_err, int impl_err) {
-
+            Log.e(Constants.LOG_TAG, "onError");
             mCurrentState = STATE_ERROR;
             mTargetState = STATE_ERROR;
 
@@ -742,6 +744,7 @@ public class MediaPlayerTextureView extends TextureView implements
         mSurfaceWidth = width;
         mSurfaceHeight = height;
         mSurfaceTexture = surface;
+
         switch (playConfig.getInterruptMode()) {
             case PlayConfig.INTERRUPT_MODE_RELEASE_CREATE:
                 Log.d(Constants.LOG_TAG, "MediaPlayerTextureVideoView onSurfaceTextureAvailable Create");
@@ -765,6 +768,7 @@ public class MediaPlayerTextureView extends TextureView implements
             case PlayConfig.INTERRUPT_MODE_STAY_PLAYING:
                 break;
         }
+
     }
 
     @Override
@@ -774,7 +778,7 @@ public class MediaPlayerTextureView extends TextureView implements
         Log.d(Constants.LOG_TAG, "onSurfaceTextureSizeChanged :surface width = " + width + ",surface height =" + height);
         mSurfaceWidth = width;
         mSurfaceHeight = height;
-        onParentSurfaceTextureSizeChanged(surface,width,height);
+        onParentSurfaceTextureSizeChanged(surface, width, height);
     }
 
     private void onParentSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
@@ -787,6 +791,7 @@ public class MediaPlayerTextureView extends TextureView implements
         if (mCurrentState == STATE_PAUSED) {
             mNeedPauseAfterLeave = true;
         }
+
         switch (playConfig.getInterruptMode()) {
             case PlayConfig.INTERRUPT_MODE_RELEASE_CREATE:
                 Log.d(Constants.LOG_TAG, "MediaPlayerTextureVideoView onSurfaceTextureDestroyed Release");
@@ -797,8 +802,10 @@ public class MediaPlayerTextureView extends TextureView implements
                 pause();
                 break;
             case PlayConfig.INTERRUPT_MODE_STAY_PLAYING:
+
                 break;
         }
+
         return true;
     }
 
