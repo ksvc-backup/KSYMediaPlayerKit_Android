@@ -45,7 +45,7 @@ public class StreamVideoActivity extends AppCompatActivity implements
 
     private void setupViews() {
         playerView = (StreamMediaPlayerView) findViewById(R.id.stream_player_view);
-        playerView.setPlayConfig(true, PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+        playerView.setPlayConfig(true, PlayConfig.INTERRUPT_MODE_RELEASE_CREATE, PlayConfig.LIVE_VIDEO_MODE);
         playerView.setPlayerViewCallback(this);
         setupDialog();
         setUpPagerAndTabs();

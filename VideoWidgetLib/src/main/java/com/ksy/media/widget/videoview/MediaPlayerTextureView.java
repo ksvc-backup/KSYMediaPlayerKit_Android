@@ -326,7 +326,7 @@ public class MediaPlayerTextureView extends TextureView implements
 
         @Override
         public void onPrepared(IMediaPlayer mp) {
-            Log.d(Constants.LOG_TAG, "OnPrepared");
+            Log.e(Constants.LOG_TAG, "MediaPlayerTextureView  OnPrepared");
             mCurrentState = STATE_PREPARED;
             mTargetState = STATE_PLAYING;
 
@@ -343,9 +343,9 @@ public class MediaPlayerTextureView extends TextureView implements
         @Override
         public void onCompletion(IMediaPlayer mp) {
 
-//            playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_STAY_PLAYING);
+            playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR);
 
-            Log.d(Constants.LOG_TAG, "onCompletion");
+            Log.d(Constants.LOG_TAG, "MediaPlayerTextureView  onCompletion");
             mCurrentState = STATE_PLAYBACK_COMPLETED;
             mTargetState = STATE_PLAYBACK_COMPLETED;
 
@@ -358,7 +358,9 @@ public class MediaPlayerTextureView extends TextureView implements
 
         @Override
         public boolean onError(IMediaPlayer mp, int framework_err, int impl_err) {
-            Log.e(Constants.LOG_TAG, "onError");
+            Log.e(Constants.LOG_TAG, "MediaPlayerTextureView onError");
+            playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR);
+
             mCurrentState = STATE_ERROR;
             mTargetState = STATE_ERROR;
 
@@ -377,7 +379,6 @@ public class MediaPlayerTextureView extends TextureView implements
 
         @Override
         public void onBufferingUpdate(IMediaPlayer mp, int percent) {
-
             mCurrentBufferPercentage = percent;
             if (mOnBufferingUpdateListener != null)
                 mOnBufferingUpdateListener.onBufferingUpdate(mp, percent);
@@ -388,7 +389,7 @@ public class MediaPlayerTextureView extends TextureView implements
 
         @Override
         public boolean onInfo(IMediaPlayer mp, int what, int extra) {
-
+            Log.d(Constants.LOG_TAG, "MediaPlayerTextureView  mInfoListener");
             if (mOnInfoListener != null) {
                 mOnInfoListener.onInfo(mp, what, extra);
             }
@@ -401,7 +402,7 @@ public class MediaPlayerTextureView extends TextureView implements
         @Override
         public void onSeekComplete(IMediaPlayer mp) {
 
-            Log.d(Constants.LOG_TAG, "onSeekComplete");
+            Log.d(Constants.LOG_TAG, "MediaPlayerTextureView  onSeekComplete");
             if (mOnSeekCompleteListener != null)
                 mOnSeekCompleteListener.onSeekComplete(mp);
         }
@@ -644,7 +645,7 @@ public class MediaPlayerTextureView extends TextureView implements
     public void onPowerState(int state) {
         switch (state) {
             case Constants.POWER_OFF:
-                Log.d(Constants.LOG_TAG, "POWER_OFF");
+                Log.e(Constants.LOG_TAG, "POWER_OFF");
                 misTexturePowerEvent = true;
                 if (mCurrentState == STATE_PAUSED) {
                     mNeedPauseAfterLeave = true;
@@ -658,12 +659,14 @@ public class MediaPlayerTextureView extends TextureView implements
                         Log.d(Constants.LOG_TAG, "POWER_OFF Pause");
                         pause();
                         break;
-                    case PlayConfig.INTERRUPT_MODE_STAY_PLAYING:
+                    case PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR:
+                        Log.e(Constants.LOG_TAG, "MediaPlayerTextureView POWER_ON FINISH_OR_ERROR 111 ");
+
                         break;
                 }
                 break;
             case Constants.POWER_ON:
-                Log.d(Constants.LOG_TAG, "POWER_ON");
+                Log.e(Constants.LOG_TAG, "POWER_ON");
                 if (isKeyGuard()) {
                     Log.d(Constants.LOG_TAG, "is KeyGuard");
                     mNeedUnlock = true;
@@ -684,13 +687,15 @@ public class MediaPlayerTextureView extends TextureView implements
                                 mNeedPauseAfterLeave = false;
                             }
                             break;
-                        case PlayConfig.INTERRUPT_MODE_STAY_PLAYING:
+                        case PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR:
+                            Log.e(Constants.LOG_TAG, "MediaPlayerTextureView POWER_ON FINISH_OR_ERROR 222 ");
+
                             break;
                     }
                 }
                 break;
             case Constants.USER_PRESENT:
-                Log.d(Constants.LOG_TAG, "USER_PRESENT");
+                Log.e(Constants.LOG_TAG, "USER_PRESENT");
                 if (isAppShowing && mNeedUnlock) {
                     Log.d(Constants.LOG_TAG, "is KeyGuard");
                     mNeedUnlock = false;
@@ -709,7 +714,25 @@ public class MediaPlayerTextureView extends TextureView implements
                                 mNeedPauseAfterLeave = false;
                             }
                             break;
-                        case PlayConfig.INTERRUPT_MODE_STAY_PLAYING:
+                        case PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR:
+                            Log.d(Constants.LOG_TAG, "MediaPlayerTextureView POWER_ON FINISH_OR_ERROR 333 ");
+
+                            switch (playConfig.getVideoMode()) {
+                                case PlayConfig.SHORT_VIDEO_MODE:
+                                    Log.d(Constants.LOG_TAG, "PlayConfig.SHORT_VIDEO_MODE  11111 ");
+                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+                                    break;
+
+                                case PlayConfig.LIVE_VIDEO_MODE:
+                                    Log.d(Constants.LOG_TAG, "PlayConfig.LIVE_VIDEO_MODE  2222222 ");
+                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+                                    break;
+
+                                case PlayConfig.OTHER_MODE:
+
+                                    break;
+                            }
+
                             break;
                     }
                 }
@@ -765,7 +788,24 @@ public class MediaPlayerTextureView extends TextureView implements
                     openVideo();
                 }
                 break;
-            case PlayConfig.INTERRUPT_MODE_STAY_PLAYING:
+            case PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR:
+                Log.d(Constants.LOG_TAG, "onSurfaceTextureAvailable  INTERRUPT_MODE_STAY_PLAYING");
+                mMediaPlayer.setSurface(new Surface(mSurfaceTexture));
+
+                switch (playConfig.getVideoMode()) {
+                    case PlayConfig.SHORT_VIDEO_MODE:
+                        playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+                        break;
+
+                    case PlayConfig.LIVE_VIDEO_MODE:
+                        playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+                        break;
+
+                    case PlayConfig.OTHER_MODE:
+
+                        break;
+                }
+
                 break;
         }
 
@@ -801,7 +841,8 @@ public class MediaPlayerTextureView extends TextureView implements
                 Log.d(Constants.LOG_TAG, "MediaPlayerTextureVideoView onSurfaceTextureDestroyed Pause");
                 pause();
                 break;
-            case PlayConfig.INTERRUPT_MODE_STAY_PLAYING:
+            case PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR:
+                Log.d(Constants.LOG_TAG, "onSurfaceTextureDestroyed  INTERRUPT_MODE_STAY_PLAYING");
 
                 break;
         }

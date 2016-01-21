@@ -44,7 +44,7 @@ public class OnlineVideoActivity extends AppCompatActivity implements
 
     private void setupViews() {
         playerView = (VideoMediaPlayerView) findViewById(R.id.video_player_view);
-        playerView.setPlayConfig(false, PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+        playerView.setPlayConfig(false, PlayConfig.INTERRUPT_MODE_PAUSE_RESUME, PlayConfig.SHORT_VIDEO_MODE);
         playerView.setPlayerViewCallback(this);
         setupDialog();
         setUpPagerAndTabs();

@@ -714,9 +714,10 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
         }
     };
 
-    public void setPlayConfig(boolean isStream, int interruptMode) {
+    public void setPlayConfig(boolean isStream, int interruptMode, int videoMode) {
         playConfig.setStream(isStream);
         playConfig.setInterruptMode(interruptMode);
+        playConfig.setVideoMode(videoMode);
     }
 
     public interface PlayerViewCallback {

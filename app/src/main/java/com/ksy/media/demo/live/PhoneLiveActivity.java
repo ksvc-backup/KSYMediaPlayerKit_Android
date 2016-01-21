@@ -33,7 +33,7 @@ public class PhoneLiveActivity extends AppCompatActivity implements LiveMediaPla
         setContentView(R.layout.activity_phone_live);
 
         playerViewLive = (LiveMediaPlayerView) findViewById(R.id.player_view_live);
-        playerViewLive.setPlayConfig(true, PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+        playerViewLive.setPlayConfig(true, PlayConfig.INTERRUPT_MODE_RELEASE_CREATE, PlayConfig.LIVE_VIDEO_MODE);
         playerViewLive.setPlayerViewCallback(this);
 
         final View dialogView = LayoutInflater.from(this).inflate(

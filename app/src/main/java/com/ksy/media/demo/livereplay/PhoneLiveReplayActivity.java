@@ -32,7 +32,7 @@ public class PhoneLiveReplayActivity extends AppCompatActivity implements LiveRe
         setContentView(R.layout.activity_phone_live_replay);
 
         playerViewLiveReplay = (LiveReplayMediaPlayerView) findViewById(R.id.player_view_live_replay);
-        playerViewLiveReplay.setPlayConfig(false, PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+        playerViewLiveReplay.setPlayConfig(false, PlayConfig.INTERRUPT_MODE_PAUSE_RESUME, PlayConfig.SHORT_VIDEO_MODE);
         playerViewLiveReplay.setPlayerViewCallback(this);
 
         final View dialogView = LayoutInflater.from(this).inflate(

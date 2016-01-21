@@ -410,7 +410,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 
         @Override
         public void onPrepared(IMediaPlayer mp) {
-            Log.e(Constants.LOG_TAG,
+            Log.d(Constants.LOG_TAG,
                     "IMediaPlayer.OnPreparedListener onPrepared 11 ");
             int duration = 0;
             if (mMediaPlayerController != null)
@@ -418,7 +418,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 
             Log.e("Constants.LOG_TAG", "mIsComplete =" + mIsComplete);
             if (mIsComplete) {
-                Log.e(Constants.LOG_TAG,
+                Log.d(Constants.LOG_TAG,
                         "IMediaPlayer.OnPreparedListener onPrepared 22");
                 mMediaPlayerSmallControllerView.hide();
                 mMediaPlayerEventActionView
@@ -429,7 +429,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                 WakeLocker.release();
             }
             if (mPausePosition > 0 && duration > 0) {
-                Log.e("Constants.LOG_TAG", "mPausePosition =" + mPausePosition);
+                Log.d("Constants.LOG_TAG", "mPausePosition =" + mPausePosition);
                 if (!mIsComplete) {
                     mMediaPlayerController.pause();
                     mMediaPlayerController.seekTo(mPausePosition);
@@ -447,19 +447,19 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             mMediaPlayerLoadingView.hide();
 
             if (!mIsComplete) {
-                Log.e(Constants.LOG_TAG, "mOnPreparedListener ingore start  11");
+                Log.d(Constants.LOG_TAG, "mOnPreparedListener ingore start  11");
                 if (!mMediaPlayerVideoView.mNeedPauseAfterLeave) {
-                    Log.e(Constants.LOG_TAG, "mOnPreparedListener ingore start  22");
+                    Log.d(Constants.LOG_TAG, "mOnPreparedListener ingore start  22");
                     mMediaPlayerVideoView.start();
                 } else {
-                    Log.e(Constants.LOG_TAG, "mOnPreparedListener ingore start for last paused state");
+                    Log.d(Constants.LOG_TAG, "mOnPreparedListener ingore start for last paused state");
                     mMediaPlayerVideoView.mNeedPauseAfterLeave = false;
                 }
             }
 
             mVideoReady = true;
             if (mPlayerViewCallback != null)
-                Log.e(Constants.LOG_TAG, "mPlayerViewCallback ");
+                Log.d(Constants.LOG_TAG, "mPlayerViewCallback ");
                 mPlayerViewCallback.onPrepared();
         }
 
@@ -776,9 +776,10 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         return false;
     }
 
-    public void setPlayConfig(boolean isStream, int interruptMode) {
+    public void setPlayConfig(boolean isStream, int interruptMode, int videoMode) {
         playConfig.setStream(isStream);
         playConfig.setInterruptMode(interruptMode);
+        playConfig.setVideoMode(videoMode);
     }
 
 }

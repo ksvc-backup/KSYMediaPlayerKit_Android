@@ -20,17 +20,6 @@
             layout="@layout/blue_media_player_buffering_view" />
     </com.ksy.media.widget.ui.base.MediaPlayerBufferingView>
 
-    <com.ksy.media.widget.ui.base.MediaPlayerLoadingView
-        android:id="@+id/ks_camera_loading_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            layout="@layout/blue_media_player_loading_view" />
-    </com.ksy.media.widget.ui.base.MediaPlayerLoadingView>
-
     <com.ksy.media.widget.ui.livereplay.LiveReplayMediaPlayerEventActionView
         android:id="@+id/ks_camera_event_action_view_live_replay"
         android:layout_width="match_parent"
@@ -52,6 +41,17 @@
             android:layout_height="match_parent"
             layout="@layout/blue_media_player_controller_live_replay" />
     </com.ksy.media.widget.controller.livereplay.LiveReplayMediaPlayerControllerView>
+
+    <com.ksy.media.widget.ui.base.MediaPlayerLoadingView
+        android:id="@+id/ks_camera_loading_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+
+        <include
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            layout="@layout/blue_media_player_loading_view" />
+    </com.ksy.media.widget.ui.base.MediaPlayerLoadingView>
     
 </RelativeLayout>
 

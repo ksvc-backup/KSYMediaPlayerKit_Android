@@ -318,7 +318,7 @@ public class MediaPlayerVideoView extends SurfaceView implements
         @Override
         public void onPrepared(IMediaPlayer mp) {
 
-            Log.d(Constants.LOG_TAG, "OnPrepared");
+            Log.d(Constants.LOG_TAG, "MediaPlayerVideoView  OnPrepared");
             mHasPrepared = true;
             mCurrentState = STATE_PREPARED;
             mTargetState = STATE_PLAYING;
@@ -336,7 +336,9 @@ public class MediaPlayerVideoView extends SurfaceView implements
         @Override
         public void onCompletion(IMediaPlayer mp) {
 
-            Log.d(Constants.LOG_TAG, "onCompletion");
+            playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR);
+
+            Log.d(Constants.LOG_TAG, "MediaPlayerVideoView  onCompletion");
             mCurrentState = STATE_PLAYBACK_COMPLETED;
             mTargetState = STATE_PLAYBACK_COMPLETED;
 
@@ -349,6 +351,9 @@ public class MediaPlayerVideoView extends SurfaceView implements
 
         @Override
         public boolean onError(IMediaPlayer mp, int framework_err, int impl_err) {
+
+            playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR);
+            Log.e(Constants.LOG_TAG, "MediaPlayerVideoView  mErrorListener");
 
             mCurrentState = STATE_ERROR;
             mTargetState = STATE_ERROR;
@@ -392,7 +397,7 @@ public class MediaPlayerVideoView extends SurfaceView implements
         @Override
         public void onSeekComplete(IMediaPlayer mp) {
 
-            Log.d(Constants.LOG_TAG, "onSeekComplete");
+            Log.d(Constants.LOG_TAG, "MediaPlayerVideoView onSeekComplete");
             if (mOnSeekCompleteListener != null)
                 mOnSeekCompleteListener.onSeekComplete(mp);
         }
@@ -463,14 +468,33 @@ public class MediaPlayerVideoView extends SurfaceView implements
                         if (!mNeedPauseAfterLeave) {
                             start();
                         } else {
-                            Log.d(Constants.LOG_TAG, "POWER_ON PAUSED STATE,Ingored start()");
+                            Log.d(Constants.LOG_TAG, "MediaPlayerVideoView POWER_ON PAUSED STATE,Ingored start()");
                             mNeedPauseAfterLeave = false;
                         }
                     } else {
                         openVideo();
                     }
                     break;
-                case PlayConfig.INTERRUPT_MODE_STAY_PLAYING:
+                case PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR:
+                    Log.e(Constants.LOG_TAG, "MediaPlayerVideoView surfaceCreated INTERRUPT_MODE_FINISH_OR_ERROR");
+                    mMediaPlayer.setSurface(mSurfaceHolder.getSurface());
+
+                    switch (playConfig.getVideoMode()) {
+                        case PlayConfig.SHORT_VIDEO_MODE:
+                            Log.e(Constants.LOG_TAG, "MediaPlayerVideoView surfaceCreated 11");
+                            playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+                            break;
+
+                        case PlayConfig.LIVE_VIDEO_MODE:
+                            Log.e(Constants.LOG_TAG, "MediaPlayerVideoView surfaceCreated 22");
+                            playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+                            break;
+
+                        case PlayConfig.OTHER_MODE:
+
+                            break;
+                    }
+
                     break;
             }
         }
@@ -490,7 +514,9 @@ public class MediaPlayerVideoView extends SurfaceView implements
                     Log.d(Constants.LOG_TAG, "MediaPlayerVideoView surfaceDestroyed Pause");
                     pause();
                     break;
-                case PlayConfig.INTERRUPT_MODE_STAY_PLAYING:
+                case PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR:
+                    Log.d(Constants.LOG_TAG, "MediaPlayerVideoView surfaceDestroyed FINISH_OR_ERROR");
+
                     break;
             }
 
@@ -627,7 +653,7 @@ public class MediaPlayerVideoView extends SurfaceView implements
     @Override
     public void seekTo(long msec) {
 
-        Log.e(Constants.LOG_TAG, "seek called=========");
+        Log.d(Constants.LOG_TAG, "seek called=========");
         if (isInPlaybackState())
             mMediaPlayer.seekTo(msec);
     }
@@ -710,7 +736,8 @@ public class MediaPlayerVideoView extends SurfaceView implements
                         Log.d(Constants.LOG_TAG, "POWER_OFF Pause");
                         pause();
                         break;
-                    case PlayConfig.INTERRUPT_MODE_STAY_PLAYING:
+                    case PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR:
+                        Log.d(Constants.LOG_TAG, " MediaPlayVideoView  INTERRUPT_MODE_FINISH_OR_ERROR 111");
                         break;
                 }
                 break;
@@ -736,7 +763,9 @@ public class MediaPlayerVideoView extends SurfaceView implements
                                 mNeedPauseAfterLeave = false;
                             }
                             break;
-                        case PlayConfig.INTERRUPT_MODE_STAY_PLAYING:
+                        case PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR:
+                            Log.d(Constants.LOG_TAG, " MediaPlayVideoView  INTERRUPT_MODE_FINISH_OR_ERROR 222");
+
                             break;
                     }
                 }
@@ -761,7 +790,25 @@ public class MediaPlayerVideoView extends SurfaceView implements
                                 mNeedPauseAfterLeave = false;
                             }
                             break;
-                        case PlayConfig.INTERRUPT_MODE_STAY_PLAYING:
+                        case PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR:
+                            Log.d(Constants.LOG_TAG, " MediaPlayVideoView  INTERRUPT_MODE_FINISH_OR_ERROR 333");
+
+                            switch (playConfig.getVideoMode()) {
+                                case PlayConfig.SHORT_VIDEO_MODE:
+                                    Log.d(Constants.LOG_TAG, "PlayConfig.SHORT_VIDEO_MODE  11111 ");
+                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+                                    break;
+
+                                case PlayConfig.LIVE_VIDEO_MODE:
+                                    Log.d(Constants.LOG_TAG, "PlayConfig.LIVE_VIDEO_MODE  2222222 ");
+                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+                                    break;
+
+                                case PlayConfig.OTHER_MODE:
+
+                                    break;
+                            }
+
                             break;
                     }
                 }

@@ -150,7 +150,7 @@ public class ShortVideoActivity extends AppCompatActivity implements
         listView.setOnItemClickListener(this);
         listView.setOnScrollListener(this);
         playerViewShortMovie = (ShortVideoMediaPlayerView) headView.findViewById(R.id.player_view_short_movie);
-        playerViewShortMovie.setPlayConfig(false, PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+        playerViewShortMovie.setPlayConfig(false, PlayConfig.INTERRUPT_MODE_PAUSE_RESUME, PlayConfig.SHORT_VIDEO_MODE);
         playerViewShortMovie.setPlayerViewCallback(this);
         playerViewShortMovie.setTextureViewVisible(true);
         short_video_add_focus = (TextView) headView.findViewById(R.id.short_video_add_focus);
