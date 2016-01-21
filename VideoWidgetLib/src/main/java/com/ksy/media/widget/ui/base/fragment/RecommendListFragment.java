@@ -87,6 +87,7 @@ public class RecommendListFragment extends Fragment implements AdapterView.OnIte
         super.onDetach();
         mListener = null;
     }
+
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         if (null != mListener) {

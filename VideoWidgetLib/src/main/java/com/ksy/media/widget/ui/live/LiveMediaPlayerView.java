@@ -463,7 +463,6 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
         mPausePosition = mMediaPlayerController.getCurrentPosition();
-        mLiveMediaPlayerControllerView.stopLiveTimer();
         disableOrientationEventListener();
         WakeLocker.release();
     }

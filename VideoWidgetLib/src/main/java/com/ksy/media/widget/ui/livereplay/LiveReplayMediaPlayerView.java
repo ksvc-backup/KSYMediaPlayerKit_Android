@@ -451,7 +451,6 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
         mNetReceiver.unRegistNetBroadCast(getContext());
         mPausePosition = mLiveReplayMediaPlayerController.getCurrentPosition();
         disableOrientationEventListener();
-        mLiveReplayMediaPlayerControllerView.stopLiveReplayTimer();
         WakeLocker.release();
     }
 

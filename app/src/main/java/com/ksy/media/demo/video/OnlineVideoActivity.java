@@ -52,6 +52,7 @@ public class OnlineVideoActivity extends AppCompatActivity implements
 
     private void setUpPagerAndTabs() {
         pager = (ViewPager) findViewById(R.id.pager);
+        pager.setOffscreenPageLimit(0);
         pagerAdapter = new VideoMediaPlayerPagerAdapter(OnlineVideoActivity.this, getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);

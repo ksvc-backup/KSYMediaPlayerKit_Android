@@ -247,6 +247,11 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 	}
 
 	private List<Map<String, Object>> getData() {
+
+		if (data != null && data.size() > 0 ) {
+			return  data;
+		}
+
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		Map<String, Object> map;
 
