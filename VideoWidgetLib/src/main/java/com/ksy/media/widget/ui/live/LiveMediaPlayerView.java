@@ -45,6 +45,7 @@ import com.ksy.media.widget.util.PlayConfig;
 import com.ksy.media.widget.util.WakeLocker;
 
 import com.ksy.media.widget.videoview.MediaPlayerTextureView;
+import com.ksy.media.widget.videoview.PhoneLiveMediaPlayerTextureView;
 import com.ksy.mediaPlayer.widget.R;
 import com.ksyun.media.player.IMediaPlayer;
 
@@ -57,7 +58,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
     private Window mWindow;
     private ViewGroup mRootView;
 //    private PhoneLiveMediaPlayerTextureView mLiveMediaPlayerVideoView;
-    private MediaPlayerTextureView mLiveMediaPlayerVideoView;
+    private PhoneLiveMediaPlayerTextureView mLiveMediaPlayerVideoView;
     private LiveMediaPlayerControllerView mLiveMediaPlayerControllerView;
     private MediaPlayerBufferingView mMediaPlayerBufferingView;
     private MediaPlayerLoadingView mMediaPlayerLoadingView;
@@ -148,7 +149,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         this.mRootView = (ViewGroup) mLayoutInflater.inflate(
                 R.layout.live_blue_media_player_view, null);
 
-        this.mLiveMediaPlayerVideoView = (MediaPlayerTextureView) mRootView
+        this.mLiveMediaPlayerVideoView = (PhoneLiveMediaPlayerTextureView) mRootView
                 .findViewById(R.id.live_ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);
@@ -498,6 +499,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         enableOrientationEventListener();
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
+        mLiveMediaPlayerControllerView.startLiveTimer();
     }
 
     public void onPause() {
@@ -507,6 +509,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         mNetReceiver.unRegistNetBroadCast(getContext());
         mPausePosition = mMediaPlayerController.getCurrentPosition();
         disableOrientationEventListener();
+        mLiveMediaPlayerControllerView.stopLiveTimer();
         WakeLocker.release();
     }
 
@@ -552,12 +555,12 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                         if (mScreenOrientation == ORIENTATION_LANDSCAPE_NORMAL
                                 || mScreenOrientation == ORIENTATION_LANDSCAPE_REVERSED) {
                             Log.i("eflake", "Accurate ScreenOrientation = " + mScreenOrientation);
-//                            mLiveMediaPlayerVideoView.setNeedMatrixTransform(true);
-//                            doScreenOrientationRotate(mScreenOrientation);
+                            mLiveMediaPlayerVideoView.setNeedMatrixTransform(true);
+                            doScreenOrientationRotate(mScreenOrientation);
                         } else if (mScreenOrientation == ORIENTATION_PORTRAIT_NORMAL) {
                             Log.i("eflake", "Accurate ScreenOrientation = " + mScreenOrientation);
-//                            mLiveMediaPlayerVideoView.setNeedMatrixTransform(true);
-//                            doScreenOrientationRotate(mScreenOrientation);
+                            mLiveMediaPlayerVideoView.setNeedMatrixTransform(true);
+                            doScreenOrientationRotate(mScreenOrientation);
                         }
                     }
                 }
@@ -598,7 +601,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
     }
 
     private void doScreenOrientationRotate(int screenOrientation) {
-//        mLiveMediaPlayerVideoView.setTargetOrientation(mScreenOrientation);
+        mLiveMediaPlayerVideoView.setTargetOrientation(mScreenOrientation);
         switch (screenOrientation) {
             case ORIENTATION_PORTRAIT_NORMAL:
                 mActivity

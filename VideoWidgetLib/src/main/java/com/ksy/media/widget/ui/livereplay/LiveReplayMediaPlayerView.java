@@ -45,6 +45,7 @@ import com.ksy.media.widget.util.NetReceiver.NetState;
 import com.ksy.media.widget.util.NetReceiver.NetStateChangedListener;
 import com.ksy.media.widget.util.WakeLocker;
 import com.ksy.media.widget.videoview.MediaPlayerTextureView;
+import com.ksy.media.widget.videoview.PhoneLiveMediaPlayerTextureView;
 import com.ksy.mediaPlayer.widget.R;
 import com.ksyun.media.player.IMediaPlayer;
 
@@ -57,7 +58,7 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
     private Window mWindow;
     private ViewGroup mRootView;
 //    private PhoneLiveMediaPlayerTextureView mLiveReplayMediaPlayerVideoView;
-    private MediaPlayerTextureView mLiveReplayMediaPlayerVideoView;
+    private PhoneLiveMediaPlayerTextureView mLiveReplayMediaPlayerVideoView;
     private LiveReplayMediaPlayerControllerView mLiveReplayMediaPlayerControllerView;
     private MediaPlayerBufferingView mMediaPlayerBufferingView;
     private MediaPlayerLoadingView mMediaPlayerLoadingView;
@@ -147,7 +148,7 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
 		/* 初始化UI组件 */
         this.mRootView = (ViewGroup) mLayoutInflater.inflate(
                 R.layout.live_replay_blue_media_player_view, null);
-        this.mLiveReplayMediaPlayerVideoView = (MediaPlayerTextureView) mRootView
+        this.mLiveReplayMediaPlayerVideoView = (PhoneLiveMediaPlayerTextureView) mRootView
                 .findViewById(R.id.live_replay_ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);
@@ -485,6 +486,7 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
         enableOrientationEventListener();
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
+        mLiveReplayMediaPlayerControllerView.startLiveReplayTimer();
     }
 
     public void onPause() {
@@ -494,11 +496,11 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
         mNetReceiver.unRegistNetBroadCast(getContext());
         mPausePosition = mLiveReplayMediaPlayerController.getCurrentPosition();
         disableOrientationEventListener();
+        mLiveReplayMediaPlayerControllerView.stopLiveReplayTimer();
         WakeLocker.release();
     }
 
     public void onDestroy() {
-
         mIsComplete = false;
         unregisterPowerReceiver();
         mLiveReplayMediaPlayerVideoView.release(true);
@@ -536,11 +538,11 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
                         if (mScreenOrientation == ORIENTATION_LANDSCAPE_NORMAL
                                 || mScreenOrientation == ORIENTATION_LANDSCAPE_REVERSED) {
                             Log.i("eflake", "Accurate ScreenOrientation = " + mScreenOrientation);
-//                            mLiveReplayMediaPlayerVideoView.setNeedMatrixTransform(true);
+                            mLiveReplayMediaPlayerVideoView.setNeedMatrixTransform(true);
                             doScreenOrientationRotate(mScreenOrientation);
                         } else if (mScreenOrientation == ORIENTATION_PORTRAIT_NORMAL) {
                             Log.i("eflake", "Accurate ScreenOrientation = " + mScreenOrientation);
-//                            mLiveReplayMediaPlayerVideoView.setNeedMatrixTransform(true);
+                            mLiveReplayMediaPlayerVideoView.setNeedMatrixTransform(true);
                             doScreenOrientationRotate(mScreenOrientation);
                         }
                     }
@@ -582,7 +584,7 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
     }
 
     private void doScreenOrientationRotate(int screenOrientation) {
-//        mLiveReplayMediaPlayerVideoView.setTargetOrientation(mScreenOrientation);
+        mLiveReplayMediaPlayerVideoView.setTargetOrientation(mScreenOrientation);
         switch (screenOrientation) {
             case ORIENTATION_PORTRAIT_NORMAL:
                 mActivity

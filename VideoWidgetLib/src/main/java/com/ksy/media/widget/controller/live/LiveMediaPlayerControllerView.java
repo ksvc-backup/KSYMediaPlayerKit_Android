@@ -27,6 +27,7 @@ import com.ksy.media.widget.ui.base.LivePersonDialog;
 import com.ksy.media.widget.ui.live.LiveChatAdapter;
 import com.ksy.media.widget.ui.live.LiveHeadListAdapter;
 import com.ksy.mediaPlayer.widget.R;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -37,345 +38,355 @@ import java.util.TimerTask;
 
 public class LiveMediaPlayerControllerView extends FrameLayout implements View.OnClickListener {
 
-	private ImageView liveHead;
-	private ImageView liveStateImage;
-	private TextView timeTextView;
-	private ImageView  liveCloseImage;
-	private ImageView  liveReportImage;
+    private ImageView liveHead;
+    private ImageView liveStateImage;
+    private TextView timeTextView;
+    private ImageView liveCloseImage;
+    private ImageView liveReportImage;
 
-	private ListView liveListView;
-	private TextView noticeTextViewLive;
-	private List<Map<String, Object>> data;
-	private Timer refreshTimer = new Timer();
-	private LiveChatAdapter adapter;
-	Map<String, Object> map;
+    private ListView liveListView;
+    private TextView noticeTextViewLive;
+    private List<Map<String, Object>> data;
+    private Timer refreshTimer = new Timer();
+    private LiveChatAdapter adapter;
+    Map<String, Object> map;
 
-	private ImageView livePerson;
-	private HorizontalListView liveHorizontalList;
-	private LiveHeadListAdapter liveHeadListAdapter;
+    private ImageView livePerson;
+    private HorizontalListView liveHorizontalList;
+    private LiveHeadListAdapter liveHeadListAdapter;
 
     private ImageView liveSwitchButton;
-	private ImageView liveShareButton;
-	private EditText  liveEditText;
+    private ImageView liveShareButton;
+    private EditText liveEditText;
 
     private Context mContext;
-	private Random mRandom = new Random();
-	private Timer mLiveTimer = new Timer();
-	private HeartLayout liveHeartLayout;
-	private ImageView liveImageView;
-	private boolean isSwitch;
-	private boolean isLiveListVisible;
+    private Random mRandom = new Random();
+    private Timer mLiveTimer = new Timer();
+    private HeartLayout liveHeartLayout;
+    private ImageView liveImageView;
+    private boolean isSwitch;
+    private boolean isLiveListVisible;
     private TextView livePraiseCountTextView;
-	private TextView livePersonCountTextView;
-	private int livePraiseCount;
+    private TextView livePersonCountTextView;
+    private int livePraiseCount;
 
-	private Handler liveHandler = new Handler();
-	protected LayoutInflater mLiveLayoutInflater;
-	private Animation showLiveAudienceAnimation;
-	private Animation hideLiveAudienceAnimation;
-	private Timer mLiveAudienceComeTimer = new Timer();
-	private Timer mLiveAudienceComeTimerGoneTimer = new Timer();
+    private Handler liveHandler = new Handler();
+    protected LayoutInflater mLiveLayoutInflater;
+    private Animation showLiveAudienceAnimation;
+    private Animation hideLiveAudienceAnimation;
+    private Timer mLiveAudienceComeTimer = new Timer();
+    private Timer mLiveAudienceComeTimerGoneTimer = new Timer();
     private boolean isRemoveData;
 
-	public LiveMediaPlayerControllerView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		mContext = context;
-	}
+    public LiveMediaPlayerControllerView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        mContext = context;
+    }
 
-	public LiveMediaPlayerControllerView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		mContext = context;
-	}
+    public LiveMediaPlayerControllerView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        mContext = context;
+    }
 
-	public LiveMediaPlayerControllerView(Context context) {
-		super(context);
-		mContext = context;
+    public LiveMediaPlayerControllerView(Context context) {
+        super(context);
+        mContext = context;
 
-		mLiveLayoutInflater = LayoutInflater.from(getContext());
-		mLiveLayoutInflater.inflate(R.layout.blue_media_player_controller_live, this);
+        mLiveLayoutInflater = LayoutInflater.from(getContext());
+        mLiveLayoutInflater.inflate(R.layout.blue_media_player_controller_live, this);
 
-		initViews();
-		initListeners();
-	}
+        initViews();
+        initListeners();
+    }
 
-	@Override
-	protected void onFinishInflate() {
-		super.onFinishInflate();
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
 
-		initViews();
-		initListeners();
-	}
+        initViews();
+        initListeners();
+    }
 
-	protected void initViews() {
-		showLiveAudienceAnimation = AnimationUtils.loadAnimation(mContext, R.anim.live_audience_show);
-		hideLiveAudienceAnimation = AnimationUtils.loadAnimation(mContext, R.anim.live_audience_hide);
+    protected void initViews() {
+        showLiveAudienceAnimation = AnimationUtils.loadAnimation(mContext, R.anim.live_audience_show);
+        hideLiveAudienceAnimation = AnimationUtils.loadAnimation(mContext, R.anim.live_audience_hide);
 
-		liveEditText = (EditText) findViewById(R.id.video_comment_text);
-		liveHead = (ImageView)findViewById(R.id.image_live_head);
-		timeTextView = (TextView) findViewById(R.id.textViewTime);
-		liveCloseImage = (ImageView) findViewById(R.id.live_image_close);
-		liveReportImage = (ImageView) findViewById(R.id.live_image_report);
-		livePersonCountTextView = (TextView) findViewById(R.id.live_person_count_textview);
+        liveEditText = (EditText) findViewById(R.id.video_comment_text);
+        liveHead = (ImageView) findViewById(R.id.image_live_head);
+        timeTextView = (TextView) findViewById(R.id.textViewTime);
+        liveCloseImage = (ImageView) findViewById(R.id.live_image_close);
+        liveReportImage = (ImageView) findViewById(R.id.live_image_report);
+        livePersonCountTextView = (TextView) findViewById(R.id.live_person_count_textview);
         livePraiseCountTextView = (TextView) findViewById(R.id.live_praise_count_text);
 
-		liveListView = (ListView) findViewById(R.id.live_list);
-		data = getData();
-		adapter = new LiveChatAdapter(mContext, data);
-		liveListView.setAdapter(adapter);
-		noticeTextViewLive = (TextView)findViewById(R.id.notice_text_live);
+        liveListView = (ListView) findViewById(R.id.live_list);
+        data = getData();
+        adapter = new LiveChatAdapter(mContext, data);
+        liveListView.setAdapter(adapter);
+        noticeTextViewLive = (TextView) findViewById(R.id.notice_text_live);
 
-		liveHorizontalList = (HorizontalListView) findViewById(R.id.live_horizon);
-		liveHeadListAdapter = new LiveHeadListAdapter(mContext);
-		liveHorizontalList.setAdapter(liveHeadListAdapter);
+        liveHorizontalList = (HorizontalListView) findViewById(R.id.live_horizon);
+        liveHeadListAdapter = new LiveHeadListAdapter(mContext);
+        liveHorizontalList.setAdapter(liveHeadListAdapter);
 
-		livePerson = (ImageView)findViewById(R.id.live_person_image);
-		liveSwitchButton = (ImageView) findViewById(R.id.live_information_switch_bt);
-		liveHeartLayout = (HeartLayout)findViewById(R.id.live_image_heart);
+        livePerson = (ImageView) findViewById(R.id.live_person_image);
+        liveSwitchButton = (ImageView) findViewById(R.id.live_information_switch_bt);
+        liveHeartLayout = (HeartLayout) findViewById(R.id.live_image_heart);
         liveImageView = (ImageView) findViewById(R.id.live_image_heart_bt);
-		liveShareButton = (ImageView) findViewById(R.id.live_share_bt);
+        liveShareButton = (ImageView) findViewById(R.id.live_share_bt);
 
-		liveHorizontalList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-				LivePersonDialog dialogPerson = new LivePersonDialog(mContext);
+        liveHorizontalList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                LivePersonDialog dialogPerson = new LivePersonDialog(mContext);
 
-				WindowManager.LayoutParams lp=dialogPerson.getWindow().getAttributes();
-				lp.alpha=0.8f;
-				dialogPerson.getWindow().setAttributes(lp);
+                WindowManager.LayoutParams lp = dialogPerson.getWindow().getAttributes();
+                lp.alpha = 0.8f;
+                dialogPerson.getWindow().setAttributes(lp);
 
-				dialogPerson.show();
-			}
-		});
-
-		chatListControl();
-		heartLayoutTimer();
-		liveAudienceComeTimer();
-		liveAudienceComeTimerGoneTimer();
+                dialogPerson.show();
+            }
+        });
 
 		/*runOnUiThread(new Runnable() {
-			public void run() {
+            public void run() {
 
 			}
 		});*/
 
-	}
+    }
 
 
+    private void chatListControl() {
+        refreshTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                liveHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (data.size() >= 8) {
+                            data.remove(0);
+                            isRemoveData = false;
+                        } else {
+                            data.add(map);
+                            isRemoveData = true;
+                        }
+                        if (isRemoveData) {
+                            liveListView.requestLayout();
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            liveListView.requestLayout();
+                            adapter.notifyDataSetChanged();
+                            data.add(7, map);
+                            liveListView.requestLayout();
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+            }
+        }, 200, 2000);
+    }
 
-	private void chatListControl() {
-		refreshTimer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				if(data.size() >= 8){
-					data.remove(0);
-					isRemoveData = false;
-				}else{
-					data.add(map);
-					isRemoveData = true;
-				}
+    public void heartLayoutTimer() {
+        mLiveTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                liveHeartLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        liveHeartLayout.addHeart(randomColor());
+                        livePraiseCount++;
+                        livePraiseCountTextView.setText(String.valueOf(livePraiseCount));
+                    }
+                });
+            }
+        }, 500, 1000);
+    }
 
+    public void liveAudienceComeTimer() {
+        mLiveAudienceComeTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                liveHandler.postDelayed(mAudienceComeRunnable, 100);
+            }
+        }, 100, 6000);
+    }
 
+    public void liveAudienceComeTimerGoneTimer() {
+        mLiveAudienceComeTimerGoneTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                liveHandler.postDelayed(mAudienceComeGoneRunnable, 100);
+            }
+        }, 100, 8000);
+    }
 
+    private List<Map<String, Object>> getData() {
 
-				liveHandler.post(new Runnable() {
-					@Override
-					public void run() {
-						if (isRemoveData) {
-							liveListView.requestLayout();
-							adapter.notifyDataSetChanged();
-						} else{
-							liveListView.requestLayout();
-							adapter.notifyDataSetChanged();
-							data.add(7, map);
-							liveListView.requestLayout();
-							adapter.notifyDataSetChanged();
-						}
-					}
-				});
-			}
-		}, 200, 2000);
-	}
+        if (data != null && data.size() > 0) {
+            return data;
+        }
 
-	public  void  heartLayoutTimer() {
-		mLiveTimer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				liveHeartLayout.post(new Runnable() {
-					@Override
-					public void run() {
-						liveHeartLayout.addHeart(randomColor());
-						livePraiseCount++;
-						livePraiseCountTextView.setText(String.valueOf(livePraiseCount));
-					}
-				});
-			}
-		}, 500, 1000);
-	}
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        Map<String, Object> map;
 
-	public void liveAudienceComeTimer() {
-		mLiveAudienceComeTimer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				liveHandler.postDelayed(mAudienceComeRunnable, 100);
-			}
-		}, 100, 6000);
-	}
+        map = new HashMap<String, Object>();
+        map.put("img", R.drawable.live_dialog_list_item);
+        map.put("title", "用户名");
+        map.put("info", "评论内容评论内容");
 
-	public void liveAudienceComeTimerGoneTimer() {
-		mLiveAudienceComeTimerGoneTimer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				liveHandler.postDelayed(mAudienceComeGoneRunnable, 100);
-			}
-		}, 100, 8000);
-	}
+        this.map = map;
+        list.add(map);
 
-	private List<Map<String, Object>> getData() {
+        return list;
+    }
 
-		if (data != null && data.size() > 0 ) {
-            return  data;
-		}
+    public void startLiveTimer() {
 
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-		Map<String, Object> map;
+        if (mLiveTimer == null || mLiveAudienceComeTimer == null || mLiveAudienceComeTimerGoneTimer == null || refreshTimer == null) {
+            mLiveTimer = new Timer();
+            mLiveAudienceComeTimer = new Timer();
+            mLiveAudienceComeTimerGoneTimer = new Timer();
+            refreshTimer = new Timer();
+        }
 
-		map = new HashMap<String, Object>();
-		map.put("img", R.drawable.live_dialog_list_item);
-		map.put("title", "用户名");
-		map.put("info", "评论内容评论内容");
+        chatListControl();
+        heartLayoutTimer();
+        liveAudienceComeTimer();
+        liveAudienceComeTimerGoneTimer();
+        initListeners();
+    }
 
-		this.map = map;
-		list.add(map);
+    public void stopLiveTimer() {
+        if (null != mLiveTimer) {
+            mLiveTimer.cancel();
+            mLiveTimer = null;
+        }
 
-		return list;
-	}
+        if (null != mLiveAudienceComeTimer) {
+            mLiveAudienceComeTimer.cancel();
+            mLiveAudienceComeTimer = null;
+        }
 
-	public void stopLiveTimer() {
-		if (null != mLiveTimer) {
-			mLiveTimer.cancel();
-		}
+        if (null != mLiveAudienceComeTimerGoneTimer) {
+            mLiveAudienceComeTimerGoneTimer.cancel();
+            mLiveAudienceComeTimerGoneTimer = null;
+        }
 
-		if (null != mLiveAudienceComeTimer) {
-			mLiveAudienceComeTimer.cancel();
-		}
+        if (null != refreshTimer) {
+            refreshTimer.cancel();
+            refreshTimer = null;
+        }
+    }
 
-		if (null != mLiveAudienceComeTimerGoneTimer) {
-			mLiveAudienceComeTimerGoneTimer.cancel();
-		}
+    Runnable mAudienceComeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            noticeTextViewLive.startAnimation(showLiveAudienceAnimation);
+        }
+    };
 
-		if (null != refreshTimer) {
-			refreshTimer.cancel();
-		}
-	}
+    Runnable mAudienceComeGoneRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (noticeTextViewLive.isShown()) {
+                noticeTextViewLive.startAnimation(hideLiveAudienceAnimation);
+                noticeTextViewLive.setVisibility(INVISIBLE);
+            }
+        }
+    };
 
-	Runnable mAudienceComeRunnable = new Runnable() {
-		@Override
-		public void run() {
-			noticeTextViewLive.startAnimation(showLiveAudienceAnimation);
-		}
-	};
+    protected void initListeners() {
+        liveHead.setOnClickListener(this);
+        liveCloseImage.setOnClickListener(this);
+        liveReportImage.setOnClickListener(this);
+        livePerson.setOnClickListener(this);
+        liveSwitchButton.setOnClickListener(this);
+        liveShareButton.setOnClickListener(this);
+    }
 
-	Runnable mAudienceComeGoneRunnable = new Runnable() {
-		@Override
-		public void run() {
-			if (noticeTextViewLive.isShown()) {
-				noticeTextViewLive.startAnimation(hideLiveAudienceAnimation);
-				noticeTextViewLive.setVisibility(INVISIBLE);
-			}
-		}
-	};
+    public void updateVideoTitle(String title) {
+        if (!TextUtils.isEmpty(title)) {
 
-	protected void initListeners() {
-		liveHead.setOnClickListener(this);
-		liveCloseImage.setOnClickListener(this);
-		liveReportImage.setOnClickListener(this);
-		livePerson.setOnClickListener(this);
-		liveSwitchButton.setOnClickListener(this);
-		liveShareButton.setOnClickListener(this);
-	}
+        }
+    }
 
-	public void updateVideoTitle(String title) {
-		if (!TextUtils.isEmpty(title)) {
+    @Override
+    public void onClick(View v) {
 
-		}
-	}
+        int id = v.getId();
 
-	@Override
-	public void onClick(View v) {
+        if (id == liveHead.getId()) {
+            LiveAnchorDialog dialogPerson = new LiveAnchorDialog(mContext);
 
-		int id = v.getId();
+            WindowManager.LayoutParams lp = dialogPerson.getWindow().getAttributes();
+            lp.alpha = 0.8f;
+            dialogPerson.getWindow().setAttributes(lp);
 
-		if (id == liveHead.getId()) {
-			LiveAnchorDialog dialogPerson = new LiveAnchorDialog(mContext);
+            dialogPerson.show();
 
-			WindowManager.LayoutParams lp=dialogPerson.getWindow().getAttributes();
-			lp.alpha=0.8f;
-			dialogPerson.getWindow().setAttributes(lp);
+        } else if (id == liveCloseImage.getId()) {
+            LiveExitDialog dialog = new LiveExitDialog(mContext, "确定关闭该直播？");
+            dialog.show();
 
-			dialogPerson.show();
+        } else if (id == liveReportImage.getId()) {
+            LiveExitDialog dialog = new LiveExitDialog(mContext, "确定举报该直播？");
+            dialog.show();
 
-		} else if (id == liveCloseImage.getId()) {
-			LiveExitDialog dialog = new LiveExitDialog(mContext, "确定关闭该直播？");
-			dialog.show();
+        } else if (id == livePerson.getId()) {
+            //person list button
+            if (isLiveListVisible) {
+                liveHorizontalList.setVisibility(VISIBLE);
+                isLiveListVisible = false;
+            } else {
+                liveHorizontalList.setVisibility(GONE);
+                isLiveListVisible = true;
+            }
 
-		} else if (id == liveReportImage.getId()) {
-			LiveExitDialog dialog = new LiveExitDialog(mContext, "确定举报该直播？");
-			dialog.show();
+        } else if (id == liveShareButton.getId()) {
 
-		} else if (id == livePerson.getId()) {
-			//person list button
-			if (isLiveListVisible) {
-				liveHorizontalList.setVisibility(VISIBLE);
-				isLiveListVisible = false;
-			} else {
-				liveHorizontalList.setVisibility(GONE);
-				isLiveListVisible = true;
-			}
+            Toast.makeText(mContext, "I am share", Toast.LENGTH_SHORT).show();
 
-		} else if (id == liveShareButton.getId()) {
-
-			Toast.makeText(mContext, "I am share", Toast.LENGTH_SHORT).show();
-
-		} else if (id == liveSwitchButton.getId()) {
-			if (isSwitch) {
-				livePerson.setVisibility(VISIBLE);
-				liveHeartLayout.setVisibility(VISIBLE);
-				liveHorizontalList.setVisibility(VISIBLE);
-				liveShareButton.setVisibility(VISIBLE);
-				liveEditText.setVisibility(VISIBLE);
-				liveImageView.setVisibility(VISIBLE);
+        } else if (id == liveSwitchButton.getId()) {
+            if (isSwitch) {
+                livePerson.setVisibility(VISIBLE);
+                liveHeartLayout.setVisibility(VISIBLE);
+                liveHorizontalList.setVisibility(VISIBLE);
+                liveShareButton.setVisibility(VISIBLE);
+                liveEditText.setVisibility(VISIBLE);
+                liveImageView.setVisibility(VISIBLE);
 //				liveSwitchButton.setText(getResources().getString(R.string.live_info_switch));
-				liveSwitchButton.setImageResource(R.drawable.live_model_image);
-				livePersonCountTextView.setVisibility(VISIBLE);
-				livePraiseCountTextView.setVisibility(VISIBLE);
-				liveListView.setVisibility(VISIBLE);
+                liveSwitchButton.setImageResource(R.drawable.live_model_image);
+                livePersonCountTextView.setVisibility(VISIBLE);
+                livePraiseCountTextView.setVisibility(VISIBLE);
+                liveListView.setVisibility(VISIBLE);
 
-				isSwitch = false;
+                isSwitch = false;
 
-			} else {
-				livePerson.setVisibility(GONE);
-				liveHeartLayout.setVisibility(GONE);
-				liveHorizontalList.setVisibility(GONE);
-				liveShareButton.setVisibility(GONE);
-				liveEditText.setVisibility(GONE);
-				liveImageView.setVisibility(GONE);
-				liveSwitchButton.setImageResource(R.drawable.live_quiet_model_image);
-				livePersonCountTextView.setVisibility(GONE);
-				livePraiseCountTextView.setVisibility(GONE);
-				liveListView.setVisibility(GONE);
+            } else {
+                livePerson.setVisibility(GONE);
+                liveHeartLayout.setVisibility(GONE);
+                liveHorizontalList.setVisibility(GONE);
+                liveShareButton.setVisibility(GONE);
+                liveEditText.setVisibility(GONE);
+                liveImageView.setVisibility(GONE);
+                liveSwitchButton.setImageResource(R.drawable.live_quiet_model_image);
+                livePersonCountTextView.setVisibility(GONE);
+                livePraiseCountTextView.setVisibility(GONE);
+                liveListView.setVisibility(GONE);
 
-				isSwitch = true;
-			}
-		} else if (id == liveImageView.getId()) {
+                isSwitch = true;
+            }
+        } else if (id == liveImageView.getId()) {
 
-			livePraiseCount ++;
-			livePraiseCountTextView.setText(String.valueOf(livePraiseCount));
-		}
+            livePraiseCount++;
+            livePraiseCountTextView.setText(String.valueOf(livePraiseCount));
+        }
 
-	}
+    }
 
-	private int randomColor() {
-		return  Color.rgb(mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255));
-	}
+    private int randomColor() {
+        return Color.rgb(mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255));
+    }
 
 }

@@ -180,7 +180,6 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
         mSeekBar.setMax(LIVEREPLAY_MAX_VIDEO_PROGRESS);
         mSeekBar.setProgress(0);
 
-        startLiveReplayTimer();
     }
 
     Runnable seekRefreshRunnable = new Runnable() {
@@ -254,17 +253,17 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
         refreshTimerLiveReplay.scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if (data.size() >= 8) {
-                    data.remove(0);
-                    isReplayRemoveData = false;
-                } else {
-                    data.add(map);
-                    isReplayRemoveData = true;
-                }
 
                 mHandler.post(new Runnable() {
                     @Override
                     public void run() {
+                        if (data.size() >= 8) {
+                            data.remove(0);
+                            isReplayRemoveData = false;
+                        } else {
+                            data.add(map);
+                            isReplayRemoveData = true;
+                        }
                         if (isReplayRemoveData) {
                             liveReplayListView.requestLayout();
                             adapter.notifyDataSetChanged();

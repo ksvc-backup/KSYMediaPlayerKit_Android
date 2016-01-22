@@ -351,7 +351,6 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
     private MediaPlayerTextureView.OnVideoComingToShowListener mOnVideoComingToShowListener = new MediaPlayerTextureView.OnVideoComingToShowListener() {
         @Override
         public void onVideoComingToShow() {
-//            initOrientationEventListener(mContext);
         }
     };
 
