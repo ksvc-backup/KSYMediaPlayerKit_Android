@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
 import com.ksy.media.widget.ui.base.fragment.CommentListFragment;
@@ -15,6 +16,7 @@ public class VideoMediaPlayerPagerAdapter extends FragmentPagerAdapter {
 
     public static final int PAGER_COUNT = 3;
     private final Context mContext;
+    public CommentListFragment mFragment;
 
     public VideoMediaPlayerPagerAdapter(Context context,FragmentManager fm) {
         super(fm);
@@ -25,13 +27,11 @@ public class VideoMediaPlayerPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return CommentListFragment.newInstance(position + "", "");
+                mFragment = CommentListFragment.getInstance(position + "", "");
+                return mFragment;
             case 1:
                 return DetailFragment.newInstance(position + "", "");
             case 2:
-                InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-
                 return RecommendListFragment.newInstance(position + "", "");
         }
 

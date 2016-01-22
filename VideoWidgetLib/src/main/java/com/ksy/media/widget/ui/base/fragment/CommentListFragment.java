@@ -43,8 +43,16 @@ public class CommentListFragment extends Fragment implements AbsListView.OnItemC
     private View commentLayout;
     private EditText pop_edittext_et;
     private View pop_comment_btn;
+    private static CommentListFragment mInstance;
 
     public CommentListFragment() {
+    }
+
+    public static CommentListFragment getInstance(String param1, String param2) {
+        if (mInstance == null){
+            mInstance = new CommentListFragment();
+        }
+        return mInstance;
     }
 
     public static CommentListFragment newInstance(String param1, String param2) {
@@ -192,6 +200,15 @@ public class CommentListFragment extends Fragment implements AbsListView.OnItemC
 
     private void hideCommentLayout() {
         view_container.removeView(commentLayout);
+    }
+
+    public void hideAll(){
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        if (imm.isActive()) {
+            imm.hideSoftInputFromWindow(pop_edittext_et.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+            hideCommentLayout();
+            pop_edittext_et.setText("");
+        }
     }
 
     private void showCommentLayout() {

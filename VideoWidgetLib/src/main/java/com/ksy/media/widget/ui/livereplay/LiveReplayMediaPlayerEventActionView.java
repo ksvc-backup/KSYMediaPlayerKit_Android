@@ -3,6 +3,7 @@ package com.ksy.media.widget.ui.livereplay;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -24,9 +25,10 @@ public class LiveReplayMediaPlayerEventActionView extends RelativeLayout {
 	private Button  replayButton;
 
 	private RelativeLayout mxCompleteLayout;
+	private Button mCompleteBackHome;
 
 	private LinearLayout mErrorLayout;
-	private Button mErrorReplayBt;
+	private Button mErrorReplayButton;
 	private TextView mErrorTextView;
 
 	private EventActionViewCallback mCallback;
@@ -58,9 +60,10 @@ public class LiveReplayMediaPlayerEventActionView extends RelativeLayout {
 		replayButton = (Button)findViewById(R.id.button_replay);
 
 		mxCompleteLayout = (RelativeLayout) findViewById(R.id.layout_live_replay_finish);
+		mCompleteBackHome = (Button) findViewById(R.id.button_back_home);
 
 		mErrorLayout = (LinearLayout) findViewById(R.id.live_replay_error_layout);
-		mErrorReplayBt = (Button) findViewById(R.id.livereplay_error_replay_bt);
+		mErrorReplayButton = (Button) findViewById(R.id.livereplay_error_replay_bt);
 		mErrorTextView = (TextView) findViewById(R.id.error_info_title_text_view);
 
 		closeTextView.setOnClickListener(new OnClickListener() {
@@ -70,22 +73,21 @@ public class LiveReplayMediaPlayerEventActionView extends RelativeLayout {
 			}
 		});
 
-		replayButton.setOnClickListener(new OnClickListener() {
+		mCompleteBackHome.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				/*if (mCallback != null) {
-					mCallback.onActionReplay();
-				}*/
-
 				System.exit(0);
 			}
 		});
 
-		mErrorReplayBt.setOnClickListener(new OnClickListener() {
+		mErrorReplayButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (mCallback != null)
+
+				if (mCallback != null) {
 					mCallback.onActionError();
+				}
+
 			}
 		});
 	}

@@ -55,10 +55,32 @@ public class StreamVideoActivity extends AppCompatActivity implements
         pager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new StreamMediaPlayerPagerAdapter(StreamVideoActivity.this, getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
+        pager.setOffscreenPageLimit(2);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setTabsFromPagerAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(pager);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                pager.setCurrentItem(tab.getPosition());
+                Log.d("lixp", "onTabSelected  ..1..");
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                Log.d("lixp", "onTabUnselected  ..2..");
+                if (tab.getPosition() == 0) {
+                    pagerAdapter.mFragment.hideAll();
+                }
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                Log.d("lixp", "onTabReselected  ..3....");
+            }
+        });
     }
+
 
     private void setupDialog() {
         final View dialogView = LayoutInflater.from(this).inflate(

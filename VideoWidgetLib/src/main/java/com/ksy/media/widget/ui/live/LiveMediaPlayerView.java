@@ -177,6 +177,8 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         this.mLiveMediaPlayerVideoView.setOnErrorListener(mOnErrorListener);
         this.mLiveMediaPlayerVideoView
                 .setMediaPlayerController(mMediaPlayerPlus);
+        this.mLiveMediaPlayerVideoView.setOnVideoComingToShowListener(mOnVideoComingToShowListener);
+
         this.mLiveMediaPlayerVideoView.setFocusable(false);
 
         setPowerStateListener(this.mLiveMediaPlayerVideoView);
@@ -230,6 +232,22 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                         if (NetworkUtil.isNetworkAvailable(mContext)) {
                             Log.i(Constants.LOG_TAG,
                                     "event action  view action replay");
+                            switch (playConfig.getVideoMode()) {
+                                case PlayConfig.SHORT_VIDEO_MODE:
+                                    Log.d(Constants.LOG_TAG, "PlayConfig.SHORT_VIDEO_MODE  11111 ");
+                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+                                    break;
+
+                                case PlayConfig.LIVE_VIDEO_MODE:
+                                    Log.d(Constants.LOG_TAG, "PlayConfig.LIVE_VIDEO_MODE  2222222 ");
+                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+                                    break;
+
+                                case PlayConfig.OTHER_MODE:
+
+                                    break;
+                            }
+
                             mLiveMediaPlayerEventActionView.hide();
                             mIsComplete = false;
                             if (mMediaPlayerController != null) {
@@ -249,6 +267,23 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                             mIsComplete = false;
                             Log.i(Constants.LOG_TAG,
                                     "event action  view action error");
+
+                            switch (playConfig.getVideoMode()) {
+                                case PlayConfig.SHORT_VIDEO_MODE:
+                                    Log.d(Constants.LOG_TAG, "PlayConfig.SHORT_VIDEO_MODE  11111 ");
+                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+                                    break;
+
+                                case PlayConfig.LIVE_VIDEO_MODE:
+                                    Log.d(Constants.LOG_TAG, "PlayConfig.LIVE_VIDEO_MODE  2222222 ");
+                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+                                    break;
+
+                                case PlayConfig.OTHER_MODE:
+
+                                    break;
+                            }
+
                             mLiveMediaPlayerEventActionView.hide();
                             mLiveMediaPlayerControllerView.setVisibility(VISIBLE);
                             mMediaPlayerLoadingView.show();
@@ -382,6 +417,14 @@ public class LiveMediaPlayerView extends RelativeLayout implements
             this.mLiveMediaPlayerVideoView.setVideoPath(path);
         }
     }
+
+    private MediaPlayerTextureView.OnVideoComingToShowListener mOnVideoComingToShowListener = new MediaPlayerTextureView.OnVideoComingToShowListener() {
+        @Override
+        public void onVideoComingToShow() {
+//            initOrientationEventListener(mContext);
+        }
+    };
+
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {

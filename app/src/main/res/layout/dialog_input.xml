@@ -13,11 +13,12 @@
         android:textColor="@color/ksy_color_font"
         android:textColorHint="@color/ksy_color_font_alpha"
         android:hint="Please Input Video Path or URL..."
-        android:text="http://sfvbook-eflake.bj.bcebos.com/BETA3/RYU/20151220224301.mp4">
+        android:text="http://eflakee.kssws.ks-cdn.com/sept_2015_1280_CC.m4v">
         <requestFocus />
     </EditText>
 
-    <!--
+    <!--http://eflakee.kssws.ks-cdn.com/sept_2015_1280_CC.m4v
+    http://sfvbook-eflake.bj.bcebos.com/BETA3/RYU/20151220224301.mp4
     -->
 
     <!--

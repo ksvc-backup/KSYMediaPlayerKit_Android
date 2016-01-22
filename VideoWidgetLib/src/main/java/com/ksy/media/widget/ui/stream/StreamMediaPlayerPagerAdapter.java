@@ -15,6 +15,7 @@ public class StreamMediaPlayerPagerAdapter extends FragmentPagerAdapter {
 
     public static final int PAGER_COUNT = 3;
     private final Context mContext;
+    public CommentListFragment mFragment;
 
     public StreamMediaPlayerPagerAdapter(Context context,FragmentManager fm) {
         super(fm);
@@ -25,7 +26,8 @@ public class StreamMediaPlayerPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return CommentListFragment.newInstance(position + "", "");
+                mFragment = CommentListFragment.getInstance(position + "", "");
+                return mFragment;
             case 1:
                 return DetailFragment.newInstance(position + "", "");
             case 2:

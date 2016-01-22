@@ -16,17 +16,17 @@ import java.util.Map;
 public class LiveReplayChatAdapter extends BaseAdapter {
 
 	private LayoutInflater mInflater = null;
-	private List<Map<String, Object>> dataReceive;
+	private List<Map<String, Object>> dataReplayReceive;
 
 	public LiveReplayChatAdapter(Context context, List<Map<String, Object>> data) {
-		dataReceive = data;
+		dataReplayReceive = data;
 		this.mInflater = LayoutInflater.from(context);
 	}
 
 	@Override
 	public int getCount() {
 
-		return dataReceive.size();
+		return dataReplayReceive.size();
 	}
 
 	@Override
@@ -59,10 +59,17 @@ public class LiveReplayChatAdapter extends BaseAdapter {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 
-		viewHolder.commendHeadImage.setBackgroundResource((Integer) dataReceive.get(position)
-				.get("img"));
-		viewHolder.userNameText.setText((String) dataReceive.get(position).get("title"));
-		viewHolder.commendText.setText((String) dataReceive.get(position).get("info"));
+		if (dataReplayReceive.size() > position) {
+			viewHolder.commendHeadImage.setBackgroundResource((Integer) dataReplayReceive.get(position)
+					.get("img"));
+			viewHolder.userNameText.setText((String) dataReplayReceive.get(position).get("title"));
+			viewHolder.commendText.setText((String) dataReplayReceive.get(position).get("info"));
+		}/* else {
+			viewHolder.commendHeadImage.setBackgroundResource((Integer) dataReplayReceive.get(1)
+					.get("img"));
+			viewHolder.userNameText.setText((String) dataReplayReceive.get(1).get("title"));
+			viewHolder.commendText.setText((String) dataReplayReceive.get(1).get("info"));
+		}*/
 		
 		return convertView;
 	}

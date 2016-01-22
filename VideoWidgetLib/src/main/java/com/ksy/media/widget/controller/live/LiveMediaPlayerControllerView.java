@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -150,7 +151,16 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 		heartLayoutTimer();
 		liveAudienceComeTimer();
 		liveAudienceComeTimerGoneTimer();
+
+		/*runOnUiThread(new Runnable() {
+			public void run() {
+
+			}
+		});*/
+
 	}
+
+
 
 	private void chatListControl() {
 		refreshTimer.scheduleAtFixedRate(new TimerTask() {
@@ -164,14 +174,20 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
 					isRemoveData = true;
 				}
 
+
+
+
 				liveHandler.post(new Runnable() {
 					@Override
 					public void run() {
 						if (isRemoveData) {
+							liveListView.requestLayout();
 							adapter.notifyDataSetChanged();
 						} else{
+							liveListView.requestLayout();
 							adapter.notifyDataSetChanged();
 							data.add(7, map);
+							liveListView.requestLayout();
 							adapter.notifyDataSetChanged();
 						}
 					}

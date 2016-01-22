@@ -75,6 +75,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
     private IPowerStateListener powerStateListener;
     private boolean mIsTextureViewVisible = true;
 
+
     public ShortVideoMediaPlayerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         mContext = context;
@@ -145,6 +146,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         this.mMediaPlayerVideoView
                 .setMediaPlayerController(mMediaPlayerPlus);
         this.mMediaPlayerVideoView.setFocusable(false);
+        this.mMediaPlayerVideoView.setOnVideoComingToShowListener(mOnVideoComingToShowListener);
         setPowerStateListener(this.mMediaPlayerVideoView);
 
         /* 设置playerVideoView UI 参数 */
@@ -201,6 +203,22 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                         if (NetworkUtil.isNetworkAvailable(mContext)) {
                             Log.i(Constants.LOG_TAG,
                                     "event action  view action replay");
+                            switch (playConfig.getVideoMode()) {
+                                case PlayConfig.SHORT_VIDEO_MODE:
+                                    Log.d(Constants.LOG_TAG, "PlayConfig.SHORT_VIDEO_MODE  11111 ");
+                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+                                    break;
+
+                                case PlayConfig.LIVE_VIDEO_MODE:
+                                    Log.d(Constants.LOG_TAG, "PlayConfig.LIVE_VIDEO_MODE  2222222 ");
+                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+                                    break;
+
+                                case PlayConfig.OTHER_MODE:
+
+                                    break;
+                            }
+
                             mMediaPlayerEventActionView.hide();
                             mIsComplete = false;
                             if (mMediaPlayerController != null) {
@@ -220,6 +238,23 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                             mIsComplete = false;
                             Log.i(Constants.LOG_TAG,
                                     "event action  view action error");
+
+                            switch (playConfig.getVideoMode()) {
+                                case PlayConfig.SHORT_VIDEO_MODE:
+                                    Log.d(Constants.LOG_TAG, "PlayConfig.SHORT_VIDEO_MODE  11111 ");
+                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+                                    break;
+
+                                case PlayConfig.LIVE_VIDEO_MODE:
+                                    Log.d(Constants.LOG_TAG, "PlayConfig.LIVE_VIDEO_MODE  2222222 ");
+                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+                                    break;
+
+                                case PlayConfig.OTHER_MODE:
+
+                                    break;
+                            }
+
                             mMediaPlayerEventActionView.hide();
                             mMediaPlayerSmallControllerView.hide();
                             mMediaPlayerLoadingView.show();
@@ -312,6 +347,13 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
     private void setPowerStateListener(IPowerStateListener powerStateListener) {
         this.powerStateListener = powerStateListener;
     }
+
+    private MediaPlayerTextureView.OnVideoComingToShowListener mOnVideoComingToShowListener = new MediaPlayerTextureView.OnVideoComingToShowListener() {
+        @Override
+        public void onVideoComingToShow() {
+//            initOrientationEventListener(mContext);
+        }
+    };
 
     public void play(String path) {
 
@@ -535,6 +577,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 
             Log.e(Constants.LOG_TAG, "On Native Error,what :" + what
                     + " , extra :" + extra);
+
             mMediaPlayerSmallControllerView.hide();
             mMediaPlayerBufferingView.hide();
             mMediaPlayerLoadingView.hide();

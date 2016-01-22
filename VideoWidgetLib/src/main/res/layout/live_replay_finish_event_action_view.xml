@@ -97,7 +97,7 @@
         android:layout_width="@dimen/stream_pop_width"
         android:layout_height="@dimen/live_bottom_height"
         android:text="@string/live_back_home"
-        android:id="@+id/button_replay"
+        android:id="@+id/button_back_home"
         android:layout_marginTop="@dimen/live_margin_left"
         android:textColor="@color/white"
         android:background="@color/lightblue"

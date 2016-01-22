@@ -3,6 +3,7 @@ package com.ksy.media.widget.controller.livereplay;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -15,6 +16,7 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
+
 import com.ksy.media.widget.ui.base.LiveAnchorDialog;
 import com.ksy.media.widget.ui.base.MediaPlayerVideoSeekBar;
 import com.ksy.media.widget.ui.base.HeartLayout;
@@ -33,6 +35,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
+
 import android.os.Handler;
 import android.graphics.Color;
 import android.widget.Toast;
@@ -40,476 +43,522 @@ import android.widget.Toast;
 
 public class LiveReplayMediaPlayerControllerView extends FrameLayout implements View.OnClickListener {
 
-	private ImageView liveReplayHead;
-	private ImageView  loadingImage;
-	private TextView  netErrorTextView;
-	private ImageView  closeImage;
-	private ImageView  reportImage;
+    private ImageView liveReplayHead;
+    private ImageView loadingImage;
+    private TextView netErrorTextView;
+    private ImageView closeImage;
+    private ImageView reportImage;
 
-	private ListView liveReplayListView;
-	private TextView noticeTextView;
-	private List<Map<String, Object>> data;
-	private Timer refreshTimerLiveReplay = new Timer();
-	private LiveReplayChatAdapter adapter;
-	Map<String, Object> map;
+    private ListView liveReplayListView;
+    private TextView noticeTextView;
+    private List<Map<String, Object>> data;
+    private LiveReplayChatAdapter adapter;
+    Map<String, Object> map;
 
-	private TextView personCountTextView;
-	private ImageView liveReplayPerson;
-	private TextView praiseCountTextView;
-	private HorizontalListView mHorizontalList;
-	private LiveReplayHeadListAdapter headListAdapter;
-	private int praiseCount;
+    private TextView personCountTextView;
+    private ImageView liveReplayPerson;
+    private TextView praiseCountTextView;
+    private HorizontalListView mHorizontalList;
+    private LiveReplayHeadListAdapter headListAdapter;
+    private int praiseCount;
 
     private ImageView switchButton;
-	private ImageView shareButton;
-	private MediaPlayerVideoSeekBar mSeekBar;
-	private TextView currentTimeTextView;
-	private TextView lineTextView;
-	private TextView totalTimeTextView;
-	private ImageView mPlaybackImageView;
+    private ImageView shareButton;
+    private MediaPlayerVideoSeekBar mSeekBar;
+    private TextView currentTimeTextView;
+    private TextView lineTextView;
+    private TextView totalTimeTextView;
+    private ImageView mPlaybackImageView;
 
     private Context mContext;
-	private Random mRandom = new Random();
-	private Timer mTimer = new Timer();
-	private Timer mAudienceComeTimer = new Timer();
-	private Timer mAudienceComeTimerGoneTimer = new Timer();
-	private HeartLayout mHeartLayout;
-	private ImageView heartImageView;
-	private boolean isSwitch;
-	private boolean isListVisible;
+    private Random mRandom = new Random();
 
-	private Handler mHandler = new Handler();
-	protected LayoutInflater mLiveReplayLayoutInflater;
-	protected static final int LIVEREPLAY_MAX_VIDEO_PROGRESS = 1000;
-	protected volatile boolean mVideoProgressTrackingTouch = false;
-	protected ILiveReplayController mLiveReplayMediaPlayerController;
-	private Timer seekTimer;
-	private volatile boolean mSeekStarted = false;
-	private Animation showAudienceAnimation;
-	private Animation hideAudienceAnimation;
+//	private Timer refreshTimerLiveReplay = new Timer();
+//	private Timer mTimer = new Timer();
+//	private Timer mAudienceComeTimer = new Timer();
+//	private Timer mAudienceComeTimerGoneTimer = new Timer();
+//	private Timer seekTimer = new Timer();
 
-	public LiveReplayMediaPlayerControllerView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		mContext = context;
-	}
+    private Timer refreshTimerLiveReplay = null;
+    private Timer mTimer = null;
+    private Timer mAudienceComeTimer = null;
+    private Timer mAudienceComeTimerGoneTimer = null;
+    private Timer seekTimer = null;
 
-	public LiveReplayMediaPlayerControllerView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		mContext = context;
-	}
+    private HeartLayout mHeartLayout;
+    private ImageView heartImageView;
+    private boolean isSwitch;
+    private boolean isListVisible;
 
-	public LiveReplayMediaPlayerControllerView(Context context) {
-		super(context);
-		mContext = context;
+    private Handler mHandler = new Handler();
+    protected LayoutInflater mLiveReplayLayoutInflater;
+    protected static final int LIVEREPLAY_MAX_VIDEO_PROGRESS = 1000;
+    protected volatile boolean mVideoProgressTrackingTouch = false;
+    protected ILiveReplayController mLiveReplayMediaPlayerController;
 
-		mLiveReplayLayoutInflater = LayoutInflater.from(getContext());
-		mLiveReplayLayoutInflater.inflate(R.layout.blue_media_player_controller_live_replay, this);
+    private volatile boolean mSeekStarted = false;
+    private Animation showAudienceAnimation;
+    private Animation hideAudienceAnimation;
+    private boolean isReplayRemoveData;
 
-		initViews();
-		initListeners();
-	}
+    public LiveReplayMediaPlayerControllerView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        mContext = context;
+    }
 
-	@Override
-	protected void onFinishInflate() {
-		super.onFinishInflate();
+    public LiveReplayMediaPlayerControllerView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        mContext = context;
+    }
 
-		initViews();
-		initListeners();
-	}
+    public LiveReplayMediaPlayerControllerView(Context context) {
+        super(context);
+        mContext = context;
 
-	protected void initViews() {
+        mLiveReplayLayoutInflater = LayoutInflater.from(getContext());
+        mLiveReplayLayoutInflater.inflate(R.layout.blue_media_player_controller_live_replay, this);
 
-		showAudienceAnimation = AnimationUtils.loadAnimation(mContext, R.anim.live_audience_show);
-		hideAudienceAnimation = AnimationUtils.loadAnimation(mContext, R.anim.live_audience_hide);
+        initViews();
+        initListeners();
+    }
 
-		liveReplayHead = (ImageView)findViewById(R.id.image_live_replay_head);
-		loadingImage = (ImageView) findViewById(R.id.text_live_replay);
-		netErrorTextView = (TextView) findViewById(R.id.textViewNetError);
-		closeImage = (ImageView) findViewById(R.id.live_replay_image_close);
-		reportImage = (ImageView) findViewById(R.id.live_replay_image_report);
-		praiseCountTextView = (TextView) findViewById(R.id.praise_count_text);
-		personCountTextView = (TextView) findViewById(R.id.person_count_textview);
+    @Override
+    protected void onFinishInflate() {
+        super.onFinishInflate();
 
-		liveReplayListView = (ListView) findViewById(R.id.live_replay_list);
-		noticeTextView = (TextView)findViewById(R.id.live_replay_notice_text);
-		data = getData();
-		adapter = new LiveReplayChatAdapter(mContext, data);
-		liveReplayListView.setAdapter(adapter);
+        initViews();
+        initListeners();
+    }
 
-		mHorizontalList = (HorizontalListView) findViewById(R.id.live_replay_horizon);
-		headListAdapter = new LiveReplayHeadListAdapter(mContext);
-		mHorizontalList.setAdapter(headListAdapter);
+    protected void initViews() {
 
-		mHorizontalList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-				LivePersonDialog dialogPerson = new LivePersonDialog(mContext);
+        showAudienceAnimation = AnimationUtils.loadAnimation(mContext, R.anim.live_audience_show);
+        hideAudienceAnimation = AnimationUtils.loadAnimation(mContext, R.anim.live_audience_hide);
 
-				WindowManager.LayoutParams lp = dialogPerson.getWindow().getAttributes();
-				lp.alpha = 0.8f;
-				dialogPerson.getWindow().setAttributes(lp);
+        liveReplayHead = (ImageView) findViewById(R.id.image_live_replay_head);
+        loadingImage = (ImageView) findViewById(R.id.text_live_replay);
+        netErrorTextView = (TextView) findViewById(R.id.textViewNetError);
+        closeImage = (ImageView) findViewById(R.id.live_replay_image_close);
+        reportImage = (ImageView) findViewById(R.id.live_replay_image_report);
+        praiseCountTextView = (TextView) findViewById(R.id.praise_count_text);
+        personCountTextView = (TextView) findViewById(R.id.person_count_textview);
 
-				dialogPerson.show();
-			}
-		});
+        liveReplayListView = (ListView) findViewById(R.id.live_replay_list);
+        noticeTextView = (TextView) findViewById(R.id.live_replay_notice_text);
+        data = getData();
+        adapter = new LiveReplayChatAdapter(mContext, data);
+        liveReplayListView.setAdapter(adapter);
 
-		liveReplayPerson = (ImageView)findViewById(R.id.live_replay_person_image);
-		switchButton = (ImageView) findViewById(R.id.live_replay_information_switch);
-		mHeartLayout = (HeartLayout)findViewById(R.id.live_replay_layout_heart);
-		heartImageView = (ImageView) findViewById(R.id.live_replay_image_heart);
-		shareButton = (ImageView) findViewById(R.id.live_replay_share_bt);
+        mHorizontalList = (HorizontalListView) findViewById(R.id.live_replay_horizon);
+        headListAdapter = new LiveReplayHeadListAdapter(mContext);
+        mHorizontalList.setAdapter(headListAdapter);
 
-		mSeekBar = (MediaPlayerVideoSeekBar) findViewById(R.id.seekbar_video_progress);
-		mPlaybackImageView = (ImageView) findViewById(R.id.video_playback_image_view);
-		currentTimeTextView = (TextView) findViewById(R.id.textViewCurrentTime);
-		lineTextView = (TextView) findViewById(R.id.textViewLine);
-		totalTimeTextView = (TextView) findViewById(R.id.textViewTotalTime);
-		mSeekBar.setMax(LIVEREPLAY_MAX_VIDEO_PROGRESS);
-		mSeekBar.setProgress(0);
+        mHorizontalList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                LivePersonDialog dialogPerson = new LivePersonDialog(mContext);
 
-		chatListControlLiveReplay();
+                WindowManager.LayoutParams lp = dialogPerson.getWindow().getAttributes();
+                lp.alpha = 0.8f;
+                dialogPerson.getWindow().setAttributes(lp);
 
-		seekRefresh();
+                dialogPerson.show();
+            }
+        });
 
-		heartRefresh();
+        liveReplayPerson = (ImageView) findViewById(R.id.live_replay_person_image);
+        switchButton = (ImageView) findViewById(R.id.live_replay_information_switch);
+        mHeartLayout = (HeartLayout) findViewById(R.id.live_replay_layout_heart);
+        heartImageView = (ImageView) findViewById(R.id.live_replay_image_heart);
+        shareButton = (ImageView) findViewById(R.id.live_replay_share_bt);
 
-		audienceComeTimer();
+        mSeekBar = (MediaPlayerVideoSeekBar) findViewById(R.id.seekbar_video_progress);
+        mPlaybackImageView = (ImageView) findViewById(R.id.video_playback_image_view);
+        currentTimeTextView = (TextView) findViewById(R.id.textViewCurrentTime);
+        lineTextView = (TextView) findViewById(R.id.textViewLine);
+        totalTimeTextView = (TextView) findViewById(R.id.textViewTotalTime);
+        mSeekBar.setMax(LIVEREPLAY_MAX_VIDEO_PROGRESS);
+        mSeekBar.setProgress(0);
 
-		audienceComeTimerGoneTimer();
-	}
+        startLiveReplayTimer();
+    }
 
-	Runnable seekRefreshRunnable = new Runnable() {
-		@Override
-		public void run() {
-			onTimerTicker();
-		}
-	};
+    Runnable seekRefreshRunnable = new Runnable() {
+        @Override
+        public void run() {
+            onTimerTicker();
+        }
+    };
 
-	Runnable mAudienceComeRunnable = new Runnable() {
-		@Override
-		public void run() {
-			noticeTextView.startAnimation(showAudienceAnimation);
-		}
-	};
+    Runnable mAudienceComeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            noticeTextView.startAnimation(showAudienceAnimation);
+        }
+    };
 
-	Runnable mAudienceComeGoneRunnable = new Runnable() {
-		@Override
-		public void run() {
-			if (noticeTextView.isShown()) {
-				noticeTextView.startAnimation(hideAudienceAnimation);
-				noticeTextView.setVisibility(INVISIBLE);
-			}
-		}
-	};
+    Runnable mAudienceComeGoneRunnable = new Runnable() {
+        @Override
+        public void run() {
+            if (noticeTextView.isShown()) {
+                noticeTextView.startAnimation(hideAudienceAnimation);
+                noticeTextView.setVisibility(INVISIBLE);
+            }
+        }
+    };
 
-	public void seekRefresh() {
-		seekTimer = new Timer();
-		seekTimer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				mHandler.postDelayed(seekRefreshRunnable, 100);
-			}
-		}, 200, 1000);
-	}
+    public void seekRefresh() {
+        seekTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.postDelayed(seekRefreshRunnable, 100);
+            }
+        }, 200, 1000);
+    }
 
-	public void heartRefresh() {
-		mTimer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				mHeartLayout.post(new Runnable() {
-					@Override
-					public void run() {
-						mHeartLayout.addHeart(randomColor());
-						praiseCount++;
-						praiseCountTextView.setText(String.valueOf(praiseCount));
-					}
-				});
-			}
-		}, 500, 1000);
-	}
+    public void heartRefresh() {
+        mTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                mHeartLayout.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        mHeartLayout.addHeart(randomColor());
+                        praiseCount++;
+                        praiseCountTextView.setText(String.valueOf(praiseCount));
+                    }
+                });
+            }
+        }, 500, 1000);
+    }
 
-	public void audienceComeTimer() {
-		mAudienceComeTimer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				mHandler.postDelayed(mAudienceComeRunnable, 100);
-			}
-		}, 100, 6000);
-	}
+    public void audienceComeTimer() {
+        mAudienceComeTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.postDelayed(mAudienceComeRunnable, 100);
+            }
+        }, 100, 6000);
+    }
 
-	public void audienceComeTimerGoneTimer() {
-		mAudienceComeTimerGoneTimer.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				mHandler.postDelayed(mAudienceComeGoneRunnable, 100);
-			}
-		}, 100, 8000);
-	}
+    public void audienceComeTimerGoneTimer() {
+        mAudienceComeTimerGoneTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                mHandler.postDelayed(mAudienceComeGoneRunnable, 100);
+            }
+        }, 100, 8000);
+    }
 
-	private List<Map<String, Object>> getData() {
+    private void chatListControlLiveReplay() {
+        refreshTimerLiveReplay.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (data.size() >= 8) {
+                    data.remove(0);
+                    isReplayRemoveData = false;
+                } else {
+                    data.add(map);
+                    isReplayRemoveData = true;
+                }
 
-		if (data != null && data.size() > 0 ) {
-			return  data;
-		}
+                mHandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (isReplayRemoveData) {
+                            liveReplayListView.requestLayout();
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            liveReplayListView.requestLayout();
+                            adapter.notifyDataSetChanged();
+                            data.add(7, map);
+                            liveReplayListView.requestLayout();
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                });
+            }
+        }, 200, 2000);
 
-		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-		Map<String, Object> map;
+    }
 
-		map = new HashMap<String, Object>();
-		map.put("img", R.drawable.live_dialog_list_item);
-		map.put("title", "用户名");
-		map.put("info", "评论内容评论内容");
+    private List<Map<String, Object>> getData() {
 
-		this.map = map;
-		list.add(map);
+        if (data != null && data.size() > 0) {
+            return data;
+        }
 
-		return list;
-	}
+        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        Map<String, Object> map;
 
-	private void chatListControlLiveReplay() {
-		refreshTimerLiveReplay.scheduleAtFixedRate(new TimerTask() {
-			@Override
-			public void run() {
-				if (data.size() >= 8) {
-					data.remove(0);
-					data.add(7, map);
-				} else {
-					data.add(map);
-				}
+        map = new HashMap<String, Object>();
+        map.put("img", R.drawable.live_dialog_list_item);
+        map.put("title", "用户名");
+        map.put("info", "评论内容评论内容");
 
-				mHandler.post(new Runnable() {
-					@Override
-					public void run() {
-						adapter.notifyDataSetChanged();
-					}
-				});
-			}
-		}, 200, 2000);
-	}
+        this.map = map;
+        list.add(map);
 
-	public void stopLiveReplayTimer() {
-		if (null != seekTimer) {
-			seekTimer.cancel();
-		}
+        return list;
+    }
 
-		if (null != mTimer) {
-			mTimer.cancel();
-		}
+    public void startLiveReplayTimer() {
 
-		if (null != mAudienceComeTimer) {
-			mAudienceComeTimer.cancel();
-		}
+        if (mTimer == null || mAudienceComeTimer == null || mAudienceComeTimerGoneTimer == null || seekTimer == null || refreshTimerLiveReplay == null) {
+            mTimer = new Timer();
+            mAudienceComeTimer = new Timer();
+            mAudienceComeTimerGoneTimer = new Timer();
+            seekTimer = new Timer();
+            refreshTimerLiveReplay = new Timer();
+        }
 
-		if (null != mAudienceComeTimerGoneTimer) {
-			mAudienceComeTimerGoneTimer.cancel();
-		}
+        chatListControlLiveReplay();
 
-		if (null != refreshTimerLiveReplay) {
-			refreshTimerLiveReplay.cancel();
-		}
+        seekRefresh();
 
-		currentTimeTextView.setText("00:00:00");
-		totalTimeTextView.setText("00:00:00");
-	}
+        heartRefresh();
 
-	protected void initListeners() {
+        audienceComeTimer();
 
-		liveReplayHead.setOnClickListener(this);
-		closeImage.setOnClickListener(this);
-		reportImage.setOnClickListener(this);
+        audienceComeTimerGoneTimer();
 
-		liveReplayPerson.setOnClickListener(this);
-		switchButton.setOnClickListener(this);
-		shareButton.setOnClickListener(this);
-		mPlaybackImageView.setOnClickListener(this);
+        initListeners();
+    }
 
-		mSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
-			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {
-				mVideoProgressTrackingTouch = false;
+    public void stopLiveReplayTimer() {
+        if (null != seekTimer) {
+            seekTimer.cancel();
+            seekTimer.purge();
+            seekTimer = null;
+        }
 
-				int curProgress = seekBar.getProgress();
-				int maxProgress = seekBar.getMax();
+        if (null != mTimer) {
+            mTimer.cancel();
+            mTimer.purge();
+            mTimer = null;
+        }
 
-				if (curProgress >= 0 && curProgress <= maxProgress) {
-					float percentage = ((float) curProgress) / maxProgress;
-					int position = (int) (mLiveReplayMediaPlayerController.getDuration() * percentage);
-					mLiveReplayMediaPlayerController.seekTo(position);
-					// mMediaPlayerController.start();
-				}
-			}
+        if (null != mAudienceComeTimer) {
+            mAudienceComeTimer.cancel();
+            mAudienceComeTimer.purge();
+            mAudienceComeTimer = null;
+        }
 
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {
-				mVideoProgressTrackingTouch = true;
-			}
+        if (null != mAudienceComeTimerGoneTimer) {
+            mAudienceComeTimerGoneTimer.cancel();
+            mAudienceComeTimerGoneTimer.purge();
+            mAudienceComeTimerGoneTimer = null;
+        }
 
-			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-				/*if (fromUser) {
+        if (null != refreshTimerLiveReplay) {
+            refreshTimerLiveReplay.cancel();
+            refreshTimerLiveReplay.purge();
+            refreshTimerLiveReplay = null;
+        }
+
+        currentTimeTextView.setText("00:00:00");
+        totalTimeTextView.setText("00:00:00");
+    }
+
+    protected void initListeners() {
+
+        liveReplayHead.setOnClickListener(this);
+        closeImage.setOnClickListener(this);
+        reportImage.setOnClickListener(this);
+
+        liveReplayPerson.setOnClickListener(this);
+        switchButton.setOnClickListener(this);
+        shareButton.setOnClickListener(this);
+        mPlaybackImageView.setOnClickListener(this);
+
+        mSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                mVideoProgressTrackingTouch = false;
+
+                Log.d("lixp", "mSeekBar  -----------------");
+                int curProgress = seekBar.getProgress();
+                int maxProgress = seekBar.getMax();
+
+                if (curProgress >= 0 && curProgress <= maxProgress) {
+                    float percentage = ((float) curProgress) / maxProgress;
+                    int position = (int) (mLiveReplayMediaPlayerController.getDuration() * percentage);
+                    mLiveReplayMediaPlayerController.seekTo(position);
+                    // mMediaPlayerController.start();
+                }
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                mVideoProgressTrackingTouch = true;
+            }
+
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                /*if (fromUser) {
 					if (isShowing()) {
 						show();
 					}
 				}*/
-			}
-		});
+            }
+        });
 
-	}
+    }
 
-	public boolean isShowing() {
-		if (getVisibility() == View.VISIBLE) {
-			return true;
-		}
-		return false;
-	}
+    public boolean isShowing() {
+        if (getVisibility() == View.VISIBLE) {
+            return true;
+        }
+        return false;
+    }
 
-	private void onTimerTicker() {
+    private void onTimerTicker() {
 
-		long currentTime = mLiveReplayMediaPlayerController.getCurrentPosition();
-		long durationTime = mLiveReplayMediaPlayerController.getDuration();
+        long currentTime = mLiveReplayMediaPlayerController.getCurrentPosition();
+        long durationTime = mLiveReplayMediaPlayerController.getDuration();
 
-		if (durationTime > 0 && currentTime <= durationTime) {
-			float percentage = ((float) currentTime) / durationTime;
-			updateVideoProgress(percentage);
-		}
-	}
+        if (durationTime > 0 && currentTime <= durationTime) {
+            float percentage = ((float) currentTime) / durationTime;
+            updateVideoProgress(percentage);
+        }
+    }
 
-	public void updateVideoTitle(String title) {
-		if (!TextUtils.isEmpty(title)) {
-		}
-	}
+    public void updateVideoTitle(String title) {
+        if (!TextUtils.isEmpty(title)) {
+        }
+    }
 
-	public void updateVideoProgress(float percentage) {
+    public void updateVideoProgress(float percentage) {
 
-		if (percentage >= 0 && percentage <= 1) {
-			int progress = (int) (percentage * mSeekBar.getMax());
-			if (!mVideoProgressTrackingTouch) {
-				mSeekBar.setProgress(progress);
-			}
+        if (percentage >= 0 && percentage <= 1) {
+            int progress = (int) (percentage * mSeekBar.getMax());
+            if (!mVideoProgressTrackingTouch) {
+                mSeekBar.setProgress(progress);
+            }
 
-			long curTime = mLiveReplayMediaPlayerController.getCurrentPosition();
-			long durTime = mLiveReplayMediaPlayerController.getDuration();
+            long curTime = mLiveReplayMediaPlayerController.getCurrentPosition();
+            long durTime = mLiveReplayMediaPlayerController.getDuration();
 
-			if (durTime > 0 && curTime <= durTime) {
-				currentTimeTextView.setText(MediaPlayerUtils
-						.getVideoDisplayTime(curTime));
-				totalTimeTextView.setText(MediaPlayerUtils.getVideoDisplayTime(durTime));
-			}
-		}
-	}
+            if (durTime > 0 && curTime <= durTime) {
+                currentTimeTextView.setText(MediaPlayerUtils
+                        .getVideoDisplayTime(curTime));
+                totalTimeTextView.setText(MediaPlayerUtils.getVideoDisplayTime(durTime));
+            }
+        }
+    }
 
-	public void updateVideoPlaybackState(boolean isStart) {
-		// 播放中
-		if (isStart) {
-			mPlaybackImageView.setImageResource(R.drawable.live_replay_pause);
+    public void updateVideoPlaybackState(boolean isStart) {
+        // 播放中
+        if (isStart) {
+            mPlaybackImageView.setImageResource(R.drawable.live_replay_pause);
 
-			if (mLiveReplayMediaPlayerController.canPause()) {
-				mPlaybackImageView.setEnabled(true);
-			} else {
-				mPlaybackImageView.setEnabled(false);
-			}
-		}
-		// 未播放
-		else {
-			mPlaybackImageView.setImageResource(R.drawable.live_replay_play);
-			if (mLiveReplayMediaPlayerController.canStart()) {
-				mPlaybackImageView.setEnabled(true);
-			} else {
-				mPlaybackImageView.setEnabled(false);
-			}
-		}
-	}
+            if (mLiveReplayMediaPlayerController.canPause()) {
+                mPlaybackImageView.setEnabled(true);
+            } else {
+                mPlaybackImageView.setEnabled(false);
+            }
+        }
+        // 未播放
+        else {
+            mPlaybackImageView.setImageResource(R.drawable.live_replay_play);
+            if (mLiveReplayMediaPlayerController.canStart()) {
+                mPlaybackImageView.setEnabled(true);
+            } else {
+                mPlaybackImageView.setEnabled(false);
+            }
+        }
+    }
 
-	@Override
-	public void onClick(View v) {
+    @Override
+    public void onClick(View v) {
 
-		int id = v.getId();
+        int id = v.getId();
 
-		if (id == liveReplayHead.getId()) {
-			LiveAnchorDialog dialogPerson = new LiveAnchorDialog(mContext);
+        if (id == liveReplayHead.getId()) {
+            LiveAnchorDialog dialogPerson = new LiveAnchorDialog(mContext);
 
-			WindowManager.LayoutParams lp=dialogPerson.getWindow().getAttributes();
-			lp.alpha=0.8f;
-			dialogPerson.getWindow().setAttributes(lp);
+            WindowManager.LayoutParams lp = dialogPerson.getWindow().getAttributes();
+            lp.alpha = 0.8f;
+            dialogPerson.getWindow().setAttributes(lp);
 
-			dialogPerson.show();
+            dialogPerson.show();
 
-		} else if (id == mPlaybackImageView.getId()) {
-			if (mLiveReplayMediaPlayerController.isPlaying()) {
-				mLiveReplayMediaPlayerController.pause();
-			} else if (!mLiveReplayMediaPlayerController.isPlaying()) {
-				mLiveReplayMediaPlayerController.start();
-			}
-		} else if (id == closeImage.getId()) {
-			LiveExitDialog dialog = new LiveExitDialog(mContext, "确定关闭该直播？");
-			dialog.show();
+        } else if (id == mPlaybackImageView.getId()) {
+            if (mLiveReplayMediaPlayerController.isPlaying()) {
+                mLiveReplayMediaPlayerController.pause();
+            } else if (!mLiveReplayMediaPlayerController.isPlaying()) {
+                mLiveReplayMediaPlayerController.start();
+            }
+        } else if (id == closeImage.getId()) {
+            LiveExitDialog dialog = new LiveExitDialog(mContext, "确定关闭该直播？");
+            dialog.show();
 
-		} else if (id == reportImage.getId()) {
-			LiveExitDialog dialog = new LiveExitDialog(mContext, "确定举报该直播？");
-			dialog.show();
+        } else if (id == reportImage.getId()) {
+            LiveExitDialog dialog = new LiveExitDialog(mContext, "确定举报该直播？");
+            dialog.show();
 
-		} else if (id == liveReplayPerson.getId()) {
-			//person list button
-			if (isListVisible) {
-				mHorizontalList.setVisibility(VISIBLE);
-				isListVisible = false;
-			} else {
-				mHorizontalList.setVisibility(GONE);
-				isListVisible = true;
-			}
+        } else if (id == liveReplayPerson.getId()) {
+            //person list button
+            if (isListVisible) {
+                mHorizontalList.setVisibility(VISIBLE);
+                isListVisible = false;
+            } else {
+                mHorizontalList.setVisibility(GONE);
+                isListVisible = true;
+            }
 
-		} else if (id == shareButton.getId()) {
-			Toast.makeText(mContext, "I am share", Toast.LENGTH_SHORT).show();
+        } else if (id == shareButton.getId()) {
+            Toast.makeText(mContext, "I am share", Toast.LENGTH_SHORT).show();
 
-		} else if (id == switchButton.getId()) {
-			if (isSwitch) {
-				currentTimeTextView.setVisibility(VISIBLE);
-				lineTextView.setVisibility(VISIBLE);
-				totalTimeTextView.setVisibility(VISIBLE);
-				liveReplayPerson.setVisibility(VISIBLE);
-				mHeartLayout.setVisibility(VISIBLE);
-				mHorizontalList.setVisibility(VISIBLE);
-				mPlaybackImageView.setVisibility(VISIBLE);
-				mSeekBar.setVisibility(VISIBLE);
-				shareButton.setVisibility(VISIBLE);
-				heartImageView.setVisibility(VISIBLE);
-				personCountTextView.setVisibility(VISIBLE);
-				praiseCountTextView.setVisibility(VISIBLE);
-				liveReplayListView.setVisibility(VISIBLE);
-				switchButton.setImageResource(R.drawable.live_model_image);
-				isSwitch = false;
+        } else if (id == switchButton.getId()) {
+            if (isSwitch) {
+                currentTimeTextView.setVisibility(VISIBLE);
+                lineTextView.setVisibility(VISIBLE);
+                totalTimeTextView.setVisibility(VISIBLE);
+                liveReplayPerson.setVisibility(VISIBLE);
+                mHeartLayout.setVisibility(VISIBLE);
+                mHorizontalList.setVisibility(VISIBLE);
+                mPlaybackImageView.setVisibility(VISIBLE);
+                mSeekBar.setVisibility(VISIBLE);
+                shareButton.setVisibility(VISIBLE);
+                heartImageView.setVisibility(VISIBLE);
+                personCountTextView.setVisibility(VISIBLE);
+                praiseCountTextView.setVisibility(VISIBLE);
+                liveReplayListView.setVisibility(VISIBLE);
+                switchButton.setImageResource(R.drawable.live_model_image);
+                isSwitch = false;
 
-			} else {
-				currentTimeTextView.setVisibility(GONE);
-				lineTextView.setVisibility(GONE);
-				totalTimeTextView.setVisibility(GONE);
-				liveReplayPerson.setVisibility(GONE);
-				mHeartLayout.setVisibility(GONE);
-				mHorizontalList.setVisibility(GONE);
-				mPlaybackImageView.setVisibility(GONE);
-				mSeekBar.setVisibility(GONE);
-				shareButton.setVisibility(GONE);
-				heartImageView.setVisibility(GONE);
-				personCountTextView.setVisibility(GONE);
-				praiseCountTextView.setVisibility(GONE);
-				liveReplayListView.setVisibility(GONE);
-				switchButton.setImageResource(R.drawable.live_quiet_model_image);
-				isSwitch = true;
-			  }
-			} else if (id == heartImageView.getId()) {
-			  //TODO
-			  praiseCount++;
-			  praiseCountTextView.setText(String.valueOf(praiseCount));
-		}
+            } else {
+                currentTimeTextView.setVisibility(GONE);
+                lineTextView.setVisibility(GONE);
+                totalTimeTextView.setVisibility(GONE);
+                liveReplayPerson.setVisibility(GONE);
+                mHeartLayout.setVisibility(GONE);
+                mHorizontalList.setVisibility(GONE);
+                mPlaybackImageView.setVisibility(GONE);
+                mSeekBar.setVisibility(GONE);
+                shareButton.setVisibility(GONE);
+                heartImageView.setVisibility(GONE);
+                personCountTextView.setVisibility(GONE);
+                praiseCountTextView.setVisibility(GONE);
+                liveReplayListView.setVisibility(GONE);
+                switchButton.setImageResource(R.drawable.live_quiet_model_image);
+                isSwitch = true;
+            }
+        } else if (id == heartImageView.getId()) {
+            //TODO
+            praiseCount++;
+            praiseCountTextView.setText(String.valueOf(praiseCount));
+        }
 
-	}
+    }
 
-	public void setMediaPlayerController(ILiveReplayController mediaPlayerController) {
-		mLiveReplayMediaPlayerController = mediaPlayerController;
-	}
+    public void setMediaPlayerController(ILiveReplayController mediaPlayerController) {
+        mLiveReplayMediaPlayerController = mediaPlayerController;
+    }
 
-	private int randomColor() {
-		return  Color.rgb(mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255));
-	}
+    private int randomColor() {
+        return Color.rgb(mRandom.nextInt(255), mRandom.nextInt(255), mRandom.nextInt(255));
+    }
 
 }

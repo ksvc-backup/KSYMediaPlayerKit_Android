@@ -108,6 +108,16 @@ public class MediaPlayerTextureView extends TextureView implements
         setMeasuredDimension(width, height);
     }
 
+    private OnVideoComingToShowListener mOnVideoComingToShowListener;
+
+    public interface OnVideoComingToShowListener{
+        public void onVideoComingToShow();
+    }
+
+    public void setOnVideoComingToShowListener(OnVideoComingToShowListener mOnVideoComingToShowListener) {
+        this.mOnVideoComingToShowListener = mOnVideoComingToShowListener;
+    }
+
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1)
     public void setVideoLayout(int layout) {
 
@@ -316,6 +326,7 @@ public class MediaPlayerTextureView extends TextureView implements
             mVideoSarDen = sarDen;
             // For override
             onParentVideoSizeChanged();
+            mOnVideoComingToShowListener.onVideoComingToShow();
         }
     };
 

@@ -3,6 +3,7 @@ package com.ksy.media.widget.ui.live;
 import java.util.List;
 import java.util.Map;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,19 +25,16 @@ public class LiveChatAdapter extends BaseAdapter {
 
 	@Override
 	public int getCount() {
-
 		return dataReceive.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-
 		return position;
 	}
 
 	@Override
 	public long getItemId(int position) {
-
 		return position;
 	}
 
@@ -58,10 +56,18 @@ public class LiveChatAdapter extends BaseAdapter {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 
-		viewHolder.commendHeadImage.setBackgroundResource((Integer) dataReceive.get(position)
-				.get("img"));
-		viewHolder.userNameText.setText((String) dataReceive.get(position).get("title"));
-		viewHolder.commendText.setText((String) dataReceive.get(position).get("info"));
+		if (dataReceive.size() > position) {
+			viewHolder.commendHeadImage.setBackgroundResource((Integer) dataReceive.get(position)
+					.get("img"));
+			viewHolder.userNameText.setText((String) dataReceive.get(position).get("title"));
+			viewHolder.commendText.setText((String) dataReceive.get(position).get("info"));
+		} /*else {
+			viewHolder.commendHeadImage.setBackgroundResource((Integer) dataReceive.get(1)
+					.get("img"));
+			viewHolder.userNameText.setText((String) dataReceive.get(1).get("title"));
+			viewHolder.commendText.setText((String) dataReceive.get(1).get("info"));
+
+		}*/
 		
 		return convertView;
 	}
