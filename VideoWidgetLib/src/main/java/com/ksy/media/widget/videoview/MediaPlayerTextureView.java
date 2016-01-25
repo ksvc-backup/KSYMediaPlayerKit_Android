@@ -731,7 +731,7 @@ public class MediaPlayerTextureView extends TextureView implements
                             switch (playConfig.getVideoMode()) {
                                 case PlayConfig.SHORT_VIDEO_MODE:
                                     Log.d(Constants.LOG_TAG, "PlayConfig.SHORT_VIDEO_MODE  11111 ");
-                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+//                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
                                     break;
 
                                 case PlayConfig.LIVE_VIDEO_MODE:
@@ -805,7 +805,7 @@ public class MediaPlayerTextureView extends TextureView implements
 
                 switch (playConfig.getVideoMode()) {
                     case PlayConfig.SHORT_VIDEO_MODE:
-                        playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+//                        playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
                         break;
 
                     case PlayConfig.LIVE_VIDEO_MODE:

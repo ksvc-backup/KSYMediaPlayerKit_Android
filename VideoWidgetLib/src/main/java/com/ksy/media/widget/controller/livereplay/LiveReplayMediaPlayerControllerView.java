@@ -73,12 +73,6 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
     private Context mContext;
     private Random mRandom = new Random();
 
-//	private Timer refreshTimerLiveReplay = new Timer();
-//	private Timer mTimer = new Timer();
-//	private Timer mAudienceComeTimer = new Timer();
-//	private Timer mAudienceComeTimerGoneTimer = new Timer();
-//	private Timer seekTimer = new Timer();
-
     private Timer refreshTimerLiveReplay = null;
     private Timer mTimer = null;
     private Timer mAudienceComeTimer = null;

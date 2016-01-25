@@ -148,12 +148,6 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
             }
         });
 
-		/*runOnUiThread(new Runnable() {
-            public void run() {
-
-			}
-		});*/
-
     }
 
 
