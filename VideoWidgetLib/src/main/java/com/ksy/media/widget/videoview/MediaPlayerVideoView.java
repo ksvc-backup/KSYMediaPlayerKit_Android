@@ -479,9 +479,6 @@ public class MediaPlayerVideoView extends SurfaceView implements
                     Log.e(Constants.LOG_TAG, "MediaPlayerVideoView surfaceCreated INTERRUPT_MODE_FINISH_OR_ERROR");
                     mMediaPlayer.setSurface(mSurfaceHolder.getSurface());
 
-                    if (playConfig.getInterruptMode() == PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR) {
-
-                    }
                     switch (playConfig.getVideoMode()) {
                         case PlayConfig.SHORT_VIDEO_MODE:
                             Log.e(Constants.LOG_TAG, "MediaPlayerVideoView surfaceCreated 11");
@@ -491,10 +488,11 @@ public class MediaPlayerVideoView extends SurfaceView implements
 
                         case PlayConfig.LIVE_VIDEO_MODE:
                             Log.e(Constants.LOG_TAG, "MediaPlayerVideoView surfaceCreated 22");
-                            playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+//                            playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
                             break;
 
                         case PlayConfig.OTHER_MODE:
+                            Log.e(Constants.LOG_TAG, "MediaPlayerVideoView surfaceCreated 33");
 
                             break;
                     }
@@ -796,6 +794,7 @@ public class MediaPlayerVideoView extends SurfaceView implements
                             break;
                         case PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR:
                             Log.d(Constants.LOG_TAG, " MediaPlayVideoView  INTERRUPT_MODE_FINISH_OR_ERROR 333");
+                            mMediaPlayer.setSurface(mSurfaceHolder.getSurface());
 
                             switch (playConfig.getVideoMode()) {
                                 case PlayConfig.SHORT_VIDEO_MODE:
@@ -805,7 +804,7 @@ public class MediaPlayerVideoView extends SurfaceView implements
 
                                 case PlayConfig.LIVE_VIDEO_MODE:
                                     Log.d(Constants.LOG_TAG, "PlayConfig.LIVE_VIDEO_MODE  2222222 ");
-                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+//                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
                                     break;
 
                                 case PlayConfig.OTHER_MODE:

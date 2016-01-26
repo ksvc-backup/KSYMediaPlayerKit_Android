@@ -727,6 +727,7 @@ public class MediaPlayerTextureView extends TextureView implements
                             break;
                         case PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR:
                             Log.d(Constants.LOG_TAG, "MediaPlayerTextureView POWER_ON FINISH_OR_ERROR 333 ");
+                            mMediaPlayer.setSurface(new Surface(mSurfaceTexture));
 
                             switch (playConfig.getVideoMode()) {
                                 case PlayConfig.SHORT_VIDEO_MODE:
@@ -736,7 +737,7 @@ public class MediaPlayerTextureView extends TextureView implements
 
                                 case PlayConfig.LIVE_VIDEO_MODE:
                                     Log.d(Constants.LOG_TAG, "PlayConfig.LIVE_VIDEO_MODE  2222222 ");
-                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+//                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
                                     break;
 
                                 case PlayConfig.OTHER_MODE:
@@ -809,7 +810,7 @@ public class MediaPlayerTextureView extends TextureView implements
                         break;
 
                     case PlayConfig.LIVE_VIDEO_MODE:
-                        playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+//                        playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
                         break;
 
                     case PlayConfig.OTHER_MODE:
