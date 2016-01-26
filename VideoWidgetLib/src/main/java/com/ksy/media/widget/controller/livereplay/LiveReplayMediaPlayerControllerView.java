@@ -369,7 +369,6 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
             public void onStopTrackingTouch(SeekBar seekBar) {
                 mVideoProgressTrackingTouch = false;
 
-                Log.d("lixp", "mSeekBar  -----------------");
                 int curProgress = seekBar.getProgress();
                 int maxProgress = seekBar.getMax();
 

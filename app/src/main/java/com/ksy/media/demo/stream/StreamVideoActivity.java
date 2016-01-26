@@ -63,12 +63,10 @@ public class StreamVideoActivity extends AppCompatActivity implements
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 pager.setCurrentItem(tab.getPosition());
-                Log.d("lixp", "onTabSelected  ..1..");
             }
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-                Log.d("lixp", "onTabUnselected  ..2..");
                 if (tab.getPosition() == 0) {
                     pagerAdapter.mFragment.hideAll();
                 }
@@ -76,7 +74,6 @@ public class StreamVideoActivity extends AppCompatActivity implements
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-                Log.d("lixp", "onTabReselected  ..3....");
             }
         });
     }

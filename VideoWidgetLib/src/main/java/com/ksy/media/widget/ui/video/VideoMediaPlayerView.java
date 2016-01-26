@@ -294,7 +294,7 @@ public class VideoMediaPlayerView extends RelativeLayout implements
                         if (NetworkUtil.isNetworkAvailable(mContext)) {
                             Log.i(Constants.LOG_TAG,
                                     "event action  view action replay");
-                            Log.d("lixp", "onActionReplay  playConfig.getVideoMode() = " + playConfig.getVideoMode());
+                            Log.d(Constants.LOG_TAG, "onActionReplay  playConfig.getVideoMode() = " + playConfig.getVideoMode());
                             switch (playConfig.getVideoMode()) {
                                 case PlayConfig.SHORT_VIDEO_MODE:
                                     Log.d(Constants.LOG_TAG, "PlayConfig.SHORT_VIDEO_MODE  11111 ");
@@ -331,7 +331,7 @@ public class VideoMediaPlayerView extends RelativeLayout implements
                             Log.i(Constants.LOG_TAG,
                                     "event action  view action error");
 
-                            Log.d("lixp", "onActionError playConfig.getVideoMode() = " + playConfig.getVideoMode());
+                            Log.d(Constants.LOG_TAG, "onActionError playConfig.getVideoMode() = " + playConfig.getVideoMode());
 
                             switch (playConfig.getVideoMode()) {
                                 case PlayConfig.SHORT_VIDEO_MODE:

@@ -10,7 +10,6 @@
         <item name="Origin">Origin</item> -->
     </string-array>
 
-    <!-- lixp -->
     <string name="initial_percent">0%</string>
     <string name="high_definition">高清</string>
     <string name="standard_definition">标清</string>

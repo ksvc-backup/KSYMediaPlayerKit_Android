@@ -316,7 +316,7 @@ public class ShortVideoActivity extends AppCompatActivity implements
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         if (scrollFlag) {
-//            Log.d("lixp", "firstVisibleItem = " + firstVisibleItem + ",visibleItemCount = " + visibleItemCount + ",totalItemCount = " + totalItemCount);
+            Log.d(Constants.LOG_TAG, "firstVisibleItem = " + firstVisibleItem + ",visibleItemCount = " + visibleItemCount + ",totalItemCount = " + totalItemCount);
             if (firstVisibleItem == 0) {
                 if (!playerViewShortMovie.isTextureViewVisible()) {
                     playerViewShortMovie.setTextureViewVisible(true);
