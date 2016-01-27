@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="100dp"
-    android:background="#ffffff">
+    android:background="@color/ksy_color_card_bg">
 
     <EditText
         android:id="@+id/input_live"
@@ -11,7 +11,8 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:hint="Please Input Video Path or URL..."
-        android:text="rtmp://live.hkstv.hk.lxdns.com/live/hks">
+        android:text="rtmp://live.hkstv.hk.lxdns.com/live/hks"
+        >
         <requestFocus />
     </EditText>
 

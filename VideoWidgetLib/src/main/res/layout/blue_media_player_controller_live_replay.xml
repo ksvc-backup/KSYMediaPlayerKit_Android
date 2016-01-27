@@ -6,53 +6,60 @@
     <include layout="@layout/live_replay_top" />
 
     <ListView
-        android:id="@+id/live_list"
-        android:layout_above="@+id/notice_text"
+        android:id="@+id/live_replay_list"
+        android:layout_above="@+id/live_replay_notice_text"
         android:scrollbars="none"
         android:headerDividersEnabled="false"
         android:stackFromBottom="true"
-        android:dividerHeight="6dp"
-        android:layout_marginLeft="6dp"
-        android:layout_width="220dp"
-        android:layout_height="400dp">
+        android:dividerHeight="@dimen/live_margin"
+        android:divider="@null"
+        android:layout_marginLeft="@dimen/live_margin_left"
+        android:layout_width="@dimen/live_person_two_hundred"
+        android:layout_height="@dimen/live_person_three_handred">
     </ListView>
 
     <TextView
-        android:id="@+id/notice_text"
+        android:id="@+id/live_replay_notice_text"
         android:layout_above="@+id/live_replay_person_list"
-        android:layout_marginLeft="6dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginLeft="@dimen/live_margin_left"
+        android:layout_marginBottom="@dimen/live_listview_margin"
+        android:layout_marginTop="@dimen/live_listview_margin"
         android:text="@string/live_replay_notice"
         android:gravity="center_vertical"
-        android:textColor="@color/black"
-        android:background="@color/white"
-        android:layout_width="110dp"
-        android:layout_height="35dp" />
+        android:textColor="@color/white"
+        android:background="@color/black"
+        android:alpha="0.5"
+        android:layout_width="@dimen/live_margin_one_hundred"
+        android:layout_height="@dimen/live_anchor_margin" />
 
     <RelativeLayout
         android:id="@+id/live_replay_person_list"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
         android:layout_above="@+id/controller_bottom_layout"
-        android:layout_width="300dp"
-        android:layout_height="120dp">
+        android:background="@drawable/live_bottom_alpha_image"
+        android:layout_width="@dimen/live_person_three_handred"
+        android:layout_height="@dimen/live_margin_nine">
         <ImageView
             android:id="@+id/live_replay_person_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/live_person_grey"/>
+            android:layout_marginLeft="@dimen/live_margin_left"
+            android:layout_marginRight="@dimen/live_margin_left"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/short_head_image_n"/>
         <TextView
             android:id="@+id/person_count_textview"
             android:textColor="@color/white"
-            android:text="88人"
+            android:text="@string/live_fans_count"
             android:layout_centerHorizontal="true"
-            android:layout_marginLeft="12dp"
+            android:layout_marginLeft="@dimen/live_margin_left"
+            android:layout_marginRight="@dimen/live_margin_left"
             android:layout_alignParentLeft="true"
             android:layout_below="@+id/live_replay_person_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.ksy.media.widget.ui.common.HorizontalListView
+        <com.ksy.media.widget.ui.base.HorizontalListView
             android:id="@+id/live_replay_horizon"
             android:layout_toRightOf="@+id/live_replay_person_image"
             android:layout_width="match_parent"
@@ -62,30 +69,29 @@
         <RelativeLayout
             android:id="@+id/layout_bottom_heart"
             android:layout_alignParentBottom="true"
-            android:layout_above="@+id/controller_bottom_layout"
+            android:layout_marginBottom="@dimen/live_bottom_edit_height"
             android:layout_toRightOf="@+id/live_replay_person_list"
-            android:layout_marginBottom="48dp"
-            android:layout_width="150dp"
-            android:layout_height="350dp">
+            android:layout_width="@dimen/live_heart_margin"
+            android:layout_height="@dimen/live_heart_margin_height">
 
-            <com.ksy.media.widget.ui.common.HeartLayout
-                android:id="@+id/live_replay_image_heart"
-                android:layout_width="150dp"
-                android:layout_height="300dp" />
+            <com.ksy.media.widget.ui.base.HeartLayout
+                android:id="@+id/live_replay_layout_heart"
+                android:layout_width="@dimen/live_heart_margin"
+                android:layout_height="@dimen/live_person_three_handred" />
 
             <ImageView
-                android:id="@+id/image_heart"
-                android:src="@drawable/heart"
+                android:id="@+id/live_replay_image_heart"
+                android:src="@drawable/live_favorite_image"
                 android:layout_centerHorizontal="true"
-                android:layout_below="@+id/live_replay_image_heart"
+                android:layout_below="@+id/live_replay_layout_heart"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
             <TextView
                 android:id="@+id/praise_count_text"
-                android:layout_below="@+id/image_heart"
-                android:layout_marginLeft="6dp"
-                android:text="0"
+                android:layout_below="@+id/live_replay_image_heart"
+                android:layout_marginLeft="@dimen/live_margin"
+                android:text="@string/live_favarite_count"
                 android:textColor="@color/white"
                 android:layout_centerHorizontal="true"
                 android:layout_width="wrap_content"

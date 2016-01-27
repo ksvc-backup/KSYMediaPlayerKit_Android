@@ -3,9 +3,11 @@ package com.ksy.media.widget.ui.livereplay;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -18,15 +20,15 @@ public class LiveReplayMediaPlayerEventActionView extends RelativeLayout {
 	public static final int EVENT_ACTION_VIEW_MODE_WAIT = 0X01;
 	public static final int EVENT_ACTION_VIEW_MODE_ERROR = 0X02;
 
-	private TextView closeTextView;
-	private TextView reportTextView;
+	private ImageView closeTextView;
+	private ImageView reportTextView;
 	private Button  replayButton;
-	private Button  noticeButton;
 
 	private RelativeLayout mxCompleteLayout;
+	private Button mCompleteBackHome;
 
 	private LinearLayout mErrorLayout;
-	private LinearLayout mErrorReplayLayout;
+	private Button mErrorReplayButton;
 	private TextView mErrorTextView;
 
 	private EventActionViewCallback mCallback;
@@ -53,15 +55,15 @@ public class LiveReplayMediaPlayerEventActionView extends RelativeLayout {
 
 	private void initViews() {
 
-		closeTextView = (TextView) findViewById(R.id.title_text_close);
-		reportTextView = (TextView) findViewById(R.id.title_text_report);
+		closeTextView = (ImageView) findViewById(R.id.title_text_close);
+		reportTextView = (ImageView) findViewById(R.id.title_text_report);
 		replayButton = (Button)findViewById(R.id.button_replay);
-		noticeButton = (Button)findViewById(R.id.button_notice);
 
 		mxCompleteLayout = (RelativeLayout) findViewById(R.id.layout_live_replay_finish);
+		mCompleteBackHome = (Button) findViewById(R.id.button_back_home);
 
 		mErrorLayout = (LinearLayout) findViewById(R.id.live_replay_error_layout);
-		mErrorReplayLayout = (LinearLayout) findViewById(R.id.live_error_replay_layout);
+		mErrorReplayButton = (Button) findViewById(R.id.livereplay_error_replay_bt);
 		mErrorTextView = (TextView) findViewById(R.id.error_info_title_text_view);
 
 		closeTextView.setOnClickListener(new OnClickListener() {
@@ -71,23 +73,23 @@ public class LiveReplayMediaPlayerEventActionView extends RelativeLayout {
 			}
 		});
 
-		replayButton.setOnClickListener(new OnClickListener() {
+		mCompleteBackHome.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				System.exit(0);
+			}
+		});
+
+		mErrorReplayButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
 				if (mCallback != null) {
-					mCallback.onActionReplay();
-				}
-			}
-		});
-
-		mErrorReplayLayout.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if (mCallback != null)
 					mCallback.onActionError();
+				}
+
 			}
 		});
-
 	}
 
 	@Override

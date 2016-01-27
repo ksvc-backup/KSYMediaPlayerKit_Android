@@ -1,13 +1,14 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:player="http://schemas.android.com/apk/res-auto"
+    android:background="@color/ksy_color_card_bg"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <com.ksy.media.widget.ui.stream.StreamMediaPlayerView
         android:id="@+id/stream_player_view"
         android:layout_width="fill_parent"
-        android:layout_height="260dp"
+        android:layout_height="205dp"
         player:playmode="window" />
 
     <android.support.design.widget.TabLayout
@@ -15,12 +16,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/stream_player_view"
+        app:tabBackground="@color/ksy_color_card_bg"
         app:tabGravity="center"
-        app:tabIndicatorColor="@color/gray_primary_dark"
+        app:tabIndicatorColor="@color/ksy_color_prime"
         app:tabMinWidth="100dp"
         app:tabMode="scrollable"
-        app:tabSelectedTextColor="@color/black"
-        app:tabTextColor="@color/gray_primary_dark" />
+        app:tabSelectedTextColor="@color/ksy_color_font"
+        app:tabTextColor="@color/ksy_color_font_alpha" />
 
     <android.support.v4.view.ViewPager
         android:id="@+id/pager"

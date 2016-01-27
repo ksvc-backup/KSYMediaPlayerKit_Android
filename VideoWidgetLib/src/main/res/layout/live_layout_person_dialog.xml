@@ -1,39 +1,47 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="270dp"
-    android:layout_height="330dp"
+    android:layout_width="@dimen/live_exit_dialog_width"
+    android:layout_height="@dimen/live_person_dialog_height"
     android:layout_gravity="center"
-    android:background="@color/white"
     tools:context=".MainActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:layout_below="@+id/imageViewClose">
+        android:layout_centerVertical="true">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageViewClose"
+            android:src="@drawable/live_close_image"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageView_person"
-            android:src="@drawable/live_replay_head_portrait"
-            android:layout_alignParentTop="true"
+            android:layout_marginTop="@dimen/live_margin"
+            android:layout_below="@+id/imageViewClose"
+            android:src="@drawable/live_anchor_detail"
             android:layout_centerHorizontal="true" />
 
         <TextView
             android:id="@+id/text_username"
             android:text="@string/live_username_one"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/live_margin_top"
             android:layout_below="@+id/imageView_person"
             android:layout_centerHorizontal="true" />
 
         <TextView
             android:id="@+id/textView"
             android:text="@string/live_praise"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/text_username"
@@ -42,7 +50,8 @@
         <TextView
             android:id="@+id/textView2"
             android:text="@string/live_signature_line"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:layout_marginTop="@dimen/live_margin_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textView"
@@ -52,19 +61,19 @@
         <LinearLayout
             android:id="@+id/layout_live"
             android:orientation="vertical"
-            android:layout_marginLeft="55dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginLeft="@dimen/live_bottom_height"
+            android:layout_marginTop="@dimen/live_margin_top"
             android:layout_below="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
-                android:text="100"
-                android:textColor="@color/black"
+                android:text="@string/live_anchor_releat_count"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:text="@string/live"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -72,20 +81,20 @@
         <LinearLayout
             android:id="@+id/layout_fans"
             android:orientation="vertical"
-            android:layout_marginLeft="33dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginLeft="@dimen/live_anchor_margin"
+            android:layout_marginTop="@dimen/live_margin_top"
             android:layout_below="@+id/textView2"
             android:layout_toRightOf="@+id/layout_live"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
-                android:text="100"
-                android:textColor="@color/black"
+                android:text="@string/live_anchor_releat_count"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:text="@string/live_fans"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -93,39 +102,34 @@
         <LinearLayout
             android:id="@+id/layout_notice"
             android:orientation="vertical"
-            android:layout_marginLeft="33dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginLeft="@dimen/live_anchor_margin"
+            android:layout_marginTop="@dimen/live_margin_top"
             android:layout_below="@+id/textView2"
             android:layout_toRightOf="@+id/layout_fans"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
             <TextView
-                android:text="100"
-                android:textColor="@color/black"
+                android:text="@string/live_anchor_releat_count"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <TextView
                 android:text="@string/live_attention"
-                android:textColor="@color/black"
+                android:textColor="@color/white"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
         <Button
-            android:layout_width="160dp"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/live_dialog_width"
+            android:layout_height="@dimen/live_dialog_height"
             android:text="@string/live_attention_plus"
+            android:textColor="@color/lightblue"
             android:id="@+id/button"
-            android:layout_marginTop="15dp"
+            android:background="@drawable/live_button_shape"
+            android:layout_marginTop="@dimen/live_person_margin"
             android:layout_centerHorizontal="true"
             android:layout_below="@+id/layout_fans" />
     </RelativeLayout>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageViewClose"
-        android:src="@drawable/live_close_grey"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true" />
-</RelativeLayout>
+</FrameLayout>

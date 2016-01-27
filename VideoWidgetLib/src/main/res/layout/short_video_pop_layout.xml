@@ -1,31 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/comment_layout"
     android:layout_width="match_parent"
-    android:layout_height="48dp"
+    android:layout_height="@dimen/live_bottom_height"
     android:layout_alignParentBottom="true"
-    android:background="@color/white"
+    android:background="@color/ksy_color_card_bg"
     android:orientation="horizontal">
 
     <EditText
         android:id="@+id/pop_edittext_et"
-        android:layout_width="0dp"
-        android:layout_height="32dp"
-        android:layout_gravity="center_vertical"
-        android:layout_margin="@dimen/list_margin"
-        android:layout_weight="5"
-        android:background="@drawable/short_video_edittext_bg"
-        android:textCursorDrawable="@null"
-        android:hint="@string/short_video_comment_hint"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:layout_width="@dimen/live_person_three_handred"
+        android:layout_height="@dimen/live_bottom_edit_height"
+        android:backgroundTint="@color/live_edit_frame"
+        android:hint="@string/live_comment"
+        android:paddingLeft="@dimen/small_margin_left"
+        android:textColor="@color/ksy_color_font"
+        android:textColorHint="@color/ksy_color_font_alpha"
         android:singleLine="true" />
 
-    <Button
+    <ImageView
         android:id="@+id/pop_comment_btn"
-        android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_weight="1"
-        android:background="@color/white"
-        android:text="@string/short_video_comment_commit"
+        android:layout_marginRight="@dimen/list_item_large_margin"
+        android:src="@drawable/ic_send_24px"
+        android:textColor="@color/ksy_color_font"
         android:textSize="18sp" />
-</LinearLayout>
+</RelativeLayout>

@@ -50,7 +50,7 @@ public class LiveReplayHeadListAdapter extends BaseAdapter {
 			viewHolder = (ViewHolder) convertView.getTag();
 		}
 
-		viewHolder.headListImage.setImageResource(R.drawable.live_person_grey);
+		viewHolder.headListImage.setImageResource(R.drawable.live_dialog_list_item);
 //		viewHolder.videoTextName.setText(videoInfoList.get(position).getDisplayName());
 
 		return convertView;

@@ -5,7 +5,11 @@ import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -13,8 +17,11 @@ import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Display;
+import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
@@ -23,6 +30,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -59,12 +67,22 @@ public class ShortVideoActivity extends AppCompatActivity implements
     private ImageView short_video_favourate_icon;
     private ImageView short_video_share_icon;
     private View pop_comment_btn;
-    private View pop_edittext_et;
+    private EditText pop_edittext_et;
     private TextView short_video_add_focus;
+    private PopupWindow shortVideoPopupWindow;
+    private View stream_share_tv;
+    private View stream_alarm_tv;
+    private View stream_setting_tv;
+    private ImageView viewFlowImage;
+    private boolean isClicked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
         setContentView(R.layout.activity_short_movie);
         setupScreenSize();
         setupViews();
@@ -76,14 +94,41 @@ public class ShortVideoActivity extends AppCompatActivity implements
         listView = (ListView) findViewById(R.id.short_video_list);
         commentLayout = LayoutInflater.from(ShortVideoActivity.this).inflate(
                 R.layout.short_video_pop_layout, null);
-        pop_edittext_et = commentLayout.findViewById(R.id.pop_edittext_et);
+        pop_edittext_et = (EditText) commentLayout.findViewById(R.id.pop_edittext_et);
         pop_comment_btn = commentLayout.findViewById(R.id.pop_comment_btn);
         pop_comment_btn.setOnClickListener(this);
+        viewFlowImage = (ImageView) findViewById(R.id.image_overflow);
+        viewFlowImage.setOnClickListener(this);
+
+        View view = LayoutInflater.from(this).inflate(com.ksy.mediaPlayer.widget.R.layout.stream_small_pop, null);
+        stream_share_tv = view.findViewById(com.ksy.mediaPlayer.widget.R.id.stream_share_tv);
+        stream_alarm_tv = view.findViewById(com.ksy.mediaPlayer.widget.R.id.stream_alarm_tv);
+        stream_setting_tv = view.findViewById(com.ksy.mediaPlayer.widget.R.id.stream_setting_tv);
+
+        shortVideoPopupWindow = new PopupWindow(view, getResources().getDimensionPixelSize(com.ksy.mediaPlayer.widget.R.dimen.stream_pop_width), getResources().getDimensionPixelOffset(com.ksy.mediaPlayer.widget.R.dimen.stream_pop_height));
+        shortVideoPopupWindow.setFocusable(true);
+        shortVideoPopupWindow.setTouchable(true);
+        shortVideoPopupWindow.setBackgroundDrawable(new BitmapDrawable());
+
+        setupInputHide();
         setupFunctionIcon();
         setupCommentList();
         setupDialog();
         setupAnimation();
         setupToolbar();
+    }
+
+    private void setupInputHide() {
+        pop_edittext_et.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    pop_edittext_et.clearFocus();
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(pop_edittext_et.getWindowToken(), 0);
+                }
+            }
+        });
     }
 
     private void setupFunctionIcon() {
@@ -105,7 +150,7 @@ public class ShortVideoActivity extends AppCompatActivity implements
         listView.setOnItemClickListener(this);
         listView.setOnScrollListener(this);
         playerViewShortMovie = (ShortVideoMediaPlayerView) headView.findViewById(R.id.player_view_short_movie);
-        playerViewShortMovie.setPlayConfig(false, PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+        playerViewShortMovie.setPlayConfig(false, PlayConfig.INTERRUPT_MODE_PAUSE_RESUME, PlayConfig.SHORT_VIDEO_MODE);
         playerViewShortMovie.setPlayerViewCallback(this);
         playerViewShortMovie.setTextureViewVisible(true);
         short_video_add_focus = (TextView) headView.findViewById(R.id.short_video_add_focus);
@@ -131,6 +176,30 @@ public class ShortVideoActivity extends AppCompatActivity implements
         mWidth = dm.widthPixels;
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()) {
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showPopWindow() {
+        if (!shortVideoPopupWindow.isShowing()) {
+            shortVideoPopupWindow.showAsDropDown(viewFlowImage, 0, getResources().getDimensionPixelSize(com.ksy.mediaPlayer.widget.R.dimen.stream_pop_offset));
+            stream_share_tv.setOnClickListener(this);
+            stream_alarm_tv.setOnClickListener(this);
+            stream_setting_tv.setOnClickListener(this);
+        }
+    }
+
     private void makeContents() {
         items = new ArrayList<>();
         for (int i = 0; i < 15; i++) {
@@ -138,6 +207,7 @@ public class ShortVideoActivity extends AppCompatActivity implements
             item.setComment(getString(R.string.short_video_item_comment));
             item.setFav(getString(R.string.short_video_item_fav));
             item.setInfo(getString(R.string.short_video_item_info));
+            item.setTime(getString(R.string.short_video_item_time));
             items.add(item);
         }
     }
@@ -147,10 +217,12 @@ public class ShortVideoActivity extends AppCompatActivity implements
         if (mToolbar != null) {
             setSupportActionBar(mToolbar);
             mToolbar.setTitle(getResources().getString(R.string.short_video_title));
-            mToolbar.setTitleTextColor(Color.BLACK);
+            mToolbar.setNavigationIcon(R.drawable.short_navigate_before);
+
             mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    finish();
                 }
             });
         }
@@ -169,6 +241,7 @@ public class ShortVideoActivity extends AppCompatActivity implements
                     public void onClick(DialogInterface dialog, int which) {
                         String inputString = editInput.getText().toString();
                         if (!TextUtils.isEmpty(inputString)) {
+
                             startPlayer(inputString);
                         } else {
                             Toast.makeText(ShortVideoActivity.this,
@@ -211,22 +284,7 @@ public class ShortVideoActivity extends AppCompatActivity implements
     }
 
     @Override
-    public void hideViews() {
-
-    }
-
-    @Override
-    public void restoreViews() {
-
-    }
-
-    @Override
     public void onPrepared() {
-
-    }
-
-    @Override
-    public void onQualityChanged() {
 
     }
 
@@ -258,7 +316,7 @@ public class ShortVideoActivity extends AppCompatActivity implements
     @Override
     public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
         if (scrollFlag) {
-//            Log.d(Constants.LOG_TAG, "firstVisibleItem = " + firstVisibleItem + ",visibleItemCount = " + visibleItemCount + ",totalItemCount = " + totalItemCount);
+            Log.d(Constants.LOG_TAG, "firstVisibleItem = " + firstVisibleItem + ",visibleItemCount = " + visibleItemCount + ",totalItemCount = " + totalItemCount);
             if (firstVisibleItem == 0) {
                 if (!playerViewShortMovie.isTextureViewVisible()) {
                     playerViewShortMovie.setTextureViewVisible(true);
@@ -274,11 +332,13 @@ public class ShortVideoActivity extends AppCompatActivity implements
             if (firstVisibleItem > lastVisibleItemPosition) {
                 //Up
                 currentState = STATE_UP;
+
             }
             if (firstVisibleItem < lastVisibleItemPosition) {
                 //Down
                 currentState = STATE_DOWN;
             }
+
             if (lastState > currentState) {
                 hideCommentLayout();
             } else if (lastState < currentState) {
@@ -328,12 +388,44 @@ public class ShortVideoActivity extends AppCompatActivity implements
             case R.id.pop_comment_btn:
                 Toast.makeText(ShortVideoActivity.this, "comment send", Toast.LENGTH_SHORT).show();
                 InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-                hideCommentLayout();
+                if (imm.isActive() && !TextUtils.isEmpty(pop_edittext_et.getText().toString())) {
+                    imm.hideSoftInputFromWindow(pop_edittext_et.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+                    hideCommentLayout();
+                    pop_edittext_et.setText("");
+                }
                 break;
             case R.id.short_video_add_focus:
-                Toast.makeText(ShortVideoActivity.this, "follow clicked", Toast.LENGTH_SHORT).show();
+
+                if (isClicked) {
+                    short_video_add_focus.setText("+ 关注");
+                    isClicked = false;
+                } else {
+                    short_video_add_focus.setText("已关注");
+                    isClicked = true;
+                }
+
                 break;
+
+            case R.id.image_overflow:
+                showPopWindow();
+
+                break;
+
+            case R.id.stream_share_tv:
+                Toast.makeText(ShortVideoActivity.this, " share", Toast.LENGTH_SHORT).show();
+                shortVideoPopupWindow.dismiss();
+                break;
+
+            case R.id.stream_alarm_tv:
+                Toast.makeText(ShortVideoActivity.this, " report ", Toast.LENGTH_SHORT).show();
+                shortVideoPopupWindow.dismiss();
+                break;
+
+            case R.id.stream_setting_tv:
+                Toast.makeText(ShortVideoActivity.this, " setting ", Toast.LENGTH_SHORT).show();
+                shortVideoPopupWindow.dismiss();
+                break;
+
         }
     }
 

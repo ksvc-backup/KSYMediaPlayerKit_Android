@@ -2,20 +2,22 @@
 <resources>
     <dimen name="small_text_size">15sp</dimen>
     <dimen name="medium_text_size">20sp</dimen>
-    <dimen name="large_text_size">17sp</dimen>
+    <dimen name="large_text_size">16sp</dimen>
     <dimen name="list_item_margin">8dp</dimen>
     <dimen name="list_item_large_margin">16dp</dimen>
     <dimen name="list_margin">8dp</dimen>
     <dimen name="list_small_margin">4dp</dimen>
     <dimen name="card_height">100dp</dimen>
     <dimen name="stream_pop_widget">150dp</dimen>
-    <dimen name="stream_pop_width">150dp</dimen>
-    <dimen name="stream_pop_height">120dp</dimen>
+    <dimen name="stream_pop_width">120dp</dimen>
+    <dimen name="stream_pop_height">150dp</dimen>
     <dimen name="stream_pop_offset">5dp</dimen>
     <dimen name="video_comment_distance">48dp</dimen>
     <dimen name="controller_small_top">48dp</dimen>
+    <dimen name="short_pop_bottom">18dp</dimen>
+    <dimen name="short_margin_width">70dp</dimen>
+    <dimen name="short_margin_height">30dp</dimen>
 
-    <!-- 800*480  需要做-->
     <dimen name="buffer_width">60dp</dimen>
     <dimen name="buffer_height">60dp</dimen>
     <dimen name="controller_bright_width">31dp</dimen>
@@ -27,7 +29,35 @@
     <dimen name="controller_seekbar_margin">1dp</dimen>
     <dimen name="controller_large_margin">18dp</dimen>
     <dimen name="controller_large_bottom_seek">8dp</dimen>
-    <dimen name="controller_large_time_margin">9dp</dimen>
+
+    <dimen name="livereplay_controller_seekbar_height">4dp</dimen>
+    <dimen name="live_bottom_height">50dp</dimen>
+    <dimen name="live_bottom_seek_height">55dp</dimen>
+    <dimen name="live_bottom_margin_right">6dp</dimen>
+    <dimen name="live_bottom_edit_height">40dp</dimen>
+    <dimen name="live_bottom_edit_width">270dp</dimen>
+    <dimen name="live_margin">5dp</dimen>
+    <dimen name="live_listview_margin">6dp</dimen>
+    <dimen name="live_item_margin">3dp</dimen>
+    <dimen name="live_margin_left">10dp</dimen>
+    <dimen name="live_margin_top">15dp</dimen>
+    <dimen name="live_anchor_margin_left">75dp</dimen>
+    <dimen name="short_margin_left">70dp</dimen>
+    <dimen name="live_anchor_margin">35dp</dimen>
+    <dimen name="live_dialog_width">190dp</dimen>
+    <dimen name="live_dialog_height">45dp</dimen>
+    <dimen name="live_exit_dialog_width">270dp</dimen>
+    <dimen name="live_person_dialog_height">330dp</dimen>
+    <dimen name="live_person_margin">25dp</dimen>
+    <dimen name="live_margin_one_hundred">100dp</dimen>
+    <dimen name="live_person_two_hundred">200dp</dimen>
+    <dimen name="live_person_three_handred">300dp</dimen>
+    <dimen name="live_person_four_handred">400dp</dimen>
+    <dimen name="live_heart_margin">150dp</dimen>
+    <dimen name="live_heart_margin_height">350dp</dimen>
+    <dimen name="small_margin_left">10dp</dimen>
+    <dimen name="live_margin_nine">90dp</dimen>
+    <dimen name="video_margin_right">20dp</dimen>
 
     <dimen name="controller_button_width">60dp</dimen>
     <dimen name="controller_button_height">30dp</dimen>
@@ -36,7 +66,6 @@
     <dimen name="bright_margin_left">20dp</dimen>
     <dimen name="bright_padding">10dp</dimen>
     <dimen name="screen_tosmall_bottom">15dp</dimen>
-    <dimen name="small_margin_left">10dp</dimen>
     <dimen name="volume_margin_bottom">4dp</dimen>
     <dimen name="event_action_padding">20dp</dimen>
     <dimen name="event_action_padding_left">6dp</dimen>
@@ -51,7 +80,6 @@
     <dimen name="bright_margin_bottom">6dp</dimen>
     <dimen name="bright_seek_margin_top">25dp</dimen>
     <dimen name="bright_seek_margin_bottom">12dp</dimen>
-
 
     <dimen name="heart_anim_bezier_x_rand">40.0dp</dimen>
     <dimen name="heart_anim_init_x">15.0dp</dimen> <!--50-->

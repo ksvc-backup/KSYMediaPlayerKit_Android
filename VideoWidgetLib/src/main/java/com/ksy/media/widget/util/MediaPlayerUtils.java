@@ -94,11 +94,11 @@ public class MediaPlayerUtils {
 	}
 
 	public static boolean isFullScreenMode(int playMode) {
-		return (playMode == MediaPlayMode.PLAYMODE_FULLSCREEN ? true : false);
+		return (playMode == MediaPlayMode.PLAY_MODE_FULLSCREEN ? true : false);
 	}
 
 	public static boolean isWindowMode(int playMode) {
-		return (playMode == MediaPlayMode.PLAYMODE_WINDOW ? true : false);
+		return (playMode == MediaPlayMode.PLAY_MODE_WINDOW ? true : false);
 	}
 
 	public static void hideSystemUI(Window window, boolean uiOverlay) {

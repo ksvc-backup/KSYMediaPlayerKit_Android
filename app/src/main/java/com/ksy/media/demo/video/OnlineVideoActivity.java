@@ -1,21 +1,26 @@
 package com.ksy.media.demo.video;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ksy.media.demo.R;
 import com.ksy.media.widget.ui.video.VideoMediaPlayerPagerAdapter;
 import com.ksy.media.widget.ui.video.VideoMediaPlayerView;
-import com.ksy.media.widget.ui.common.fragment.CommentListFragment;
-import com.ksy.media.widget.ui.common.fragment.RecommendListFragment;
+import com.ksy.media.widget.ui.base.fragment.CommentListFragment;
+import com.ksy.media.widget.ui.base.fragment.RecommendListFragment;
 import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.PlayConfig;
 
@@ -29,13 +34,17 @@ public class OnlineVideoActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
         setContentView(R.layout.activity_online_video);
         setupViews();
     }
 
     private void setupViews() {
         playerView = (VideoMediaPlayerView) findViewById(R.id.video_player_view);
-        playerView.setPlayConfig(false, PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+        playerView.setPlayConfig(false, PlayConfig.INTERRUPT_MODE_PAUSE_RESUME, PlayConfig.SHORT_VIDEO_MODE);
         playerView.setPlayerViewCallback(this);
         setupDialog();
         setUpPagerAndTabs();
@@ -45,9 +54,28 @@ public class OnlineVideoActivity extends AppCompatActivity implements
         pager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new VideoMediaPlayerPagerAdapter(OnlineVideoActivity.this, getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
+        pager.setOffscreenPageLimit(2);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setTabsFromPagerAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(pager);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                pager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    pagerAdapter.mFragment.hideAll();
+                }
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
+
     }
 
     private void setupDialog() {
@@ -56,10 +84,10 @@ public class OnlineVideoActivity extends AppCompatActivity implements
         final EditText editInput = (EditText) dialogView
                 .findViewById(R.id.input);
 
-        String inputString = editInput.getText().toString();
-        startPlayer(inputString);
+//        String inputString = editInput.getText().toString();
+//        startPlayer(inputString);
 
-        /*new AlertDialog.Builder(this).setTitle("User Input")
+        new AlertDialog.Builder(this).setTitle("User Input")
                 .setView(dialogView)
                 .setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
 
@@ -80,7 +108,7 @@ public class OnlineVideoActivity extends AppCompatActivity implements
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
             }
-        }).show();*/
+        }).show();
     }
 
     @Override

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/ksy_color_bg"
     tools:context=".main.DemoActivity">
 
     <android.support.v7.widget.Toolbar
@@ -14,6 +15,7 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/demo_list"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_centerVertical="true"

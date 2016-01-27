@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:alpha="0.7"
-    android:background="@color/balck" >
+    android:background="@color/black" >
 
     <ListView
         android:id="@+id/screen_size_list_view"

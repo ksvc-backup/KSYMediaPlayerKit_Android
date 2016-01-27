@@ -3,22 +3,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.ksy.media.widget.ui.common.fragment.DetailFragment">
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/card_height">
+    tools:context="com.ksy.media.widget.ui.base.fragment.DetailFragment">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="@dimen/card_height"
+            android:background="@color/ksy_color_card_bg">
 
             <ImageView
                 android:id="@+id/user_img"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
                 android:layout_margin="@dimen/list_item_margin"
-                android:src="@drawable/ic_account_circle_grey600_36dp" />
+                android:src="@drawable/shortvideo_head_image" />
 
             <TextView
                 android:id="@+id/user_tv"
@@ -26,13 +24,15 @@
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/user_img"
                 android:layout_margin="@dimen/list_item_margin"
+                android:textColor="@color/ksy_color_font"
                 android:layout_toRightOf="@id/user_img"
                 android:text="@string/video_detail_user" />
 
             <TextView
                 android:id="@+id/comment_tv"
-                android:layout_width="150dp"
+                android:layout_width="@dimen/live_heart_margin"
                 android:layout_alignLeft="@+id/user_tv"
+                android:textColor="@color/ksy_color_font_alpha"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/user_tv"
                 android:text="@string/video_detail_description" />
@@ -40,13 +40,14 @@
             <Button
                 android:id="@+id/follow_btn"
                 android:layout_width="wrap_content"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/live_bottom_height"
+                android:background="@color/ksy_color_card_bg"
+                android:textColor="@color/ksy_color_prime"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_margin="@dimen/list_item_margin"
                 android:text="@string/video_detail_focus" />
         </RelativeLayout>
-    </android.support.v7.widget.CardView>
 
     <TextView
         android:id="@+id/video_detail_title"
@@ -55,7 +56,7 @@
         android:layout_marginTop="@dimen/list_small_margin"
         android:layout_marginLeft="@dimen/list_item_large_margin"
         android:text="@string/video_detail_title"
-        android:textColor="@color/black"
+        android:textColor="@color/ksy_color_font"
         android:textSize="@dimen/large_text_size" />
 
     <TextView
@@ -66,6 +67,6 @@
         android:layout_marginRight="@dimen/list_item_large_margin"
         android:layout_marginTop="@dimen/list_small_margin"
         android:text="@string/video_detail_content"
-        android:textColor="@color/gray_primary_dark"
+        android:textColor="@color/ksy_color_font_alpha"
         android:textSize="@dimen/small_text_size" />
 </LinearLayout>

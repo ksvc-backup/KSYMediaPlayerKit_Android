@@ -2,6 +2,7 @@ package com.ksy.media.demo.stream;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
@@ -11,14 +12,15 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import com.ksy.media.demo.R;
 import com.ksy.media.widget.ui.stream.StreamMediaPlayerPagerAdapter;
 import com.ksy.media.widget.ui.stream.StreamMediaPlayerView;
-import com.ksy.media.widget.ui.common.fragment.CommentListFragment;
-import com.ksy.media.widget.ui.common.fragment.RecommendListFragment;
+import com.ksy.media.widget.ui.base.fragment.CommentListFragment;
+import com.ksy.media.widget.ui.base.fragment.RecommendListFragment;
 import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.PlayConfig;
 
@@ -33,13 +35,17 @@ public class StreamVideoActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+        }
         setContentView(R.layout.activity_stream_video);
         setupViews();
     }
 
     private void setupViews() {
         playerView = (StreamMediaPlayerView) findViewById(R.id.stream_player_view);
-        playerView.setPlayConfig(true, PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+        playerView.setPlayConfig(true, PlayConfig.INTERRUPT_MODE_RELEASE_CREATE, PlayConfig.LIVE_VIDEO_MODE);
         playerView.setPlayerViewCallback(this);
         setupDialog();
         setUpPagerAndTabs();
@@ -49,10 +55,29 @@ public class StreamVideoActivity extends AppCompatActivity implements
         pager = (ViewPager) findViewById(R.id.pager);
         pagerAdapter = new StreamMediaPlayerPagerAdapter(StreamVideoActivity.this, getSupportFragmentManager());
         pager.setAdapter(pagerAdapter);
+        pager.setOffscreenPageLimit(2);
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setTabsFromPagerAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(pager);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                pager.setCurrentItem(tab.getPosition());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                if (tab.getPosition() == 0) {
+                    pagerAdapter.mFragment.hideAll();
+                }
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+            }
+        });
     }
+
 
     private void setupDialog() {
         final View dialogView = LayoutInflater.from(this).inflate(
@@ -119,11 +144,6 @@ public class StreamVideoActivity extends AppCompatActivity implements
 
     @Override
     public void onPrepared() {
-
-    }
-
-    @Override
-    public void onQualityChanged() {
 
     }
 

@@ -29,13 +29,13 @@
     </style>
 
     <style name="Widget.Demo.Toolbar" parent="Widget.AppCompat.Toolbar">
-        <item name="android:background">?attr/colorPrimary</item>
+        <item name="android:background">@color/ksy_color_card_bg</item>
         <item name="popupTheme">@style/ThemeOverlay.AppCompat.Light</item>
         <item name="android:actionModeBackground">@color/gray_primary_dark</item>
         <item name="theme">@style/Demo.Theme.actionbar</item>
     </style>
 
-    <style name="Demo.Theme.actionbar" parent="ThemeOverlay.AppCompat.ActionBar">
+    <style name="Demo.Theme.actionbar" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="android:actionModeBackground">@color/gray_primary_dark</item>
     </style>
 

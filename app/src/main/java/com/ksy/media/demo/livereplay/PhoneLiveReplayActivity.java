@@ -18,7 +18,7 @@ import com.ksy.media.widget.ui.livereplay.LiveReplayMediaPlayerView;
 import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.PlayConfig;
 
-public class PhoneLiveReplayActivity extends AppCompatActivity implements LiveReplayMediaPlayerView.PlayerViewCallback{
+public class  PhoneLiveReplayActivity extends AppCompatActivity implements LiveReplayMediaPlayerView.PlayerViewCallback{
 
     LiveReplayMediaPlayerView playerViewLiveReplay;
 
@@ -32,11 +32,11 @@ public class PhoneLiveReplayActivity extends AppCompatActivity implements LiveRe
         setContentView(R.layout.activity_phone_live_replay);
 
         playerViewLiveReplay = (LiveReplayMediaPlayerView) findViewById(R.id.player_view_live_replay);
-        playerViewLiveReplay.setPlayConfig(false, PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+        playerViewLiveReplay.setPlayConfig(false, PlayConfig.INTERRUPT_MODE_RELEASE_CREATE, PlayConfig.LIVE_VIDEO_MODE);
         playerViewLiveReplay.setPlayerViewCallback(this);
 
         final View dialogView = LayoutInflater.from(this).inflate(
-                R.layout.dialog_input, null);
+                R.layout.livereplay_dialog_input, null);
         final EditText editInput = (EditText) dialogView
                 .findViewById(R.id.input);
         // startPlayer("");
@@ -91,25 +91,10 @@ public class PhoneLiveReplayActivity extends AppCompatActivity implements LiveRe
     }
 
     @Override
-    public void hideViews() {
-
-    }
-
-    @Override
-    public void restoreViews() {
-
-    }
-
-    @Override
     public void onPrepared() {
 
     }
-
-    @Override
-    public void onQualityChanged() {
-
-    }
-
+    
     @Override
     public void onFinish(int playMode) {
         Log.i(Constants.LOG_TAG, "activity on finish ===========");

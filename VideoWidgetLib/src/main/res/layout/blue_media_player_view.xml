@@ -9,7 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <com.ksy.media.widget.ui.common.MediaPlayerBufferingView
+    <com.ksy.media.widget.ui.base.MediaPlayerBufferingView
         android:id="@+id/ks_camera_buffering_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -18,9 +18,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             layout="@layout/blue_media_player_buffering_view" />
-    </com.ksy.media.widget.ui.common.MediaPlayerBufferingView>
+    </com.ksy.media.widget.ui.base.MediaPlayerBufferingView>
 
-    <com.ksy.media.widget.ui.common.MediaPlayerLoadingView
+    <com.ksy.media.widget.ui.base.MediaPlayerLoadingView
         android:id="@+id/ks_camera_loading_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -29,9 +29,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             layout="@layout/blue_media_player_loading_view" />
-    </com.ksy.media.widget.ui.common.MediaPlayerLoadingView>
+    </com.ksy.media.widget.ui.base.MediaPlayerLoadingView>
 
-    <com.ksy.media.widget.ui.common.MediaPlayerEventActionView
+    <com.ksy.media.widget.ui.base.MediaPlayerEventActionView
         android:id="@+id/ks_camera_event_action_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" >
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             layout="@layout/blue_media_player_event_action_view" />
-    </com.ksy.media.widget.ui.common.MediaPlayerEventActionView>
+    </com.ksy.media.widget.ui.base.MediaPlayerEventActionView>
 
     <com.ksy.media.widget.controller.MediaPlayerLargeControllerView
         android:id="@+id/media_player_controller_view_large"
@@ -68,7 +68,7 @@
     <RelativeLayout
         android:id="@+id/layoutPop"
         android:layout_gravity="center_vertical|center_horizontal"
-        android:background="@color/balck"
+        android:background="@color/black"
         android:alpha="0.6"
         android:visibility="gone"
         android:layout_width="@dimen/crop_view_width"
@@ -91,63 +91,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
     </RelativeLayout>
-
-    <!-- net speed -->
-    <TextView
-        android:id="@+id/player_speed"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:text="@string/net_speed"
-        android:textColor="#ffffffff"
-        android:textSize="15sp" />
-    
-    
-     <TextView
-        android:id="@+id/player_total"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:visibility="gone"
-        android:text="@string/consumption_flow"
-        android:layout_below="@+id/player_speed"
-        android:textColor="#ffffffff"
-        android:textSize="15sp" />
-     
-     <TextView 
-        android:id="@+id/player_net"
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:visibility="gone"
-        android:text="@string/play_net"
-        android:layout_below="@+id/player_total"
-        android:textColor="#ffffffff"
-        android:textSize="15sp" />
-
-    <!-- <TextView
-        android:id="@+id/player_demux"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:text="demux:"
-        android:layout_below="@+id/player_speed"
-        android:textColor="#ffffffff"
-        android:textSize="15sp" />
-    
-    <TextView
-        android:id="@+id/player_decode"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:text="decode:"
-        android:layout_below="@+id/player_demux"
-        android:textColor="#ffffffff"
-        android:textSize="15sp" />
-    
-    <TextView
-        android:id="@+id/player_time"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:text="time:"
-        android:layout_below="@+id/player_decode"
-        android:textColor="#ffffffff"
-        android:textSize="15sp" /> -->
     
 </RelativeLayout>
 

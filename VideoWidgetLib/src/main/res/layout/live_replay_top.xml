@@ -6,58 +6,56 @@
     <RelativeLayout
         android:id="@+id/controller_top_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/controller_large_top"
+        android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:clickable="true" >
+        android:paddingTop="@dimen/live_margin_top"
+        android:background="@drawable/live_top_alpha_image">
 
         <ImageView
             android:id="@+id/image_live_replay_head"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_marginRight="@dimen/small_margin_left"
-            android:src="@drawable/live_person_grey" />
+            android:src="@drawable/live_anchor" />
 
-        <TextView
+        <ImageView
             android:id="@+id/text_live_replay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/live_loading"
+            android:src="@drawable/live_replay_image"
+            android:layout_marginTop="@dimen/volume_margin_bottom"
             android:layout_toRightOf="@+id/image_live_replay_head"
             android:layout_toEndOf="@+id/image_live_replay_head" />
 
-        <TextView
-            android:id="@+id/title_text_close"
+        <ImageView
+            android:id="@+id/live_replay_image_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
             android:layout_alignParentRight="true"
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_marginRight="@dimen/small_margin_left"
-            android:gravity="center_vertical"
-            android:text="@string/live_close" />
+            android:src="@drawable/live_close_image"/>
 
-        <TextView
-            android:id="@+id/title_text_report"
+        <ImageView
+            android:id="@+id/live_replay_image_report"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_toLeftOf="@+id/title_text_close"
+            android:layout_toLeftOf="@+id/live_replay_image_close"
             android:layout_marginLeft="@dimen/small_margin_left"
             android:layout_marginRight="@dimen/small_margin_left"
-            android:gravity="center_vertical"
-            android:text="@string/live_report" />
+            android:src="@drawable/live_report_image"/>
 
         <TextView
             android:id="@+id/textViewNetError"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/seek_touch_margin_top"
+            android:textColor="@color/white"
             android:text="@string/live_replay_net_error"
             android:layout_below="@+id/text_live_replay"
-            android:layout_toRightOf="@+id/image_live_replay_head"
-            android:layout_toEndOf="@+id/image_live_replay_head" />
+            android:layout_toRightOf="@+id/image_live_replay_head" />
     </RelativeLayout>
 
 </RelativeLayout>

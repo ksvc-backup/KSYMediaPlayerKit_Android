@@ -1,79 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="90dp"
-    android:background="@color/cyan_500"
-    app:cardCornerRadius="5dp">
+    android:layout_height="@dimen/live_margin_one_hundred"
+    android:background="@color/ksy_color_card_bg">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:background="@color/transparent">
+    <ImageView
+        android:id="@+id/icon_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="@dimen/list_margin"
+        android:src="@drawable/video_img_default" />
 
-        <ImageView
-            android:id="@+id/icon_img"
-            android:layout_width="100dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="@dimen/list_margin"
-            android:src="@color/gray_primary_dark"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/list_item_large_margin"
+        android:layout_marginRight="@dimen/live_bottom_seek_height"
+        android:layout_marginTop="@dimen/bright_margin_bottom"
+        android:layout_toRightOf="@+id/icon_img"
+        android:text="title_tv"
+        android:textSize="18sp"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:textColor="@color/ksy_color_font" />
 
-        <TextView
-            android:id="@+id/title_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignTop="@+id/icon_img"
-            android:layout_marginLeft="@dimen/list_item_margin"
-            android:layout_marginRight="100dp"
-            android:layout_toRightOf="@+id/icon_img"
-            android:text="title_tv"
-            android:textAppearance="?android:attr/textAppearanceSmall" />
+    <TextView
+        android:id="@+id/time_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/small_margin_left"
+        android:text="09:11:11"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="@dimen/bright_margin_bottom"
+        android:textColor="@color/ksy_color_font_alpha"
+        android:textSize="@dimen/small_text_size" />
 
-        <ImageView
-            android:id="@+id/watch_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/icon_img"
-            android:layout_alignLeft="@+id/title_tv"
-            android:layout_below="@+id/title_tv"
-            android:src="@drawable/ic_visibility_grey600_24dp" />
+    <TextView
+        android:id="@+id/watch_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_tv"
+        android:layout_marginLeft="@dimen/list_item_large_margin"
+        android:layout_toRightOf="@+id/icon_img"
+        android:text="Text"
+        android:textColor="@color/ksy_color_font"
+        android:textSize="@dimen/small_text_size" />
 
-        <TextView
-            android:id="@+id/watch_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/watch_img"
-            android:layout_below="@+id/title_tv"
-            android:layout_marginLeft="@dimen/list_item_margin"
-            android:layout_marginRight="8dp"
-            android:layout_toRightOf="@+id/watch_img"
-            android:gravity="center"
-            android:text="Text"
-            android:textSize="@dimen/small_text_size" />
+    <TextView
+        android:id="@+id/content_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/watch_tv"
+        android:layout_marginLeft="@dimen/list_item_large_margin"
+        android:layout_toRightOf="@+id/icon_img"
+        android:text="Text"
+        android:textColor="@color/ksy_color_font_alpha"
+        android:textSize="@dimen/small_text_size" />
 
-        <ImageView
-            android:id="@+id/time_img"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/watch_img"
-            android:layout_below="@+id/title_tv"
-            android:layout_toRightOf="@+id/watch_tv"
-            android:src="@drawable/ic_query_builder_grey600_24dp" />
-
-        <TextView
-            android:id="@+id/time_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@+id/watch_img"
-            android:layout_below="@+id/title_tv"
-            android:layout_marginLeft="@dimen/list_item_margin"
-            android:layout_toRightOf="@+id/time_img"
-            android:gravity="center"
-            android:text="Text"
-            android:textSize="@dimen/small_text_size" />
-
-    </RelativeLayout>
-</android.support.v7.widget.CardView>
+</RelativeLayout>

@@ -8,7 +8,7 @@
         android:id="@+id/live_imageview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/live_person_grey" />
+        android:layout_marginLeft="@dimen/live_margin_left"
+        android:src="@drawable/live_dialog_list_item" />
 
 </RelativeLayout>

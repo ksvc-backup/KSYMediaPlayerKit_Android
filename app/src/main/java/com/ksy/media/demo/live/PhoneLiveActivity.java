@@ -2,6 +2,7 @@ package com.ksy.media.demo.live;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -32,7 +33,7 @@ public class PhoneLiveActivity extends AppCompatActivity implements LiveMediaPla
         setContentView(R.layout.activity_phone_live);
 
         playerViewLive = (LiveMediaPlayerView) findViewById(R.id.player_view_live);
-        playerViewLive.setPlayConfig(true, PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+        playerViewLive.setPlayConfig(true, PlayConfig.INTERRUPT_MODE_RELEASE_CREATE, PlayConfig.LIVE_VIDEO_MODE);
         playerViewLive.setPlayerViewCallback(this);
 
         final View dialogView = LayoutInflater.from(this).inflate(
@@ -88,23 +89,9 @@ public class PhoneLiveActivity extends AppCompatActivity implements LiveMediaPla
         playerViewLive.play(url);
     }
 
-    @Override
-    public void hideViews() {
-
-    }
-
-    @Override
-    public void restoreViews() {
-
-    }
 
     @Override
     public void onPrepared() {
-
-    }
-
-    @Override
-    public void onQualityChanged() {
 
     }
 

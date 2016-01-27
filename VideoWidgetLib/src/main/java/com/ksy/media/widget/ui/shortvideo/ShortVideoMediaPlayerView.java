@@ -7,15 +7,8 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.res.TypedArray;
-import android.graphics.Bitmap;
-import android.graphics.Bitmap.Config;
 import android.graphics.Color;
-import android.net.TrafficStats;
-import android.os.Environment;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -23,96 +16,65 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
-import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.ksy.media.widget.controller.MediaPlayerController;
-import com.ksy.media.widget.controller.ShortVideoMediaPlayerControllerView;
+import com.ksy.media.widget.controller.shortvideo.IShortVideoController;
+import com.ksy.media.widget.controller.shortvideo.ShortVideoMediaPlayerControllerView;
 import com.ksy.media.widget.model.MediaPlayMode;
+import com.ksy.media.widget.player.IMediaPlayerPlus;
+import com.ksy.media.widget.ui.base.MediaPlayerBufferingView;
+import com.ksy.media.widget.ui.base.MediaPlayerLoadingView;
+import com.ksy.media.widget.util.Constants;
+import com.ksy.media.widget.util.IPowerStateListener;
 import com.ksy.media.widget.util.MediaPlayerUtils;
 import com.ksy.media.widget.util.NetReceiver;
 import com.ksy.media.widget.util.NetReceiver.NetState;
 import com.ksy.media.widget.util.NetReceiver.NetStateChangedListener;
-import com.ksy.media.widget.util.WakeLocker;
-import com.ksy.media.widget.ui.common.MediaPlayerBufferingView;
-import com.ksy.media.widget.ui.common.MediaPlayerEventActionView;
-import com.ksy.media.widget.ui.common.MediaPlayerLoadingView;
-import com.ksy.media.widget.ui.common.MediaPlayerMovieRatioView;
-import com.ksy.media.widget.util.IPowerStateListener;
-import com.ksy.media.widget.util.PlayConfig;
-import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.NetworkUtil;
-import com.ksy.media.widget.videoview.MediaPlayerTextureVideoView;
+import com.ksy.media.widget.util.PlayConfig;
+import com.ksy.media.widget.util.WakeLocker;
+import com.ksy.media.widget.videoview.MediaPlayerTextureView;
 import com.ksy.mediaPlayer.widget.R;
 import com.ksyun.media.player.IMediaPlayer;
-
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Locale;
 
 public class ShortVideoMediaPlayerView extends RelativeLayout implements
         IPowerStateListener {
     private static final int QUALITY_BEST = 100;
-    private static final String CAPUTRE_SCREEN_PATH = "KSY_SDK_SCREENSHOT";
+    private static final String CAPTURE_SCREEN_PATH = "KSY_SDK_SCREENSHOT";
     private Activity mActivity;
     private LayoutInflater mLayoutInflater;
     private Window mWindow;
-    private volatile boolean mWindowActived = false;
-
     private ViewGroup mRootView;
-    private MediaPlayerTextureVideoView mMediaPlayerVideoView;
-
+    private MediaPlayerTextureView mMediaPlayerVideoView;
     private ShortVideoMediaPlayerControllerView mMediaPlayerSmallControllerView;
     private MediaPlayerBufferingView mMediaPlayerBufferingView;
     private MediaPlayerLoadingView mMediaPlayerLoadingView;
-    private MediaPlayerEventActionView mMediaPlayerEventActionView;
-
+    private ShortVideoMediaPlayerEventActionView mMediaPlayerEventActionView;
     private PlayerViewCallback mPlayerViewCallback;
-
-    private volatile int mPlayMode = MediaPlayMode.PLAYMODE_FULLSCREEN;
-    private volatile boolean mLockMode = false;
+    private volatile int mPlayMode = MediaPlayMode.PLAY_MODE_FULLSCREEN;
     private volatile boolean mScreenLockMode = false;
     private volatile boolean mScreenshotPreparing = false;
-
     private boolean mVideoReady = false;
-
-    private boolean mStartAfterPause = false;
     private PlayConfig playConfig = PlayConfig.getInstance();
-
     private int mPausePosition = 0;
-
     private LayoutParams mMediaPlayerControllerViewSmallParams;
-
     private boolean mDeviceNavigationBarExist;
-
-    private int mDisplaySizeMode = MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_16_9;
-
     private NetReceiver mNetReceiver;
     private NetStateChangedListener mNetChangedListener;
     private boolean mIsComplete = false;
-
-    private float mCurrentPlayingRatio = 1f;
     private float mCurrentPlayingVolumeRatio = 1f;
-    public static float MAX_PLAYING_RATIO = 4f;
     public static float MAX_PLAYING_VOLUME_RATIO = 3.0f;
     // add for replay
     private boolean mRecyclePlay = false;
-
-//    private DRMRetrieverManager mDrmManager;
-//    private DRMRetrieverResponseHandler mDrmHandler;
-
     private RelativeLayout layoutPop;
     private Handler mHandler = new Handler();
-
     private Context mContext;
     private IPowerStateListener powerStateListener;
     private boolean mIsTextureViewVisible = true;
+
 
     public ShortVideoMediaPlayerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -146,11 +108,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         setPowerStateListener(this);
         TypedArray typedArray = context.obtainStyledAttributes(attrs,
                 R.styleable.PlayerView);
-
-        this.mLockMode = typedArray.getBoolean(R.styleable.PlayerView_lockmode,
-                false);
         typedArray.recycle();
-
         this.mLayoutInflater = LayoutInflater.from(context);
         this.mActivity = (Activity) context;
         this.mWindow = mActivity.getWindow();
@@ -166,14 +124,14 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         this.layoutPop = (RelativeLayout) mRootView
                 .findViewById(R.id.layoutPop);
 
-        this.mMediaPlayerVideoView = (MediaPlayerTextureVideoView) mRootView
+        this.mMediaPlayerVideoView = (MediaPlayerTextureView) mRootView
                 .findViewById(R.id.ks_camera_video_view);
         this.mMediaPlayerBufferingView = (MediaPlayerBufferingView) mRootView
                 .findViewById(R.id.ks_camera_buffering_view);
         this.mMediaPlayerLoadingView = (MediaPlayerLoadingView) mRootView
                 .findViewById(R.id.ks_camera_loading_view);
-        this.mMediaPlayerEventActionView = (MediaPlayerEventActionView) mRootView
-                .findViewById(R.id.ks_camera_event_action_view);
+        this.mMediaPlayerEventActionView = (ShortVideoMediaPlayerEventActionView) mRootView
+                .findViewById(R.id.short_camera_event_action_view);
         this.mMediaPlayerSmallControllerView = (ShortVideoMediaPlayerControllerView) mRootView
                 .findViewById(R.id.media_player_controller_view_small);
 
@@ -184,15 +142,12 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         this.mMediaPlayerVideoView
                 .setOnCompletionListener(mOnCompletionListener);
         this.mMediaPlayerVideoView.setOnInfoListener(mOnInfoListener);
-//        this.mMediaPlayerVideoView
-//                .setOnDRMRequiredListener(mOnDRMRequiredListener);
         this.mMediaPlayerVideoView.setOnErrorListener(mOnErrorListener);
-//        this.mMediaPlayerVideoView.setOnSurfaceListener(mOnSurfaceListener);
         this.mMediaPlayerVideoView
-                .setMediaPlayerController(mMediaPlayerController);
+                .setMediaPlayerController(mMediaPlayerPlus);
         this.mMediaPlayerVideoView.setFocusable(false);
+        this.mMediaPlayerVideoView.setOnVideoComingToShowListener(mOnVideoComingToShowListener);
         setPowerStateListener(this.mMediaPlayerVideoView);
-
 
         /* 设置playerVideoView UI 参数 */
         LayoutParams mediaPlayerVideoViewParams = new LayoutParams(
@@ -211,11 +166,6 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         mediaPlayerLoadingViewParams.addRule(RelativeLayout.CENTER_IN_PARENT);
         this.mMediaPlayerLoadingView.hide();
 
-        // 截图成功layout
-        // RelativeLayout.LayoutParams mediaPlayerPopViewParams = new
-        // LayoutParams(
-        // LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);
-
         LayoutParams mediaPlayerPopViewParams = new LayoutParams(
                 240, 230);
         mediaPlayerPopViewParams.addRule(RelativeLayout.CENTER_IN_PARENT);
@@ -231,7 +181,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 
 		/* 设置eventActionView callback */
         this.mMediaPlayerEventActionView
-                .setCallback(new MediaPlayerEventActionView.EventActionViewCallback() {
+                .setCallback(new ShortVideoMediaPlayerEventActionView.EventActionViewCallback() {
 
                     @Override
                     public void onActionPlay() {
@@ -253,6 +203,22 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                         if (NetworkUtil.isNetworkAvailable(mContext)) {
                             Log.i(Constants.LOG_TAG,
                                     "event action  view action replay");
+                            switch (playConfig.getVideoMode()) {
+                                case PlayConfig.SHORT_VIDEO_MODE:
+                                    Log.d(Constants.LOG_TAG, "PlayConfig.SHORT_VIDEO_MODE  11111 ");
+                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+                                    break;
+
+                                case PlayConfig.LIVE_VIDEO_MODE:
+                                    Log.d(Constants.LOG_TAG, "PlayConfig.LIVE_VIDEO_MODE  2222222 ");
+                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+                                    break;
+
+                                case PlayConfig.OTHER_MODE:
+
+                                    break;
+                            }
+
                             mMediaPlayerEventActionView.hide();
                             mIsComplete = false;
                             if (mMediaPlayerController != null) {
@@ -272,9 +238,27 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                             mIsComplete = false;
                             Log.i(Constants.LOG_TAG,
                                     "event action  view action error");
+
+                            switch (playConfig.getVideoMode()) {
+                                case PlayConfig.SHORT_VIDEO_MODE:
+                                    Log.d(Constants.LOG_TAG, "PlayConfig.SHORT_VIDEO_MODE  11111 ");
+                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+                                    break;
+
+                                case PlayConfig.LIVE_VIDEO_MODE:
+                                    Log.d(Constants.LOG_TAG, "PlayConfig.LIVE_VIDEO_MODE  2222222 ");
+                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+                                    break;
+
+                                case PlayConfig.OTHER_MODE:
+
+                                    break;
+                            }
+
                             mMediaPlayerEventActionView.hide();
                             mMediaPlayerSmallControllerView.hide();
                             mMediaPlayerLoadingView.show();
+                            mMediaPlayerVideoView.release(true);
                             mMediaPlayerVideoView.setVideoPath(url);
                         } else {
                             Toast.makeText(mContext, "no network",
@@ -316,25 +300,15 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         addView(mMediaPlayerLoadingView, mediaPlayerLoadingViewParams);
         addView(mMediaPlayerEventActionView, mediaPlayereventActionViewParams);
         addView(layoutPop, mediaPlayerPopViewParams);
-//        addView(mTextViewSpeed);
         addView(mMediaPlayerSmallControllerView,
                 mMediaPlayerControllerViewSmallParams);
+
         mMediaPlayerSmallControllerView.hide();
         mMediaPlayerBufferingView.hide();
         mMediaPlayerLoadingView.hide();
         mMediaPlayerEventActionView.hide();
         // Default not use,if need it ,open it
         // initOrientationEventListener(context);
-
-   /*     post(new Runnable() {
-
-            @Override
-            public void run() {
-
-                if (MediaPlayerUtils.isWindowMode(mPlayMode)) {
-                }
-            }
-        });*/
 
         mNetReceiver = NetReceiver.getInstance();
         mNetChangedListener = new NetStateChangedListener() {
@@ -343,48 +317,27 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             public void onNetStateChanged(NetState netCode) {
 
                 switch (netCode) {
-
                     case NET_NO:
                         Log.i(Constants.LOG_TAG, "网络断了");
-
-                        // Toast.makeText(getContext(), "网络变化了:没有网络连接",
-                        // Toast.LENGTH_LONG).show();
                         break;
                     case NET_2G:
                         Log.i(Constants.LOG_TAG, "2g网络");
-
-                        // Toast.makeText(getContext(), "网络变化了:2g网络",
-                        // Toast.LENGTH_LONG).show();
                         break;
                     case NET_3G:
                         Log.i(Constants.LOG_TAG, "3g网络");
-
-                        // Toast.makeText(getContext(), "网络变化了:3g网络",
-                        // Toast.LENGTH_LONG).show();
                         break;
                     case NET_4G:
                         Log.i(Constants.LOG_TAG, "4g网络");
-
-                        // Toast.makeText(getContext(), "网络变化了:4g网络",
-                        // Toast.LENGTH_LONG).show();
                         break;
                     case NET_WIFI:
                         Log.i(Constants.LOG_TAG, "WIFI网络");
-
-                        // Toast.makeText(getContext(), "网络变化了:WIFI网络",
-                        // Toast.LENGTH_LONG).show();
                         break;
 
                     case NET_UNKNOWN:
                         Log.i(Constants.LOG_TAG, "未知网络");
-
-                        // Toast.makeText(getContext(), "网络变化了:未知网络",
-                        // Toast.LENGTH_LONG).show();
                         break;
                     default:
                         Log.i(Constants.LOG_TAG, "不知道什么情况~>_<~");
-                        // Toast.makeText(getContext(), "网络变化了:不知道什么情况~>_<~",
-                        // Toast.LENGTH_LONG).show();
                 }
             }
         };
@@ -395,6 +348,12 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
     private void setPowerStateListener(IPowerStateListener powerStateListener) {
         this.powerStateListener = powerStateListener;
     }
+
+    private MediaPlayerTextureView.OnVideoComingToShowListener mOnVideoComingToShowListener = new MediaPlayerTextureView.OnVideoComingToShowListener() {
+        @Override
+        public void onVideoComingToShow() {
+        }
+    };
 
     public void play(String path) {
 
@@ -462,32 +421,17 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 
     public void onResume() {
         Log.d(Constants.LOG_TAG, "PlayView onResume");
-
-        mWindowActived = true;
         powerStateListener.onPowerState(Constants.APP_SHOWN);
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
-//        if (mMediaPlayerController.canStart()){
-//            mMediaPlayerController.start();
-//        }
     }
 
     public void onPause() {
         Log.d(Constants.LOG_TAG, "PlayView OnPause");
-        powerStateListener.onPowerState(Constants.APP_HIDEN);
+        powerStateListener.onPowerState(Constants.APP_HIDDEN);
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
-        mWindowActived = false;
-
         mPausePosition = mMediaPlayerController.getCurrentPosition();
-//        if (!isTextureViewVisible()) {
-//            mMediaPlayerController.pause();
-//        }
-
-//        if (mMediaPlayerController.isPlaying()) {
-//            mMediaPlayerController.pause();
-//            mStartAfterPause = true;
-//        }
         WakeLocker.release();
     }
 
@@ -504,41 +448,30 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         mMediaPlayerEventActionView.updateVideoTitle(getResources().getString(R.string.short_video_title));
     }
 
-    private void changeMovieRatio() {
-        /*
-         * if (mDisplaySizeMode >
-		 * MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_ORIGIN) { mDisplaySizeMode
-		 * = MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_16_9; }
-		 */
-
-        if (mDisplaySizeMode > MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_4_3) {
-            mDisplaySizeMode = MediaPlayerMovieRatioView.MOVIE_RATIO_MODE_16_9;
-        }
-
-        mMediaPlayerVideoView.setVideoLayout(mDisplaySizeMode);
-        // mDisplaySizeMode++;
-    }
-
     IMediaPlayer.OnPreparedListener mOnPreparedListener = new IMediaPlayer.OnPreparedListener() {
 
         @Override
         public void onPrepared(IMediaPlayer mp) {
             Log.d(Constants.LOG_TAG,
-                    "IMediaPlayer.OnPreparedListener onPrepared");
+                    "IMediaPlayer.OnPreparedListener onPrepared 11 ");
             int duration = 0;
             if (mMediaPlayerController != null)
                 duration = mMediaPlayerController.getDuration();
 
+            Log.e("Constants.LOG_TAG", "mIsComplete =" + mIsComplete);
             if (mIsComplete) {
+                Log.d(Constants.LOG_TAG,
+                        "IMediaPlayer.OnPreparedListener onPrepared 22");
                 mMediaPlayerSmallControllerView.hide();
                 mMediaPlayerEventActionView
                         .updateEventMode(
-                                MediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_COMPLETE,
+                                ShortVideoMediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_COMPLETE,
                                 null);
                 mMediaPlayerEventActionView.show();
                 WakeLocker.release();
             }
             if (mPausePosition > 0 && duration > 0) {
+                Log.d("Constants.LOG_TAG", "mPausePosition =" + mPausePosition);
                 if (!mIsComplete) {
                     mMediaPlayerController.pause();
                     mMediaPlayerController.seekTo(mPausePosition);
@@ -556,7 +489,9 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             mMediaPlayerLoadingView.hide();
 
             if (!mIsComplete) {
+                Log.d(Constants.LOG_TAG, "mOnPreparedListener ingore start  11");
                 if (!mMediaPlayerVideoView.mNeedPauseAfterLeave) {
+                    Log.d(Constants.LOG_TAG, "mOnPreparedListener ingore start  22");
                     mMediaPlayerVideoView.start();
                 } else {
                     Log.d(Constants.LOG_TAG, "mOnPreparedListener ingore start for last paused state");
@@ -564,11 +499,9 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                 }
             }
 
-            // mMediaPlayerEventActionView.updateEventMode(
-            // MediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_WAIT,
-            // null);
             mVideoReady = true;
             if (mPlayerViewCallback != null)
+                Log.d(Constants.LOG_TAG, "mPlayerViewCallback ");
                 mPlayerViewCallback.onPrepared();
         }
 
@@ -579,7 +512,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         @Override
         public void onCompletion(IMediaPlayer mp) {
 
-            Log.i(Constants.LOG_TAG, "================onCompletion============");
+            Log.i(Constants.LOG_TAG, "=========11=======onCompletion============");
             if (mRecyclePlay) {
                 Log.i(Constants.LOG_TAG, "==replay==");
                 mMediaPlayerEventActionView.hide();
@@ -589,11 +522,12 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                     mMediaPlayerVideoView.start();
                 }
             } else {
+                Log.i(Constants.LOG_TAG, "===========22=====onCompletion============");
                 mIsComplete = true;
                 mMediaPlayerSmallControllerView.hide();
                 mMediaPlayerEventActionView
                         .updateEventMode(
-                                MediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_COMPLETE,
+                                ShortVideoMediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_COMPLETE,
                                 null);
                 mMediaPlayerEventActionView.show();
                 WakeLocker.release();
@@ -609,11 +543,6 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         public boolean onInfo(IMediaPlayer mp, int what, int extra) {
 
             switch (what) {
-//                case IMediaPlayer.MEDIA_INFO_METADATA_SPEED:
-//                    // Log.i(Constants.LOG_TAG, "MEDIA_INFO_METADATA_SPEED:"
-//                    // +extra);
-//                    break;
-                // 视频缓冲开始
                 case IMediaPlayer.MEDIA_INFO_BUFFERING_START:
                     Log.i(Constants.LOG_TAG, "MEDIA_INFO_BUFFERING_START");
                     mMediaPlayerBufferingView.show();
@@ -629,77 +558,6 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             return true;
         }
     };
-
-//    IMediaPlayer.OnDRMRequiredListener mOnDRMRequiredListener = new IMediaPlayer.OnDRMRequiredListener() {
-//
-//        @Override
-//        public void OnDRMRequired(IMediaPlayer mp, int what, int extra,
-//                                  String version) {
-//
-//            Toast.makeText(getContext(),
-//                    "begin drm retriving..version :" + version,
-//                    Toast.LENGTH_SHORT).show();
-//            requestDRMKey(version);
-//        }
-//    };
-//
-//    private void requestDRMKey(final String version) {
-//
-//        if (mDrmManager == null)
-//            mDrmManager = DRMRetrieverManager.getInstance();
-//        if (mDrmHandler == null) {
-//            mDrmHandler = new DRMRetrieverResponseHandler() {
-//
-//                private static final long serialVersionUID = 1L;
-//
-//                @Override
-//                public void onSuccess(String version, String cek) {
-//
-//                    mMediaPlayerVideoView.setDRMKey(version, cek);
-//                    Toast.makeText(
-//                            getContext(),
-//                            "DRM KEY retrieve success,ver :" + version
-//                                    + ", key :" + cek, Toast.LENGTH_SHORT)
-//                            .show();
-//                }
-//
-//                @Override
-//                public void onFailure(int arg0, String arg1, Throwable arg2) {
-//
-//                    Log.e(Constants.LOG_TAG,
-//                            "drm retrieve failed !!!!!!!!!!!!!!");
-//                    Toast.makeText(getContext(), "DRM KEY retrieve failed",
-//                            Toast.LENGTH_SHORT).show();
-//                }
-//
-//            };
-//        }
-//
-//        IDRMRetriverRequest request = new IDRMRetriverRequest(version, url) {
-//
-//            private static final long serialVersionUID = 1L;
-//
-//            @Override
-//            public DRMKey retriveDRMKeyFromAppServer(String cekVersion,
-//                                                     String cekUrl) {
-//
-//                return null;
-//            }
-//
-//            @Override
-//            public DRMFullURL retriveDRMFullUrl(String cekVersion, String cekUrl)
-//                    throws Exception {
-//
-//                DRMFullURL fullURL = new DRMFullURL("2HITWMQXL2VBB3XMAEHQ",
-//                        "ilZQ9p/NHAK1dOYA/dTKKeIqT/t67rO6V2PrXUNr", cekUrl,
-//                        cekVersion);
-//
-//                return fullURL;
-//
-//            }
-//        };
-//        mDrmManager.retrieveDRM(request, mDrmHandler);
-//    }
 
     IMediaPlayer.OnBufferingUpdateListener mOnPlaybackBufferingUpdateListener = new IMediaPlayer.OnBufferingUpdateListener() {
 
@@ -719,11 +577,12 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 
             Log.e(Constants.LOG_TAG, "On Native Error,what :" + what
                     + " , extra :" + extra);
+
             mMediaPlayerSmallControllerView.hide();
             mMediaPlayerBufferingView.hide();
             mMediaPlayerLoadingView.hide();
             mMediaPlayerEventActionView.updateEventMode(
-                    MediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_ERROR,
+                    ShortVideoMediaPlayerEventActionView.EVENT_ACTION_VIEW_MODE_ERROR,
                     what + "," + extra);
             mMediaPlayerEventActionView.show();
             return true;
@@ -749,50 +608,15 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         return mIsTextureViewVisible;
     }
 
-//    IMediaPlayer.OnSurfaceListener mOnSurfaceListener = new IMediaPlayer.OnSurfaceListener() {
-//
-//        @Override
-//        public void surfaceDestroyed(SurfaceHolder holder) {
-//
-//            Log.i(Constants.LOG_TAG, "surfaceDestroyed");
-//            mVideoReady = false;
-//            mMediaPlayerSmallControllerView.hide();
-//            mMediaPlayerBufferingView.hide();
-//            mMediaPlayerLoadingView.hide();
-//
-//        }
-//
-//        @Override
-//        public void surfaceCreated(SurfaceHolder holder) {
-//
-//            Log.i(Constants.LOG_TAG, "MediaPlayerView surfaceCreated");
-//        }
-//
-//        @Override
-//        public void surfaceChanged(SurfaceHolder holder, int format, int w,
-//                                   int h) {
-//
-//        }
-//    };
-
     public interface PlayerViewCallback {
-
-        void hideViews();
-
-        void restoreViews();
-
         void onPrepared();
-
-        void onQualityChanged();
 
         void onFinish(int playMode);
 
         void onError(int errorCode, String errorMsg);
     }
 
-    private final MediaPlayerController mMediaPlayerController = new MediaPlayerController() {
-
-        private Bitmap bitmap;
+    private final IShortVideoController mMediaPlayerController = new IShortVideoController() {
 
         @Override
         public void start() {
@@ -877,36 +701,6 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         }
 
         @Override
-        public boolean supportQuality() {
-
-            return true;
-        }
-
-        @Override
-        public boolean supportVolume() {
-
-            return true;
-        }
-
-        @Override
-        public boolean playVideo(String url) {
-
-            mMediaPlayerVideoView.setVideoPath(url);
-            return true;
-        }
-
-        @Override
-        public int getPlayMode() {
-
-            return mPlayMode;
-        }
-
-        @Override
-        public void onRequestPlayMode(int requestPlayMode) {
-            Log.d("Constants.LOG_TAG", "onRequestPlayMode" + requestPlayMode);
-        }
-
-        @Override
         public void onBackPress(int playMode) {
             Log.i(Constants.LOG_TAG,
                     "========playerview back pressed ==============playMode :"
@@ -918,48 +712,33 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
 
         @Override
         public void onControllerShow(int playMode) {
-
+            Log.d(Constants.LOG_TAG,"onControllerShow");
         }
 
         @Override
         public void onControllerHide(int playMode) {
-
+            Log.d(Constants.LOG_TAG,"onControllerHide");
         }
 
         @Override
-        public void onRequestLockMode(boolean lockMode) {
-
-            if (mScreenLockMode != lockMode) {
-                mScreenLockMode = lockMode;
-
-                // 加锁:屏幕操作锁
-                if (mScreenLockMode) {
-                }
-                // 解锁:屏幕操作锁
-                else {
-                }
-            }
+        public boolean canStart() {
+            Log.i(Constants.LOG_TAG,
+                    "can Start ? " + mMediaPlayerVideoView.canStart());
+            return mMediaPlayerVideoView.canStart();
         }
+    };
+
+    private IMediaPlayerPlus mMediaPlayerPlus = new IMediaPlayerPlus() {
 
         @Override
         public void onVideoPreparing() {
-
             Log.i(Constants.LOG_TAG, "on video preparing");
             mMediaPlayerLoadingView.setLoadingTip("loading ...");
             mMediaPlayerLoadingView.show();
         }
 
         @Override
-        public boolean canStart() {
-
-            Log.i(Constants.LOG_TAG,
-                    "can Start ? " + mMediaPlayerVideoView.canStart());
-            return mMediaPlayerVideoView.canStart();
-        }
-
-        @Override
         public void onPlay() {
-
             Log.i(Constants.LOG_TAG, "on play called");
             mMediaPlayerEventActionView.hide();
             mMediaPlayerSmallControllerView.updateVideoPlaybackState(true);
@@ -972,169 +751,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             mMediaPlayerEventActionView.hide();
             mMediaPlayerSmallControllerView.updateVideoPlaybackState(false);
         }
-
-        @Override
-        public void onMovieRatioChange(int screenSize) {
-
-            mMediaPlayerVideoView.setVideoLayout(screenSize);
-            // changeMovieRatio();
-        }
-
-        @Override
-        public void onMoviePlayRatioUp() {
-
-            Log.d(Constants.LOG_TAG, "speed up");
-            if (mMediaPlayerController != null
-                    && mMediaPlayerController.isPlaying()) {
-                if (mCurrentPlayingRatio == MAX_PLAYING_RATIO) {
-                    Log.d(Constants.LOG_TAG, "current playing ratio is max");
-                    return;
-                } else {
-                    mCurrentPlayingRatio = mCurrentPlayingRatio + 0.5f;
-//                    mMediaPlayerVideoView.setVideoRate(mCurrentPlayingRatio);
-                    Log.d(Constants.LOG_TAG, "set playing ratio to --->"
-                            + mCurrentPlayingRatio);
-                }
-            }
-
-            Log.d(Constants.LOG_TAG,
-                    "current video is not playing , set ratio unsupported");
-
-        }
-
-        @Override
-        public void onMoviePlayRatioDown() {
-
-            if (mMediaPlayerController != null
-                    && mMediaPlayerController.isPlaying()) {
-                if (mCurrentPlayingRatio == 0) {
-                    Log.d(Constants.LOG_TAG, "current playing ratio is 0");
-                    return;
-                } else {
-                    mCurrentPlayingRatio = mCurrentPlayingRatio - 0.5f;
-//                    mMediaPlayerVideoView.setVideoRate(mCurrentPlayingRatio);
-                    Log.d(Constants.LOG_TAG, "set playing ratio to --->"
-                            + mCurrentPlayingRatio);
-                    return;
-                }
-            }
-
-            Log.d(Constants.LOG_TAG,
-                    "current video is not playing , set ratio unsupported");
-        }
-
-        @Override
-        public void onMovieCrop() {
-            if (!mScreenshotPreparing) {
-                mScreenshotPreparing = true;
-                bitmap = Bitmap.createBitmap(
-                        mMediaPlayerVideoView.getVideoWidth(),
-                        mMediaPlayerVideoView.getVideoHeight(),
-                        Config.ARGB_8888);
-                if (bitmap != null) {
-//                    mMediaPlayerVideoView.getCurrentFrame(bitmap);
-                    compressAndSaveBitmapToSDCard(bitmap, getCurrentTime(),
-                            ShortVideoMediaPlayerView.QUALITY_BEST);
-                    /*
-                     * Toast.makeText( getContext(),
-					 * "screenshoot saved in path :/storage/emulated/0/KSY_SDK_SCREENSHOT"
-					 * , Toast.LENGTH_SHORT).show();
-					 */
-
-                    layoutPop.setVisibility(View.VISIBLE);
-                    mHandler.postDelayed(runnableCrop, 1000);
-
-                    mScreenshotPreparing = false;
-                } else {
-                    Log.d(Constants.LOG_TAG, "bitmap is null");
-                }
-            }
-
-        }
-
-        @Override
-        public void onVolumeDown() {
-            Log.d(Constants.LOG_TAG, "audio down");
-            if (mMediaPlayerController != null
-                    && mMediaPlayerController.isPlaying()) {
-                if (mCurrentPlayingVolumeRatio == 0) {
-                    Log.d(Constants.LOG_TAG, "current playing volume is 0");
-                    return;
-                } else {
-                    mCurrentPlayingVolumeRatio = mCurrentPlayingVolumeRatio - 0.5f;
-//                    mMediaPlayerVideoView
-//                            .setAudioAmplify(mCurrentPlayingVolumeRatio);
-                    Log.d(Constants.LOG_TAG, "set playing volume to --->"
-                            + mCurrentPlayingVolumeRatio);
-                    return;
-                }
-            }
-        }
-
-        @Override
-        public void onVolumeUp() {
-            Log.d(Constants.LOG_TAG, "audio up");
-            if (mMediaPlayerController != null
-                    && mMediaPlayerController.isPlaying()) {
-                if (mCurrentPlayingVolumeRatio == MAX_PLAYING_VOLUME_RATIO) {
-                    Log.d(Constants.LOG_TAG, "current playing ratio is max");
-                    return;
-                } else {
-                    mCurrentPlayingVolumeRatio = mCurrentPlayingVolumeRatio + 0.5f;
-//                    mMediaPlayerVideoView
-//                            .setAudioAmplify(mCurrentPlayingVolumeRatio);
-                    Log.d(Constants.LOG_TAG, "set playing volume to --->"
-                            + mCurrentPlayingVolumeRatio);
-                }
-            }
-        }
     };
-
-    // 延迟操作
-    Runnable runnableCrop = new Runnable() {
-        @Override
-        public void run() {
-            layoutPop.setVisibility(View.GONE);
-        }
-    };
-
-    private String getCurrentTime() {
-
-        StringBuffer buffer = new StringBuffer();
-        SimpleDateFormat sDateFormat = new SimpleDateFormat(
-                "yyyy-MM-dd_hh:mm:ss", Locale.US);
-        buffer.append(sDateFormat.format(new java.util.Date())).append(".")
-                .append("png");
-        return buffer.toString();
-    }
-
-    private void compressAndSaveBitmapToSDCard(Bitmap rawBitmap,
-                                               String fileName, int quality) {
-
-        File directory = new File(Environment.getExternalStorageDirectory()
-                + File.separator + ShortVideoMediaPlayerView.CAPUTRE_SCREEN_PATH);
-        if (!directory.exists()) {
-            directory.mkdir();
-        }
-        File saveFile = new File(directory, fileName);
-        if (!saveFile.exists()) {
-            try {
-                FileOutputStream fileOutputStream = new FileOutputStream(
-                        saveFile);
-                if (fileOutputStream != null) {
-                    rawBitmap.compress(Bitmap.CompressFormat.PNG, quality,
-                            fileOutputStream);
-                }
-                fileOutputStream.flush();
-                fileOutputStream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-
-            }
-        } else {
-            Log.d(Constants.LOG_TAG, "too frequently screen shot");
-        }
-    }
 
     @Override
     public void onPowerState(int state) {
@@ -1202,9 +819,10 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         return false;
     }
 
-    public void setPlayConfig(boolean isStream, int interruptMode) {
+    public void setPlayConfig(boolean isStream, int interruptMode, int videoMode) {
         playConfig.setStream(isStream);
         playConfig.setInterruptMode(interruptMode);
+        playConfig.setVideoMode(videoMode);
     }
 
 }
