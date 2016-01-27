@@ -604,7 +604,9 @@ public class VideoMediaPlayerLargeControllerView extends
     }
 
     protected void onGestureVolumeChange(float distanceY, float totalVolumeDistance, AudioManager audioManager) {
+
         if (mWidgetVolumeControl != null) {
+
             mWidgetVolumeControl.onGestureVolumeChange(distanceY, totalVolumeDistance / 4,
                     audioManager);
         }
