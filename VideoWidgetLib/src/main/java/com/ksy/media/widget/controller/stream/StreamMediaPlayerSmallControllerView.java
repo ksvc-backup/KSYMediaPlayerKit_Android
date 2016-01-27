@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.ksy.media.widget.controller.base.MediaPlayerBaseControllerView;
 import com.ksy.media.widget.model.MediaPlayMode;
+import com.ksy.media.widget.util.Constants;
 import com.ksy.mediaPlayer.widget.R;
 
 public class StreamMediaPlayerSmallControllerView extends MediaPlayerBaseControllerView implements View.OnClickListener {
@@ -82,19 +83,19 @@ public class StreamMediaPlayerSmallControllerView extends MediaPlayerBaseControl
 
     @Override
     public void onTimerTicker() {
-        Log.d("eflake", "onTimerTicker");
+        Log.d(Constants.LOG_TAG, "onTimerTicker");
     }
 
     @Override
     public void onShow() {
-        Log.d("eflake", "onShow");
+        Log.d(Constants.LOG_TAG, "onShow");
         mControllerTopView.setVisibility(VISIBLE);
         mControllerBottomView.setVisibility(VISIBLE);
     }
 
     @Override
     public void onHide() {
-        Log.d("eflake", "onHide");
+        Log.d(Constants.LOG_TAG, "onHide");
         mControllerTopView.setVisibility(View.GONE);
         mControllerBottomView.setVisibility(View.GONE);
         hidePopWindow();

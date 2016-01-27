@@ -319,7 +319,7 @@ public class MediaPlayerTextureView extends TextureView implements
         public void onVideoSizeChanged(IMediaPlayer mp, int width, int height,
                                        int sarNum, int sarDen) {
 
-            Log.d("eflake", "OnVideoSizeChangedListener,width = " + mp.getVideoWidth() + ",height = " + mp.getVideoHeight());
+            Log.d(Constants.LOG_TAG, "OnVideoSizeChangedListener,width = " + mp.getVideoWidth() + ",height = " + mp.getVideoHeight());
             mVideoWidth = mp.getVideoWidth();
             mVideoHeight = mp.getVideoHeight();
             mVideoSarNum = sarNum;

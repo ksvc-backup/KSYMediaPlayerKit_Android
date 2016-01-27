@@ -218,7 +218,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                         if (NetworkUtil.isNetworkAvailable(mContext)) {
                             mIsComplete = false;
                             Log.i(Constants.LOG_TAG,
-                                    "event action  view action play");
+                                    "live event action  view action play");
                             mLiveMediaPlayerEventActionView.hide();
                             mMediaPlayerLoadingView.hide();
                             mLiveMediaPlayerVideoView.start();
@@ -232,7 +232,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                     public void onActionReplay() {
                         if (NetworkUtil.isNetworkAvailable(mContext)) {
                             Log.i(Constants.LOG_TAG,
-                                    "event action  view action replay");
+                                    "live event action  view action replay");
                             switch (playConfig.getVideoMode()) {
                                 case PlayConfig.SHORT_VIDEO_MODE:
                                     Log.d(Constants.LOG_TAG, "PlayConfig.SHORT_VIDEO_MODE  11111 ");
@@ -267,7 +267,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                         if (NetworkUtil.isNetworkAvailable(mContext)) {
                             mIsComplete = false;
                             Log.i(Constants.LOG_TAG,
-                                    "event action  view action error");
+                                    "live event action  view action error");
 
                             switch (playConfig.getVideoMode()) {
                                 case PlayConfig.SHORT_VIDEO_MODE:
@@ -288,6 +288,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                             mLiveMediaPlayerEventActionView.hide();
                             mLiveMediaPlayerControllerView.setVisibility(VISIBLE);
                             mMediaPlayerLoadingView.show();
+                            mLiveMediaPlayerVideoView.release(true);
                             mLiveMediaPlayerVideoView.setVideoPath(url);
                         } else {
                             Toast.makeText(mContext, "no network",
@@ -431,10 +432,10 @@ public class LiveMediaPlayerView extends RelativeLayout implements
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         if (h > oldh && oldw != 0 && oldh != 0) {
-            Log.d("eflake", "hide keyboard,distance = " + (h - oldh) + ", screen = " + h);
+            Log.d(Constants.LOG_TAG, "hide keyboard,distance = " + (h - oldh) + ", screen = " + h);
 
         } else if (h < oldh) {
-            Log.d("eflake", "show keyboard,distance = " + (oldh - h) + ", screen = " + oldh);
+            Log.d(Constants.LOG_TAG, "show keyboard,distance = " + (oldh - h) + ", screen = " + oldh);
         }
     }
 
@@ -546,19 +547,19 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                     if (preScreenOrientation != mScreenOrientation) {
                         if (!MediaPlayerUtils.checkSystemGravity(getContext()))
                             return;
-                        Log.i("eflake", "mScreenOrientation = " + mScreenOrientation);
+                        Log.i(Constants.LOG_TAG, "mScreenOrientation = " + mScreenOrientation);
                         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
                         if (imm.isActive(liveEditText)) {
-                            Log.d("eflake", "keyboard is active");
+                            Log.d(Constants.LOG_TAG, "keyboard is active");
                             imm.hideSoftInputFromWindow(liveEditText.getWindowToken(), 0);
                         }
                         if (mScreenOrientation == ORIENTATION_LANDSCAPE_NORMAL
                                 || mScreenOrientation == ORIENTATION_LANDSCAPE_REVERSED) {
-                            Log.i("eflake", "Accurate ScreenOrientation = " + mScreenOrientation);
+                            Log.i(Constants.LOG_TAG, "Accurate ScreenOrientation = " + mScreenOrientation);
                             mLiveMediaPlayerVideoView.setNeedMatrixTransform(true);
                             doScreenOrientationRotate(mScreenOrientation);
                         } else if (mScreenOrientation == ORIENTATION_PORTRAIT_NORMAL) {
-                            Log.i("eflake", "Accurate ScreenOrientation = " + mScreenOrientation);
+                            Log.i(Constants.LOG_TAG, "Accurate ScreenOrientation = " + mScreenOrientation);
                             mLiveMediaPlayerVideoView.setNeedMatrixTransform(true);
                             doScreenOrientationRotate(mScreenOrientation);
                         }

@@ -224,7 +224,7 @@ public class MediaPlayerControllerVolumeView extends RelativeLayout implements
     private float mTotalDeltaVolumeDistance = 0;
     private float mTotalLastDeltaVolumePercentage = 0;
     public void onGestureVolumeChange(float deltaVolumeDistance, float totalVolumeDistance, AudioManager audioManager){
-        
+		Log.d("lixp", "onGestureVolumeChange ....11....");
         mTotalDeltaVolumeDistance = mTotalDeltaVolumeDistance + deltaVolumeDistance;
         float minVolumeDistance = totalVolumeDistance / LEVEL_VOLUME;
         float minVolumePercentage = (float) 1 / audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
@@ -262,10 +262,11 @@ public class MediaPlayerControllerVolumeView extends RelativeLayout implements
             else if(newVolumePercentage > 1){
                 newVolumePercentage = 1.0f;
             }
-            
+            Log.d("lixp", "onGestureVolumeChange ....22....");
+
             audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, newVolume, 0);
             performVolumeChange(newVolumePercentage);
-            
+			Log.d("lixp", "onGestureVolumeChange ....33....");
             mTotalDeltaVolumeDistance = 0;
             
         }

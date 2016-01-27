@@ -9,6 +9,8 @@ import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
+import com.ksy.media.widget.util.Constants;
+
 public class TopLayout extends RelativeLayout {
 
     private final Context mContext;
@@ -22,7 +24,7 @@ public class TopLayout extends RelativeLayout {
 
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
-        Log.d("eflake", "TopLayout---top parent width = " + w + ",top parent height = " + h
+        Log.d(Constants.LOG_TAG, "TopLayout---top parent width = " + w + ",top parent height = " + h
                 + "oldwidth = " + oldw + ",oldheight = " + oldh);
     }
 

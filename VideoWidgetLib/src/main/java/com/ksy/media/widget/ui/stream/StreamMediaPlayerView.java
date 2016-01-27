@@ -348,6 +348,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
                             mMediaPlayerLargeControllerView.hide();
                             mMediaPlayerSmallControllerView.hide();
                             mMediaPlayerLoadingView.show();
+                            mMediaPlayerVideoView.release(true);
                             mMediaPlayerVideoView.setVideoPath(url);
                         } else {
                             Toast.makeText(mContext, "no network",

@@ -19,6 +19,7 @@ import com.ksy.media.widget.controller.base.MediaPlayerBaseControllerView;
 import com.ksy.media.widget.model.MediaPlayMode;
 import com.ksy.media.widget.model.MediaPlayerMovieRatio;
 import com.ksy.media.widget.ui.base.MediaPlayerScreenSizePopupView;
+import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.MediaPlayerUtils;
 import com.ksy.media.widget.model.MediaPlayerVideoQuality;
 import com.ksy.media.widget.ui.base.MediaPlayerControllerBrightView;
@@ -420,7 +421,7 @@ public class VideoMediaPlayerLargeControllerView extends
 
     //视频播放时间
     public void updateVideoProgress(float percentage) {
-        Log.d("eflake", "percentage = " + percentage);
+        Log.d(Constants.LOG_TAG, "percentage = " + percentage);
         if (percentage >= 0 && percentage <= 1) {
             int progress = (int) (percentage * mSeekBar.getMax());
             if (!mVideoProgressTrackingTouch)

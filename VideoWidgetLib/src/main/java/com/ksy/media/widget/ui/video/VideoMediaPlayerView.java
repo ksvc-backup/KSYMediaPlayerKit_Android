@@ -293,7 +293,7 @@ public class VideoMediaPlayerView extends RelativeLayout implements
                     public void onActionReplay() {
                         if (NetworkUtil.isNetworkAvailable(mContext)) {
                             Log.i(Constants.LOG_TAG,
-                                    "event action  view action replay");
+                                    "video event action  view action replay");
                             Log.d(Constants.LOG_TAG, "onActionReplay  playConfig.getVideoMode() = " + playConfig.getVideoMode());
                             switch (playConfig.getVideoMode()) {
                                 case PlayConfig.SHORT_VIDEO_MODE:
@@ -329,7 +329,7 @@ public class VideoMediaPlayerView extends RelativeLayout implements
                         if (NetworkUtil.isNetworkAvailable(mContext)) {
                             mIsComplete = false;
                             Log.i(Constants.LOG_TAG,
-                                    "event action  view action error");
+                                    "video event action  view action error");
 
                             Log.d(Constants.LOG_TAG, "onActionError playConfig.getVideoMode() = " + playConfig.getVideoMode());
 
@@ -353,6 +353,8 @@ public class VideoMediaPlayerView extends RelativeLayout implements
                             mMediaPlayerLargeControllerView.hide();
                             mMediaPlayerSmallControllerView.hide();
                             mMediaPlayerLoadingView.show();
+                            mMediaPlayerVideoView.release(true);
+
                             mMediaPlayerVideoView.setVideoPath(url);
                         } else {
                             Toast.makeText(mContext, "no network",

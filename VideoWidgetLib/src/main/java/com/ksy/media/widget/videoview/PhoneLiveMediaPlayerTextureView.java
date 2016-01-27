@@ -9,6 +9,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 
 import com.ksy.media.widget.ui.live.LiveMediaPlayerView;
+import com.ksy.media.widget.util.Constants;
 
 /**
  * Created by eflakemac on 16/1/11.
@@ -52,7 +53,7 @@ public class PhoneLiveMediaPlayerTextureView extends MediaPlayerTextureView {
     public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
         super.onSurfaceTextureSizeChanged(surface, width, height);
         if (needMatrixTransform) {
-            Log.d("eflake", "needMatrixTransform");
+            Log.d(Constants.LOG_TAG, "needMatrixTransform");
             if (mCurrentPushMode == PUSH_MODE_PORTRAIT) {
                 if (mTargetOrientaion == LiveMediaPlayerView.ORIENTATION_LANDSCAPE_REVERSED) {
                     doMatrixChange(mTargetOrientaion);

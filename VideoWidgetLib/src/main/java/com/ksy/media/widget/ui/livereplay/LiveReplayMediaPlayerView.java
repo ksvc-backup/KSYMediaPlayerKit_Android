@@ -282,6 +282,8 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
                             mLiveReplayMediaPlayerEventActionView.hide();
                             mLiveReplayMediaPlayerControllerView.setVisibility(VISIBLE);
                             mMediaPlayerLoadingView.show();
+                            mLiveReplayMediaPlayerVideoView.release(true);
+
                             mLiveReplayMediaPlayerVideoView.setVideoPath(url);
                             mLiveReplayMediaPlayerControllerView.startLiveReplayTimer();
 
@@ -470,9 +472,9 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
         if (h > oldh) {
-            Log.d("eflake", "hide keyboard");
+            Log.d(Constants.LOG_TAG, "hide keyboard");
         } else {
-            Log.d("eflake", "show keyboard");
+            Log.d(Constants.LOG_TAG, "show keyboard");
             ViewGroup.LayoutParams mediaPlayerViewParams = getLayoutParams();
             mediaPlayerViewParams.width = oldw;
             mediaPlayerViewParams.height = oldh;
@@ -533,15 +535,15 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
                     if (preScreenOrientation != mScreenOrientation) {
                         if (!MediaPlayerUtils.checkSystemGravity(getContext()))
                             return;
-                        Log.i("eflake", "mScreenOrientation = " + mScreenOrientation);
+                        Log.i(Constants.LOG_TAG, "mScreenOrientation = " + mScreenOrientation);
                         InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
                         if (mScreenOrientation == ORIENTATION_LANDSCAPE_NORMAL
                                 || mScreenOrientation == ORIENTATION_LANDSCAPE_REVERSED) {
-                            Log.i("eflake", "Accurate ScreenOrientation = " + mScreenOrientation);
+                            Log.i(Constants.LOG_TAG, "Accurate ScreenOrientation = " + mScreenOrientation);
                             mLiveReplayMediaPlayerVideoView.setNeedMatrixTransform(true);
                             doScreenOrientationRotate(mScreenOrientation);
                         } else if (mScreenOrientation == ORIENTATION_PORTRAIT_NORMAL) {
-                            Log.i("eflake", "Accurate ScreenOrientation = " + mScreenOrientation);
+                            Log.i(Constants.LOG_TAG, "Accurate ScreenOrientation = " + mScreenOrientation);
                             mLiveReplayMediaPlayerVideoView.setNeedMatrixTransform(true);
                             doScreenOrientationRotate(mScreenOrientation);
                         }
