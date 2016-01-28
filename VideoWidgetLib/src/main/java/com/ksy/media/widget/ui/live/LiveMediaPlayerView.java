@@ -289,6 +289,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                             mLiveMediaPlayerControllerView.setVisibility(VISIBLE);
                             mMediaPlayerLoadingView.show();
                             mLiveMediaPlayerVideoView.release(true);
+                            mLiveMediaPlayerVideoView.misTexturePowerEvent = true;
                             mLiveMediaPlayerVideoView.setVideoPath(url);
                         } else {
                             Toast.makeText(mContext, "no network",

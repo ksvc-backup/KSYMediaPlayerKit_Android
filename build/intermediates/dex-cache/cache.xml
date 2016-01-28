@@ -2,11 +2,11 @@
 <items version="2" >
 
     <item
-        jar="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\exploded-aar\KSYMediaPlayer-Android-SDK-LIBRARY-AS\VideoWidgetLib\unspecified\jars\classes.jar"
+        jar="/Users/eflakemac/Documents/Git/KsyMediaPlayer-Android-Library-as/KSYMediaPlayer-Android-SDK-LIBRARY-AS/app/build/intermediates/exploded-aar/KSYMediaPlayer-Android-SDK-LIBRARY-AS/VideoWidgetLib/unspecified/jars/classes.jar"
         jumboMode="false"
         revision="23.0.2"
-        sha1="96225b3bf8ffd7020f02aa0d90d8ab27e99bf004">
-        <dex dex="E:\github_ksyv\KSYMediaPlayer-Android-SDK-LIBRARY-AS\app\build\intermediates\pre-dexed\debug\classes-860166759d29f8f458dc9fab6bdf18b21f661c89.jar" />
+        sha1="2bca0f78b0dd9870760840285267b38a638497af">
+        <dex dex="/Users/eflakemac/Documents/Git/KsyMediaPlayer-Android-Library-as/KSYMediaPlayer-Android-SDK-LIBRARY-AS/app/build/intermediates/pre-dexed/debug/classes-27d89de85fd80316b09d85b8a02a1d3f1dea655a.jar" />
     </item>
 
 </items>

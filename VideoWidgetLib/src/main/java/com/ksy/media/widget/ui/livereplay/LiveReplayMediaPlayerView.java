@@ -282,7 +282,7 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
                             mLiveReplayMediaPlayerControllerView.setVisibility(VISIBLE);
                             mMediaPlayerLoadingView.show();
                             mLiveReplayMediaPlayerVideoView.release(true);
-
+                            mLiveReplayMediaPlayerVideoView.misTexturePowerEvent = true;
                             mLiveReplayMediaPlayerVideoView.setVideoPath(url);
                             mLiveReplayMediaPlayerControllerView.startLiveReplayTimer();
 

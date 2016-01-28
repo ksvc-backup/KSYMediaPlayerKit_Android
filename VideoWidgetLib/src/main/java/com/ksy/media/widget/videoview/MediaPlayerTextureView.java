@@ -81,7 +81,7 @@ public class MediaPlayerTextureView extends TextureView implements
     KSYMediaPlayer ksyMediaPlayer = null;
     protected PlayConfig playConfig = PlayConfig.getInstance();
     protected Surface mSurface;
-    protected boolean misTexturePowerEvent;
+    public boolean misTexturePowerEvent;
     protected boolean mNeedUnlock;
     public boolean mNeedPauseAfterLeave;
 

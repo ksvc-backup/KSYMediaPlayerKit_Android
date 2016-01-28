@@ -259,7 +259,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                             mMediaPlayerSmallControllerView.hide();
                             mMediaPlayerLoadingView.show();
                             mMediaPlayerVideoView.release(true);
-
+                            mMediaPlayerVideoView.misTexturePowerEvent = true;
                             mMediaPlayerVideoView.setVideoPath(url);
                         } else {
                             Toast.makeText(mContext, "no network",
