@@ -237,7 +237,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                         if (NetworkUtil.isNetworkAvailable(mContext)) {
                             mIsComplete = false;
                             Log.i(Constants.LOG_TAG,
-                                    "event action  view action error");
+                                    "short event action  view action error");
 
                             switch (playConfig.getVideoMode()) {
                                 case PlayConfig.SHORT_VIDEO_MODE:
@@ -259,6 +259,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                             mMediaPlayerSmallControllerView.hide();
                             mMediaPlayerLoadingView.show();
                             mMediaPlayerVideoView.release(true);
+
                             mMediaPlayerVideoView.setVideoPath(url);
                         } else {
                             Toast.makeText(mContext, "no network",
@@ -559,14 +560,17 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         }
     };
 
+
     IMediaPlayer.OnBufferingUpdateListener mOnPlaybackBufferingUpdateListener = new IMediaPlayer.OnBufferingUpdateListener() {
 
         @Override
         public void onBufferingUpdate(IMediaPlayer mp, int percent) {
 
             if (percent > 0 && percent <= 100) {
-            } else {
+                mMediaPlayerSmallControllerView.updateVideoSecondProgress(percent);
+
             }
+
         }
     };
 
@@ -824,5 +828,6 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         playConfig.setInterruptMode(interruptMode);
         playConfig.setVideoMode(videoMode);
     }
+
 
 }

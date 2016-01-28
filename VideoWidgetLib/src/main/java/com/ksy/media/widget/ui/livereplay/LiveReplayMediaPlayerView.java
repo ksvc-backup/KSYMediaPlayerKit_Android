@@ -29,7 +29,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ksy.media.widget.controller.livereplay.ILiveReplayController;
-import com.ksy.media.widget.controller.video.IVideoController;
 import com.ksy.media.widget.player.IMediaPlayerPlus;
 import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.NetworkUtil;
@@ -735,9 +734,8 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
         public void onBufferingUpdate(IMediaPlayer mp, int percent) {
 
             if (percent > 0 && percent <= 100) {
-            } else {
+                mLiveReplayMediaPlayerControllerView.updateVideoSecondProgress(mp.getDuration(), percent);
             }
-
         }
     };
 

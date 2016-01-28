@@ -246,17 +246,17 @@ public class MediaPlayerTextureView extends TextureView implements
                 String timeSec = String.valueOf(System.currentTimeMillis() / 1000);
                 String skSign = MD5Util.md5("sb56661c74aabc0df83d723a8d3eba69" + timeSec);
                 ksyMediaPlayer = new KSYMediaPlayer.Builder(mContext.getApplicationContext()).setAppId("QYA0788DA337D2E0EC45").setAccessKey("a8b4dff4665f6e69ba6cbeb8ebadc9a3").setSecretKeySign(skSign).setTimeSec(timeSec).build();
-                ksyMediaPlayer
-                        .setBufferSize(Constants.MEDIA_BUFFER_SIZE_DEFAULT);
+//                ksyMediaPlayer
+//                        .setBufferSize(Constants.MEDIA_BUFFER_SIZE_DEFAULT);
 //                ksyMediaPlayer.setTimeout(Constants.MEDIA_TIME_OUT_DEFAULT);
                 Log.d(Constants.LOG_TAG, "isStream =  "
                         + playConfig.isStream());
-                ksyMediaPlayer.clearCachedFiles(new File(Environment
-                        .getExternalStorageDirectory(), "ksy_cached_temp")
-                        .getPath());
-                ksyMediaPlayer.setCachedDir(new File(Environment
-                        .getExternalStorageDirectory(), "ksy_cached_temp")
-                        .getPath());
+//                ksyMediaPlayer.clearCachedFiles(new File(Environment
+//                        .getExternalStorageDirectory(), "ksy_cached_temp")
+//                        .getPath());
+//                ksyMediaPlayer.setCachedDir(new File(Environment
+//                        .getExternalStorageDirectory(), "ksy_cached_temp")
+//                        .getPath());
             } else {
                 Log.e(Constants.LOG_TAG, "mUri is null ");
             }
@@ -391,8 +391,9 @@ public class MediaPlayerTextureView extends TextureView implements
         @Override
         public void onBufferingUpdate(IMediaPlayer mp, int percent) {
             mCurrentBufferPercentage = percent;
-            if (mOnBufferingUpdateListener != null)
+            if (mOnBufferingUpdateListener != null) {
                 mOnBufferingUpdateListener.onBufferingUpdate(mp, percent);
+            }
         }
     };
 
@@ -587,7 +588,7 @@ public class MediaPlayerTextureView extends TextureView implements
     @Override
     public void seekTo(long msec) {
 
-        Log.e(Constants.LOG_TAG, "seek called=========");
+        Log.d(Constants.LOG_TAG, "seek called=========");
         if (isInPlaybackState())
             mMediaPlayer.seekTo(msec);
     }

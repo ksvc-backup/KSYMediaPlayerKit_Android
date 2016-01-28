@@ -983,14 +983,14 @@ public class VideoMediaPlayerView extends RelativeLayout implements
 
         @Override
         public void onBufferingUpdate(IMediaPlayer mp, int percent) {
-//            Log.d(Constants.LOG_TAG, "onBufferingUpdate =" + percent);
+
             if (percent > 0 && percent <= 100) {
                 if (MediaPlayerUtils.isFullScreenMode(mPlayMode)) {
                     mMediaPlayerLargeControllerView.updateVideoSecondProgress(percent);
                 } else {
+
                     mMediaPlayerSmallControllerView.updateVideoSecondProgress(percent);
                 }
-            } else {
             }
 
         }

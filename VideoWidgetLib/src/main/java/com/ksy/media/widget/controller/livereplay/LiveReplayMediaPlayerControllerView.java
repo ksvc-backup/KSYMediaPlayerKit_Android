@@ -94,6 +94,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
     private Animation showAudienceAnimation;
     private Animation hideAudienceAnimation;
     private boolean isReplayRemoveData;
+    private boolean isFirst;
 
     public LiveReplayMediaPlayerControllerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -171,8 +172,6 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
         currentTimeTextView = (TextView) findViewById(R.id.textViewCurrentTime);
         lineTextView = (TextView) findViewById(R.id.textViewLine);
         totalTimeTextView = (TextView) findViewById(R.id.textViewTotalTime);
-        mSeekBar.setMax(LIVEREPLAY_MAX_VIDEO_PROGRESS);
-        mSeekBar.setProgress(0);
 
     }
 
@@ -437,6 +436,19 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
                 totalTimeTextView.setText(MediaPlayerUtils.getVideoDisplayTime(durTime));
             }
         }
+    }
+
+    public void updateVideoSecondProgress(long duration, int percent) {
+
+        long progress = duration * percent / 100;
+
+        if (duration > 0 && !isFirst) {
+            mSeekBar.setMax((int)duration);
+            mSeekBar.setProgress(0);
+            isFirst = true;
+        }
+
+        mSeekBar.setSecondaryProgress((int) progress);
     }
 
     public void updateVideoPlaybackState(boolean isStart) {
