@@ -259,6 +259,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                             mMediaPlayerSmallControllerView.hide();
                             mMediaPlayerLoadingView.show();
                             mMediaPlayerVideoView.release(true);
+
                             mMediaPlayerVideoView.misTexturePowerEvent = true;
                             mMediaPlayerVideoView.setVideoPath(url);
                         } else {
@@ -423,6 +424,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
     public void onResume() {
         Log.d(Constants.LOG_TAG, "PlayView onResume");
         powerStateListener.onPowerState(Constants.APP_SHOWN);
+        WakeLocker.acquire(getContext());
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
     }
@@ -433,13 +435,14 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
         mPausePosition = mMediaPlayerController.getCurrentPosition();
-        WakeLocker.release();
+
     }
 
     public void onDestroy() {
         mIsComplete = false;
         mMediaPlayerVideoView.release(true);
         unregisterPowerReceiver();
+        WakeLocker.release();
     }
 
     private void updateVideoInfo2Controller() {
@@ -637,7 +640,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             Log.i(Constants.LOG_TAG, " MediaPlayerView  pause() ");
             if (canPause()) {
                 mMediaPlayerVideoView.pause();
-                WakeLocker.release();
+
             }
 
         }

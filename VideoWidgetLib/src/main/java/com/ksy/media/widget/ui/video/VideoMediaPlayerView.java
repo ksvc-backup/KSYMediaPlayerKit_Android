@@ -658,6 +658,7 @@ public class VideoMediaPlayerView extends RelativeLayout implements
         mWindowActived = true;
         powerStateListener.onPowerState(Constants.APP_SHOWN);
         enableOrientationEventListener();
+        WakeLocker.acquire(getContext());
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
     }
@@ -670,13 +671,13 @@ public class VideoMediaPlayerView extends RelativeLayout implements
         mPausePosition = mMediaPlayerController.getCurrentPosition();
 
         disableOrientationEventListener();
-        WakeLocker.release();
     }
 
     public void onDestroy() {
         mIsComplete = false;
         unregisterPowerReceiver();
         mMediaPlayerVideoView.release(true);
+        WakeLocker.release();
         Log.d(Constants.LOG_TAG, "MediaPlayerView   onDestroy....");
     }
 
@@ -1055,7 +1056,7 @@ public class VideoMediaPlayerView extends RelativeLayout implements
             Log.i(Constants.LOG_TAG, " MediaPlayerView  pause() ");
             if (canPause()) {
                 mMediaPlayerVideoView.pause();
-                WakeLocker.release();
+
             }
 
         }

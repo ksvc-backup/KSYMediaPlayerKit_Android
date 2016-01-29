@@ -658,6 +658,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
     public void onResume() {
         Log.d(Constants.LOG_TAG, "PlayView onResume");
         powerStateListener.onPowerState(Constants.APP_SHOWN);
+        WakeLocker.acquire(getContext());
         mWindowActived = true;
         enableOrientationEventListener();
         mNetReceiver.registNetBroadCast(getContext());
@@ -674,14 +675,13 @@ public class StreamMediaPlayerView extends RelativeLayout implements
         mPausePosition = mMediaPlayerController.getCurrentPosition();
 
         disableOrientationEventListener();
-
-        WakeLocker.release();
     }
 
     public void onDestroy() {
         unregisterPowerReceiver();
         mIsComplete = false;
         mMediaPlayerVideoView.release(true);
+        WakeLocker.release();
         Log.d(Constants.LOG_TAG, "MediaPlayerView   onDestroy....");
     }
 
@@ -1027,7 +1027,7 @@ public class StreamMediaPlayerView extends RelativeLayout implements
             Log.i(Constants.LOG_TAG, " MediaPlayerView  pause() ");
             if (canPause()) {
                 mMediaPlayerVideoView.pause();
-                WakeLocker.release();
+
             }
 
         }

@@ -271,13 +271,17 @@ public class MediaPlayerTextureView extends TextureView implements
             mMediaPlayer.setOnInfoListener(mInfoListener);
             mMediaPlayer.setOnSeekCompleteListener(mSeekCompleteListener);
             String url = mUri.toString();
+            Log.d(Constants.LOG_TAG, "misTexturePowerEvent 1 =" + misTexturePowerEvent + "<<>>mSurface=" + mSurface);
             if (!misTexturePowerEvent) {
                 if (isValid()) {
+                    Log.d(Constants.LOG_TAG, "misTexturePowerEvent 2 =" + misTexturePowerEvent);
                     mSurface = new Surface(mSurfaceTexture);
                 } else {
+                    Log.d(Constants.LOG_TAG, "misTexturePowerEvent 3 =" + misTexturePowerEvent);
                     mSurface = new Surface(getSurfaceTexture());
                 }
             } else {
+                Log.d(Constants.LOG_TAG, "misTexturePowerEvent 4 =" + misTexturePowerEvent);
                 misTexturePowerEvent = false;
             }
             mMediaPlayer.setSurface(mSurface);
