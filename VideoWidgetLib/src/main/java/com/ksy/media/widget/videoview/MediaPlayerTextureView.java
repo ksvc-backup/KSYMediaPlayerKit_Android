@@ -81,9 +81,10 @@ public class MediaPlayerTextureView extends TextureView implements
     KSYMediaPlayer ksyMediaPlayer = null;
     protected PlayConfig playConfig = PlayConfig.getInstance();
     protected Surface mSurface;
-    protected boolean misTexturePowerEvent;
+    public boolean misTexturePowerEvent;
     protected boolean mNeedUnlock;
     public boolean mNeedPauseAfterLeave;
+    private boolean mNeedAppShowProcess;
 
     public MediaPlayerTextureView(Context context) {
         super(context);
@@ -110,7 +111,7 @@ public class MediaPlayerTextureView extends TextureView implements
 
     private OnVideoComingToShowListener mOnVideoComingToShowListener;
 
-    public interface OnVideoComingToShowListener{
+    public interface OnVideoComingToShowListener {
         public void onVideoComingToShow();
     }
 
@@ -246,17 +247,17 @@ public class MediaPlayerTextureView extends TextureView implements
                 String timeSec = String.valueOf(System.currentTimeMillis() / 1000);
                 String skSign = MD5Util.md5("sb56661c74aabc0df83d723a8d3eba69" + timeSec);
                 ksyMediaPlayer = new KSYMediaPlayer.Builder(mContext.getApplicationContext()).setAppId("QYA0788DA337D2E0EC45").setAccessKey("a8b4dff4665f6e69ba6cbeb8ebadc9a3").setSecretKeySign(skSign).setTimeSec(timeSec).build();
-                ksyMediaPlayer
-                        .setBufferSize(Constants.MEDIA_BUFFER_SIZE_DEFAULT);
+//                ksyMediaPlayer
+//                        .setBufferSize(Constants.MEDIA_BUFFER_SIZE_DEFAULT);
 //                ksyMediaPlayer.setTimeout(Constants.MEDIA_TIME_OUT_DEFAULT);
                 Log.d(Constants.LOG_TAG, "isStream =  "
                         + playConfig.isStream());
-                ksyMediaPlayer.clearCachedFiles(new File(Environment
-                        .getExternalStorageDirectory(), "ksy_cached_temp")
-                        .getPath());
-                ksyMediaPlayer.setCachedDir(new File(Environment
-                        .getExternalStorageDirectory(), "ksy_cached_temp")
-                        .getPath());
+//                ksyMediaPlayer.clearCachedFiles(new File(Environment
+//                        .getExternalStorageDirectory(), "ksy_cached_temp")
+//                        .getPath());
+//                ksyMediaPlayer.setCachedDir(new File(Environment
+//                        .getExternalStorageDirectory(), "ksy_cached_temp")
+//                        .getPath());
             } else {
                 Log.e(Constants.LOG_TAG, "mUri is null ");
             }
@@ -270,13 +271,17 @@ public class MediaPlayerTextureView extends TextureView implements
             mMediaPlayer.setOnInfoListener(mInfoListener);
             mMediaPlayer.setOnSeekCompleteListener(mSeekCompleteListener);
             String url = mUri.toString();
+            Log.d(Constants.LOG_TAG, "misTexturePowerEvent 1 =" + misTexturePowerEvent + "<<>>mSurface=" + mSurface);
             if (!misTexturePowerEvent) {
                 if (isValid()) {
+                    Log.d(Constants.LOG_TAG, "misTexturePowerEvent 2 =" + misTexturePowerEvent);
                     mSurface = new Surface(mSurfaceTexture);
                 } else {
+                    Log.d(Constants.LOG_TAG, "misTexturePowerEvent 3 =" + misTexturePowerEvent);
                     mSurface = new Surface(getSurfaceTexture());
                 }
             } else {
+                Log.d(Constants.LOG_TAG, "misTexturePowerEvent 4 =" + misTexturePowerEvent);
                 misTexturePowerEvent = false;
             }
             mMediaPlayer.setSurface(mSurface);
@@ -391,8 +396,9 @@ public class MediaPlayerTextureView extends TextureView implements
         @Override
         public void onBufferingUpdate(IMediaPlayer mp, int percent) {
             mCurrentBufferPercentage = percent;
-            if (mOnBufferingUpdateListener != null)
+            if (mOnBufferingUpdateListener != null) {
                 mOnBufferingUpdateListener.onBufferingUpdate(mp, percent);
+            }
         }
     };
 
@@ -587,7 +593,7 @@ public class MediaPlayerTextureView extends TextureView implements
     @Override
     public void seekTo(long msec) {
 
-        Log.e(Constants.LOG_TAG, "seek called=========");
+        Log.d(Constants.LOG_TAG, "seek called=========");
         if (isInPlaybackState())
             mMediaPlayer.seekTo(msec);
     }
@@ -683,80 +689,98 @@ public class MediaPlayerTextureView extends TextureView implements
                     mNeedUnlock = true;
                 } else {
                     Log.d(Constants.LOG_TAG, "no KeyGuard");
-                    switch (playConfig.getInterruptMode()) {
-                        case PlayConfig.INTERRUPT_MODE_RELEASE_CREATE:
-                            Log.d(Constants.LOG_TAG, "POWER_ON Create");
-                            openVideo();
-                            break;
-                        case PlayConfig.INTERRUPT_MODE_PAUSE_RESUME:
-                            Log.d(Constants.LOG_TAG, "POWER_ON Start");
-                            stopMusicService();
-                            if (!mNeedPauseAfterLeave) {
-                                start();
-                            } else {
-                                Log.d(Constants.LOG_TAG, "POWER_ON PAUSED STATE,Ingored start()");
-                                mNeedPauseAfterLeave = false;
-                            }
-                            break;
-                        case PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR:
-                            Log.e(Constants.LOG_TAG, "MediaPlayerTextureView POWER_ON FINISH_OR_ERROR 222 ");
-
-                            break;
-                    }
+                    videoResumeWithoutUnlock();
                 }
                 break;
             case Constants.USER_PRESENT:
                 Log.e(Constants.LOG_TAG, "USER_PRESENT");
-                if (isAppShowing && mNeedUnlock) {
-                    Log.d(Constants.LOG_TAG, "is KeyGuard");
-                    mNeedUnlock = false;
-                    switch (playConfig.getInterruptMode()) {
-                        case PlayConfig.INTERRUPT_MODE_RELEASE_CREATE:
-                            Log.d(Constants.LOG_TAG, "is KeyGuard Create");
-                            openVideo();
-                            break;
-                        case PlayConfig.INTERRUPT_MODE_PAUSE_RESUME:
-                            Log.d(Constants.LOG_TAG, "is KeyGuard Start");
-                            stopMusicService();
-                            if (!mNeedPauseAfterLeave) {
-                                start();
-                            } else {
-                                Log.d(Constants.LOG_TAG, "POWER_ON PAUSED STATE,Ingored start()");
-                                mNeedPauseAfterLeave = false;
-                            }
-                            break;
-                        case PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR:
-                            Log.d(Constants.LOG_TAG, "MediaPlayerTextureView POWER_ON FINISH_OR_ERROR 333 ");
-                            mMediaPlayer.setSurface(new Surface(mSurfaceTexture));
-
-                            switch (playConfig.getVideoMode()) {
-                                case PlayConfig.SHORT_VIDEO_MODE:
-                                    Log.d(Constants.LOG_TAG, "PlayConfig.SHORT_VIDEO_MODE  11111 ");
-//                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
-                                    break;
-
-                                case PlayConfig.LIVE_VIDEO_MODE:
-                                    Log.d(Constants.LOG_TAG, "PlayConfig.LIVE_VIDEO_MODE  2222222 ");
-//                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
-                                    break;
-
-                                case PlayConfig.OTHER_MODE:
-
-                                    break;
-                            }
-
-                            break;
-                    }
+                if (isAppShowing) {
+                    videoResumeWithUnlock();
+                } else {
+                    mNeedAppShowProcess = true;
                 }
                 break;
             case Constants.APP_SHOWN:
+                Log.d(Constants.LOG_TAG, "textureView  APP_SHOWN");
                 isAppShowing = true;
+                if (mNeedAppShowProcess) {
+                    mNeedAppShowProcess = false;
+                    videoResumeWithUnlock();
+                }
+
                 break;
             case Constants.APP_HIDDEN:
+                Log.d(Constants.LOG_TAG, "textureView APP_HIDDEN");
                 isAppShowing = false;
                 break;
             default:
                 break;
+        }
+    }
+
+    private void videoResumeWithoutUnlock() {
+        switch (playConfig.getInterruptMode()) {
+            case PlayConfig.INTERRUPT_MODE_RELEASE_CREATE:
+                Log.d(Constants.LOG_TAG, "POWER_ON Create");
+                openVideo();
+                break;
+            case PlayConfig.INTERRUPT_MODE_PAUSE_RESUME:
+                Log.d(Constants.LOG_TAG, "POWER_ON Start");
+                stopMusicService();
+                if (!mNeedPauseAfterLeave) {
+                    start();
+                } else {
+                    Log.d(Constants.LOG_TAG, "POWER_ON PAUSED STATE,Ingored start()");
+                    mNeedPauseAfterLeave = false;
+                }
+                break;
+            case PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR:
+                Log.e(Constants.LOG_TAG, "MediaPlayerTextureView POWER_ON FINISH_OR_ERROR 222 ");
+
+                break;
+        }
+    }
+
+    private void videoResumeWithUnlock() {
+        if (mNeedUnlock) {
+            Log.d(Constants.LOG_TAG, "is KeyGuard");
+            mNeedUnlock = false;
+            switch (playConfig.getInterruptMode()) {
+                case PlayConfig.INTERRUPT_MODE_RELEASE_CREATE:
+                    Log.d(Constants.LOG_TAG, "is KeyGuard Create");
+                    openVideo();
+                    break;
+                case PlayConfig.INTERRUPT_MODE_PAUSE_RESUME:
+                    Log.d(Constants.LOG_TAG, "is KeyGuard Start");
+                    stopMusicService();
+                    if (!mNeedPauseAfterLeave) {
+                        start();
+                    } else {
+                        Log.d(Constants.LOG_TAG, "POWER_ON PAUSED STATE,Ingored start()");
+                        mNeedPauseAfterLeave = false;
+                    }
+                    break;
+                case PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR:
+                    Log.d(Constants.LOG_TAG, "MediaPlayerTextureView POWER_ON FINISH_OR_ERROR 333 ");
+                    mMediaPlayer.setSurface(new Surface(mSurfaceTexture));
+
+                    switch (playConfig.getVideoMode()) {
+                        case PlayConfig.SHORT_VIDEO_MODE:
+                            Log.d(Constants.LOG_TAG, "PlayConfig.SHORT_VIDEO_MODE  11111 ");
+//                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
+                            break;
+
+                        case PlayConfig.LIVE_VIDEO_MODE:
+                            Log.d(Constants.LOG_TAG, "PlayConfig.LIVE_VIDEO_MODE  2222222 ");
+//                                    playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_RELEASE_CREATE);
+                            break;
+
+                        case PlayConfig.OTHER_MODE:
+
+                            break;
+                    }
+                    break;
+            }
         }
     }
 

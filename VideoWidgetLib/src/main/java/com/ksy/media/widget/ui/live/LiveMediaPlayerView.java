@@ -289,6 +289,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
                             mLiveMediaPlayerControllerView.setVisibility(VISIBLE);
                             mMediaPlayerLoadingView.show();
                             mLiveMediaPlayerVideoView.release(true);
+                            mLiveMediaPlayerVideoView.misTexturePowerEvent = true;
                             mLiveMediaPlayerVideoView.setVideoPath(url);
                         } else {
                             Toast.makeText(mContext, "no network",
@@ -495,23 +496,23 @@ public class LiveMediaPlayerView extends RelativeLayout implements
 
     public void onResume() {
 
-        Log.d("Constants.LOG_TAG", "PlayView onResume");
+        Log.d(Constants.LOG_TAG, "PlayView onResume");
         powerStateListener.onPowerState(Constants.APP_SHOWN);
         enableOrientationEventListener();
+        WakeLocker.acquire(getContext());
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
         mLiveMediaPlayerControllerView.startLiveTimer();
     }
 
     public void onPause() {
-        Log.d("Constants.LOG_TAG", "PlayView OnPause");
+        Log.d(Constants.LOG_TAG, "PlayView OnPause");
         powerStateListener.onPowerState(Constants.APP_HIDDEN);
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
         mPausePosition = mMediaPlayerController.getCurrentPosition();
         disableOrientationEventListener();
         mLiveMediaPlayerControllerView.stopLiveTimer();
-        WakeLocker.release();
     }
 
     public void onDestroy() {
@@ -519,6 +520,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
         unregisterPowerReceiver();
         mLiveMediaPlayerVideoView.release(true);
         mLiveMediaPlayerControllerView.stopLiveTimer();
+        WakeLocker.release();
         Log.d(Constants.LOG_TAG, "MediaPlayerView live  onDestroy....");
     }
 
@@ -811,7 +813,7 @@ public class LiveMediaPlayerView extends RelativeLayout implements
             Log.i(Constants.LOG_TAG, " MediaPlayerView  pause() ");
             if (canPause()) {
                 mLiveMediaPlayerVideoView.pause();
-                WakeLocker.release();
+
             }
         }
 
@@ -835,9 +837,10 @@ public class LiveMediaPlayerView extends RelativeLayout implements
             if (canSeekBackward() && canSeekForward()) {
                 mLiveMediaPlayerVideoView.seekTo(pos);
             } else {
-                Toast.makeText(getContext(),
-                        "current is real stream, seek is unSupported !",
-                        Toast.LENGTH_SHORT).show();
+//                Toast.makeText(getContext(),
+//                        "current is real stream, seek is unSupported !",
+//                        Toast.LENGTH_SHORT).show();
+                Log.d(Constants.LOG_TAG, "LiveMediaPlayerView !canSeekBackward() ");
             }
         }
 

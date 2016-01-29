@@ -25,6 +25,7 @@ import com.ksy.media.widget.ui.base.LiveExitDialog;
 import com.ksy.media.widget.ui.base.LivePersonDialog;
 import com.ksy.media.widget.ui.livereplay.LiveReplayChatAdapter;
 import com.ksy.media.widget.ui.livereplay.LiveReplayHeadListAdapter;
+import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.MediaPlayerUtils;
 import com.ksy.mediaPlayer.widget.R;
 
@@ -94,6 +95,7 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
     private Animation showAudienceAnimation;
     private Animation hideAudienceAnimation;
     private boolean isReplayRemoveData;
+    private boolean isFirst;
 
     public LiveReplayMediaPlayerControllerView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
@@ -171,8 +173,6 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
         currentTimeTextView = (TextView) findViewById(R.id.textViewCurrentTime);
         lineTextView = (TextView) findViewById(R.id.textViewLine);
         totalTimeTextView = (TextView) findViewById(R.id.textViewTotalTime);
-        mSeekBar.setMax(LIVEREPLAY_MAX_VIDEO_PROGRESS);
-        mSeekBar.setProgress(0);
 
     }
 
@@ -297,23 +297,24 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
 
     public void startLiveReplayTimer() {
 
-        if (mTimer == null || mAudienceComeTimer == null || mAudienceComeTimerGoneTimer == null || seekTimer == null || refreshTimerLiveReplay == null) {
+        if (mTimer == null || seekTimer == null || refreshTimerLiveReplay == null) {
             mTimer = new Timer();
-            mAudienceComeTimer = new Timer();
-            mAudienceComeTimerGoneTimer = new Timer();
             seekTimer = new Timer();
             refreshTimerLiveReplay = new Timer();
         }
 
-        chatListControlLiveReplay();
+        if (isSwitch) {
+            chatListControlLiveReplay();
+            seekRefresh();
+            heartRefresh();
 
-        seekRefresh();
+        } else {
 
-        heartRefresh();
-
-        audienceComeTimer();
-
-        audienceComeTimerGoneTimer();
+            startLiveReplayAudienceTimer();
+            chatListControlLiveReplay();
+            seekRefresh();
+            heartRefresh();
+        }
 
         initListeners();
     }
@@ -352,6 +353,36 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
         currentTimeTextView.setText("00:00:00");
         totalTimeTextView.setText("00:00:00");
     }
+
+
+    private void startLiveReplayAudienceTimer() {
+        Log.d(Constants.LOG_TAG, "startLiveReplayAudienceTimer ....");
+
+        if (mAudienceComeTimer == null || mAudienceComeTimerGoneTimer == null) {
+            mAudienceComeTimer = new Timer();
+            mAudienceComeTimerGoneTimer = new Timer();
+        }
+
+        audienceComeTimer();
+        audienceComeTimerGoneTimer();
+    }
+
+    private void stopLiveReplayAudienctTimer() {
+        Log.d(Constants.LOG_TAG, "stopLiveReplayAudienctTimer ....");
+        if (null != mAudienceComeTimer) {
+            mAudienceComeTimer.cancel();
+            mAudienceComeTimer.purge();
+            mAudienceComeTimer = null;
+        }
+
+        if (null != mAudienceComeTimerGoneTimer) {
+            mAudienceComeTimerGoneTimer.cancel();
+            mAudienceComeTimerGoneTimer.purge();
+            mAudienceComeTimerGoneTimer = null;
+        }
+
+    }
+
 
     protected void initListeners() {
 
@@ -439,6 +470,19 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
         }
     }
 
+    public void updateVideoSecondProgress(long duration, int percent) {
+
+        long progress = duration * percent / 100;
+
+        if (duration > 0 && !isFirst) {
+            mSeekBar.setMax((int)duration);
+            mSeekBar.setProgress(0);
+            isFirst = true;
+        }
+
+        mSeekBar.setSecondaryProgress((int) progress);
+    }
+
     public void updateVideoPlaybackState(boolean isStart) {
         // 播放中
         if (isStart) {
@@ -518,9 +562,12 @@ public class LiveReplayMediaPlayerControllerView extends FrameLayout implements 
                 praiseCountTextView.setVisibility(VISIBLE);
                 liveReplayListView.setVisibility(VISIBLE);
                 switchButton.setImageResource(R.drawable.live_model_image);
+                startLiveReplayAudienceTimer();
                 isSwitch = false;
 
             } else {
+
+                stopLiveReplayAudienctTimer();
                 currentTimeTextView.setVisibility(GONE);
                 lineTextView.setVisibility(GONE);
                 totalTimeTextView.setVisibility(GONE);

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.view.inputmethod.InputMethodManager;
 
 import com.ksy.media.widget.ui.base.fragment.CommentListFragment;
 import com.ksy.media.widget.ui.base.fragment.DetailFragment;
@@ -31,9 +30,6 @@ public class StreamMediaPlayerPagerAdapter extends FragmentPagerAdapter {
             case 1:
                 return DetailFragment.newInstance(position + "", "");
             case 2:
-                InputMethodManager imm = (InputMethodManager) mContext.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-
                 return RecommendListFragment.newInstance(position + "", "");
         }
         return null;

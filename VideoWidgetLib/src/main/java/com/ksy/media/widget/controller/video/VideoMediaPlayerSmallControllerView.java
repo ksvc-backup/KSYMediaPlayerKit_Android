@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -37,6 +38,7 @@ public class VideoMediaPlayerSmallControllerView extends MediaPlayerBaseControll
     private View stream_setting_tv;
     private Context mContext;
     private ImageView overflowImage;
+    private boolean isFirst;
 
     public VideoMediaPlayerSmallControllerView(Context context, AttributeSet attrs, int defStyle) {
 
@@ -73,8 +75,6 @@ public class VideoMediaPlayerSmallControllerView extends MediaPlayerBaseControll
         mScreenModeImageView = (ImageView) findViewById(R.id.video_fullscreen_image_view);
         mCurrentTimeTextView = (TextView) findViewById(R.id.video_small_current_time_tv);
         mTotalTimeTextView = (TextView) findViewById(R.id.video_small_duration_time_tv);
-        mSeekBar.setMax(MAX_VIDEO_PROGRESS);
-        mSeekBar.setProgress(0);
 
         View view = LayoutInflater.from(mContext).inflate(R.layout.stream_small_pop, null);
         stream_share_tv = view.findViewById(R.id.stream_share_tv);
@@ -241,7 +241,15 @@ public class VideoMediaPlayerSmallControllerView extends MediaPlayerBaseControll
     public void updateVideoSecondProgress(int percent) {
         long duration = mMediaPlayerController.getDuration();
         long progress = duration * percent / 100;
+
+        if (duration > 0 && !isFirst) {
+            mSeekBar.setMax((int)duration);
+            mSeekBar.setProgress(0);
+            isFirst = true;
+        }
+
         mSeekBar.setSecondaryProgress((int) progress);
+
     }
 
     private void showPopWindow() {

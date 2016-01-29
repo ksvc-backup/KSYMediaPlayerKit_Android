@@ -29,7 +29,6 @@ import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.ksy.media.widget.controller.livereplay.ILiveReplayController;
-import com.ksy.media.widget.controller.video.IVideoController;
 import com.ksy.media.widget.player.IMediaPlayerPlus;
 import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.NetworkUtil;
@@ -283,7 +282,7 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
                             mLiveReplayMediaPlayerControllerView.setVisibility(VISIBLE);
                             mMediaPlayerLoadingView.show();
                             mLiveReplayMediaPlayerVideoView.release(true);
-
+                            mLiveReplayMediaPlayerVideoView.misTexturePowerEvent = true;
                             mLiveReplayMediaPlayerVideoView.setVideoPath(url);
                             mLiveReplayMediaPlayerControllerView.startLiveReplayTimer();
 
@@ -483,23 +482,24 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
     }
 
     public void onResume() {
-        Log.d("Constants.LOG_TAG", "PlayView onResume");
+        Log.d(Constants.LOG_TAG, "PlayView onResume");
         powerStateListener.onPowerState(Constants.APP_SHOWN);
         enableOrientationEventListener();
+        WakeLocker.acquire(getContext());
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
         mLiveReplayMediaPlayerControllerView.startLiveReplayTimer();
     }
 
     public void onPause() {
-        Log.d("Constants.LOG_TAG", "PlayView OnPause");
+        Log.d(Constants.LOG_TAG, "PlayView OnPause");
         powerStateListener.onPowerState(Constants.APP_HIDDEN);
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
         mPausePosition = mLiveReplayMediaPlayerController.getCurrentPosition();
         disableOrientationEventListener();
         mLiveReplayMediaPlayerControllerView.stopLiveReplayTimer();
-        WakeLocker.release();
+
     }
 
     public void onDestroy() {
@@ -507,6 +507,7 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
         unregisterPowerReceiver();
         mLiveReplayMediaPlayerVideoView.release(true);
         mLiveReplayMediaPlayerControllerView.stopLiveReplayTimer();
+        WakeLocker.release();
         Log.d(Constants.LOG_TAG, "MediaPlayerView livereplay   onDestroy....");
     }
 
@@ -735,9 +736,8 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
         public void onBufferingUpdate(IMediaPlayer mp, int percent) {
 
             if (percent > 0 && percent <= 100) {
-            } else {
+                mLiveReplayMediaPlayerControllerView.updateVideoSecondProgress(mp.getDuration(), percent);
             }
-
         }
     };
 
@@ -791,7 +791,7 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
             Log.i(Constants.LOG_TAG, " MediaPlayerView  pause() ");
             if (canPause()) {
                 mLiveReplayMediaPlayerVideoView.pause();
-                WakeLocker.release();
+
             }
         }
 
@@ -814,9 +814,11 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
             if (canSeekBackward() && canSeekForward()) {
                 mLiveReplayMediaPlayerVideoView.seekTo(pos);
             } else {
-                Toast.makeText(getContext(),
+                /*Toast.makeText(getContext(),
                         "current is real stream, seek is unSupported !",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
+
+                Log.d(Constants.LOG_TAG, "LiveReplayMediaPlayerView !canSeekBackward() ");
             }
         }
 

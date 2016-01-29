@@ -3,12 +3,14 @@ package com.ksy.media.widget.util;
 import android.content.Context;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
+import android.util.Log;
 
 public class WakeLocker {
 
     private static WakeLock mWakeLock;
 
     public static void acquire(Context context) {
+
         if (mWakeLock == null) {
             PowerManager powerManager = (PowerManager) (context.getSystemService(Context.POWER_SERVICE));
             int level = PowerManager.SCREEN_BRIGHT_WAKE_LOCK;

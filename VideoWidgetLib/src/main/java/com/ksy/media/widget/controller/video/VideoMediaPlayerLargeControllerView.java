@@ -81,6 +81,7 @@ public class VideoMediaPlayerLargeControllerView extends
     protected MediaPlayerControllerBrightView mControllerBrightView;
     protected MediaPlayerControllerVolumeView mWidgetVolumeControl;
     protected MediaPlayerSeekView mWidgetSeekView;
+    private boolean isFirst;
     // private MediaPlayerControllerVolumeView mWidgetControllerVolumeView;
     //声音控制
     // private ImageView mVideoRatioBackView;
@@ -143,9 +144,6 @@ public class VideoMediaPlayerLargeControllerView extends
         mCurrentTimeTextView = (TextView) findViewById(R.id.video_current_time_text_view);
         mTotalTimeTextView = (TextView) findViewById(R.id.video_total_time_text_view);
         mScreenModeImageView = (ImageView) findViewById(R.id.video_window_screen_image_view); // 大屏切小屏
-
-        mSeekBar.setMax(MAX_VIDEO_PROGRESS);
-        mSeekBar.setProgress(0);
 
         mQualityPopup = new MediaPlayerQualityPopupView(getContext());
 
@@ -220,7 +218,6 @@ public class VideoMediaPlayerLargeControllerView extends
 
         //清晰度
         mQualityPopup.setCallback(new MediaPlayerQualityPopupView.Callback() {
-
             @Override
             public void onQualitySelected(MediaPlayerVideoQuality quality) {
 
@@ -441,6 +438,13 @@ public class VideoMediaPlayerLargeControllerView extends
     public void updateVideoSecondProgress(int percent) {
         long duration = mMediaPlayerController.getDuration();
         long progress = duration * percent / 100;
+
+        if (duration > 0 && !isFirst) {
+            mSeekBar.setMax((int)duration);
+            mSeekBar.setProgress(0);
+            isFirst = true;
+        }
+
         mSeekBar.setSecondaryProgress((int) progress);
     }
 
@@ -600,6 +604,7 @@ public class VideoMediaPlayerLargeControllerView extends
     }
 
     protected void onGestureSeekBegin(int currentPosition, int duration) {
+
         mWidgetSeekView.onGestureSeekBegin(currentPosition, duration);
     }
 
@@ -619,8 +624,11 @@ public class VideoMediaPlayerLargeControllerView extends
     }
 
     protected void onGestureSeekChange(float distanceY, float totalSeekDistance) {
-        if (mWidgetSeekView != null)
+        if (mWidgetSeekView != null) {
+
             mWidgetSeekView.onGestureSeekChange(distanceY, totalSeekDistance);
+
+        }
     }
 
     protected void onSeekTo() {

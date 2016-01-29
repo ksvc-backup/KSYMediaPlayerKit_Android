@@ -3,6 +3,7 @@ package com.ksy.media.widget.controller.shortvideo;
 import android.content.Context;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.ksy.media.widget.controller.base.MediaPlayerBaseControllerView;
 import com.ksy.media.widget.model.MediaPlayMode;
+import com.ksy.media.widget.util.Constants;
 import com.ksy.media.widget.util.MediaPlayerUtils;
 import com.ksy.media.widget.ui.base.MediaPlayerVideoSeekBar;
 import com.ksy.mediaPlayer.widget.R;
@@ -29,7 +31,7 @@ public class ShortVideoMediaPlayerControllerView extends MediaPlayerBaseControll
     private TextView mCurrentTimeTextView;
     private TextView mTotalTimeTextView;
     private TextView short_video_add_focus;
-
+    private boolean isFirst;
 
     public ShortVideoMediaPlayerControllerView(Context context, AttributeSet attrs, int defStyle) {
 
@@ -60,8 +62,6 @@ public class ShortVideoMediaPlayerControllerView extends MediaPlayerBaseControll
         mPlaybackImageView = (ImageView) findViewById(R.id.video_playback_image_view);
         mCurrentTimeTextView = (TextView) findViewById(R.id.short_video_small_current_time_tv);
         mTotalTimeTextView = (TextView) findViewById(R.id.short_video_small_duration_time_tv);
-        mSeekBar.setMax(MAX_VIDEO_PROGRESS);
-        mSeekBar.setProgress(0);
 
     }
 
@@ -79,6 +79,7 @@ public class ShortVideoMediaPlayerControllerView extends MediaPlayerBaseControll
 
                 mVideoProgressTrackingTouch = false;
 
+
                 int curProgress = seekBar.getProgress();
                 int maxProgress = seekBar.getMax();
 
@@ -86,6 +87,7 @@ public class ShortVideoMediaPlayerControllerView extends MediaPlayerBaseControll
                     float percentage = ((float) curProgress) / maxProgress;
                     int position = (int) (mMediaPlayerController.getDuration() * percentage);
                     mMediaPlayerController.seekTo(position);
+                    Log.d(Constants.LOG_TAG, "onStopTrackingTouch .........position=......" + position + "<>>,duration= " + mMediaPlayerController.getDuration());
                     // mMediaPlayerController.start();
                 }
             }
@@ -207,5 +209,21 @@ public class ShortVideoMediaPlayerControllerView extends MediaPlayerBaseControll
 
         }
     }
+
+    public void updateVideoSecondProgress(int percent) {
+        long duration = mMediaPlayerController.getDuration();
+        long progress = duration * percent / 100;
+
+//        Log.d(Constants.LOG_TAG, "updateVideoSecondProgress short duration=" + duration + ",,..(int) progress=" + (int) progress);
+        if (duration > 0 && !isFirst) {
+            mSeekBar.setMax((int)duration);
+            mSeekBar.setProgress(0);
+            isFirst = true;
+        }
+
+        mSeekBar.setSecondaryProgress((int) progress);
+
+    }
+
 
 }

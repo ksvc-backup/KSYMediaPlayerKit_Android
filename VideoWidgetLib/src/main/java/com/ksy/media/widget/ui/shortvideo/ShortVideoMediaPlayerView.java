@@ -237,7 +237,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                         if (NetworkUtil.isNetworkAvailable(mContext)) {
                             mIsComplete = false;
                             Log.i(Constants.LOG_TAG,
-                                    "event action  view action error");
+                                    "short event action  view action error");
 
                             switch (playConfig.getVideoMode()) {
                                 case PlayConfig.SHORT_VIDEO_MODE:
@@ -259,6 +259,8 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                             mMediaPlayerSmallControllerView.hide();
                             mMediaPlayerLoadingView.show();
                             mMediaPlayerVideoView.release(true);
+
+                            mMediaPlayerVideoView.misTexturePowerEvent = true;
                             mMediaPlayerVideoView.setVideoPath(url);
                         } else {
                             Toast.makeText(mContext, "no network",
@@ -371,7 +373,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         }
 
         if (mVideoReady && !mMediaPlayerEventActionView.isShowing()) {
-            Log.d("Constants.LOG_TAG", "touch");
+            Log.d(Constants.LOG_TAG, "touch");
             return mMediaPlayerSmallControllerView.dispatchTouchEvent(ev);
         }
         return true;
@@ -422,6 +424,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
     public void onResume() {
         Log.d(Constants.LOG_TAG, "PlayView onResume");
         powerStateListener.onPowerState(Constants.APP_SHOWN);
+        WakeLocker.acquire(getContext());
         mNetReceiver.registNetBroadCast(getContext());
         mNetReceiver.addNetStateChangeListener(mNetChangedListener);
     }
@@ -432,13 +435,14 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
         mPausePosition = mMediaPlayerController.getCurrentPosition();
-        WakeLocker.release();
+
     }
 
     public void onDestroy() {
         mIsComplete = false;
         mMediaPlayerVideoView.release(true);
         unregisterPowerReceiver();
+        WakeLocker.release();
     }
 
     private void updateVideoInfo2Controller() {
@@ -458,7 +462,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             if (mMediaPlayerController != null)
                 duration = mMediaPlayerController.getDuration();
 
-            Log.e("Constants.LOG_TAG", "mIsComplete =" + mIsComplete);
+            Log.d(Constants.LOG_TAG, "mIsComplete =" + mIsComplete);
             if (mIsComplete) {
                 Log.d(Constants.LOG_TAG,
                         "IMediaPlayer.OnPreparedListener onPrepared 22");
@@ -471,7 +475,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                 WakeLocker.release();
             }
             if (mPausePosition > 0 && duration > 0) {
-                Log.d("Constants.LOG_TAG", "mPausePosition =" + mPausePosition);
+                Log.d(Constants.LOG_TAG, "mPausePosition =" + mPausePosition);
                 if (!mIsComplete) {
                     mMediaPlayerController.pause();
                     mMediaPlayerController.seekTo(mPausePosition);
@@ -559,14 +563,17 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         }
     };
 
+
     IMediaPlayer.OnBufferingUpdateListener mOnPlaybackBufferingUpdateListener = new IMediaPlayer.OnBufferingUpdateListener() {
 
         @Override
         public void onBufferingUpdate(IMediaPlayer mp, int percent) {
 
             if (percent > 0 && percent <= 100) {
-            } else {
+                mMediaPlayerSmallControllerView.updateVideoSecondProgress(percent);
+
             }
+
         }
     };
 
@@ -633,7 +640,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             Log.i(Constants.LOG_TAG, " MediaPlayerView  pause() ");
             if (canPause()) {
                 mMediaPlayerVideoView.pause();
-                WakeLocker.release();
+
             }
 
         }
@@ -658,9 +665,10 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             if (canSeekBackward() && canSeekForward()) {
                 mMediaPlayerVideoView.seekTo(pos);
             } else {
-                Toast.makeText(getContext(),
+                /*Toast.makeText(getContext(),
                         "current is real stream, seek is unSupported !",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
+                Log.d(Constants.LOG_TAG, "shortVideoMediaPlayerView !canSeekBackward() ");
             }
         }
 
@@ -824,5 +832,6 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         playConfig.setInterruptMode(interruptMode);
         playConfig.setVideoMode(videoMode);
     }
+
 
 }

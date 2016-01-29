@@ -26,6 +26,7 @@ import com.ksy.media.widget.ui.base.LiveExitDialog;
 import com.ksy.media.widget.ui.base.LivePersonDialog;
 import com.ksy.media.widget.ui.live.LiveChatAdapter;
 import com.ksy.media.widget.ui.live.LiveHeadListAdapter;
+import com.ksy.media.widget.util.Constants;
 import com.ksy.mediaPlayer.widget.R;
 
 import java.util.ArrayList;
@@ -236,22 +237,54 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
     }
 
     public void startLiveTimer() {
+        Log.d(Constants.LOG_TAG, "startLiveTimer  ....");
 
-        if (mLiveTimer == null || mLiveAudienceComeTimer == null || mLiveAudienceComeTimerGoneTimer == null || refreshTimer == null) {
+        if (mLiveTimer == null || refreshTimer == null) {
             mLiveTimer = new Timer();
-            mLiveAudienceComeTimer = new Timer();
-            mLiveAudienceComeTimerGoneTimer = new Timer();
             refreshTimer = new Timer();
         }
 
-        chatListControl();
-        heartLayoutTimer();
-        liveAudienceComeTimer();
-        liveAudienceComeTimerGoneTimer();
+        if (isSwitch) {
+            chatListControl();
+            heartLayoutTimer();
+
+        } else {
+            startAudienceTimer();
+            chatListControl();
+            heartLayoutTimer();
+        }
+
         initListeners();
     }
 
+    private void startAudienceTimer() {
+        Log.d(Constants.LOG_TAG, "startAudienceTimer ....");
+        if (mLiveAudienceComeTimer == null || mLiveAudienceComeTimerGoneTimer == null) {
+            mLiveAudienceComeTimer = new Timer();
+            mLiveAudienceComeTimerGoneTimer = new Timer();
+        }
+
+        liveAudienceComeTimer();
+        liveAudienceComeTimerGoneTimer();
+    }
+
+    private void stopAudienctTimer() {
+        Log.d(Constants.LOG_TAG, "stopAudienctTimer ....");
+        if (null != mLiveAudienceComeTimer) {
+            mLiveAudienceComeTimer.cancel();
+            mLiveAudienceComeTimer = null;
+        }
+
+        if (null != mLiveAudienceComeTimerGoneTimer) {
+            mLiveAudienceComeTimerGoneTimer.cancel();
+            mLiveAudienceComeTimerGoneTimer = null;
+        }
+
+    }
+
+
     public void stopLiveTimer() {
+        Log.d(Constants.LOG_TAG, "stopLiveTimer ....");
         if (null != mLiveTimer) {
             mLiveTimer.cancel();
             mLiveTimer = null;
@@ -355,9 +388,13 @@ public class LiveMediaPlayerControllerView extends FrameLayout implements View.O
                 livePraiseCountTextView.setVisibility(VISIBLE);
                 liveListView.setVisibility(VISIBLE);
 
+                startAudienceTimer();
+
                 isSwitch = false;
 
             } else {
+                stopAudienctTimer();
+
                 livePerson.setVisibility(GONE);
                 liveHeartLayout.setVisibility(GONE);
                 liveHorizontalList.setVisibility(GONE);
