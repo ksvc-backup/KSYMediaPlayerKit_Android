@@ -13,7 +13,7 @@
         android:textColor="@color/ksy_color_font"
         android:textColorHint="@color/ksy_color_font_alpha"
         android:hint="Please Input Video Path or URL..."
-        android:text="http://eflakee.kssws.ks-cdn.com/sept_2015_1280_CC.m4v">
+        android:text="http://eflakee.kssws.ks-cdn.com/MP4/%E9%AD%94%E9%AC%BC%E4%B8%AD%E7%9A%84%E5%A4%A9%E4%BD%BF.mp4">
         <requestFocus />
     </EditText>
 

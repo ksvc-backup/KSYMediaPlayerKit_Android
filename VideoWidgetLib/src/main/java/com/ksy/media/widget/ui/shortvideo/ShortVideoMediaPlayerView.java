@@ -372,7 +372,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
         }
 
         if (mVideoReady && !mMediaPlayerEventActionView.isShowing()) {
-            Log.d("Constants.LOG_TAG", "touch");
+            Log.d(Constants.LOG_TAG, "touch");
             return mMediaPlayerSmallControllerView.dispatchTouchEvent(ev);
         }
         return true;
@@ -459,7 +459,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             if (mMediaPlayerController != null)
                 duration = mMediaPlayerController.getDuration();
 
-            Log.e("Constants.LOG_TAG", "mIsComplete =" + mIsComplete);
+            Log.d(Constants.LOG_TAG, "mIsComplete =" + mIsComplete);
             if (mIsComplete) {
                 Log.d(Constants.LOG_TAG,
                         "IMediaPlayer.OnPreparedListener onPrepared 22");
@@ -472,7 +472,7 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
                 WakeLocker.release();
             }
             if (mPausePosition > 0 && duration > 0) {
-                Log.d("Constants.LOG_TAG", "mPausePosition =" + mPausePosition);
+                Log.d(Constants.LOG_TAG, "mPausePosition =" + mPausePosition);
                 if (!mIsComplete) {
                     mMediaPlayerController.pause();
                     mMediaPlayerController.seekTo(mPausePosition);
@@ -662,9 +662,10 @@ public class ShortVideoMediaPlayerView extends RelativeLayout implements
             if (canSeekBackward() && canSeekForward()) {
                 mMediaPlayerVideoView.seekTo(pos);
             } else {
-                Toast.makeText(getContext(),
+                /*Toast.makeText(getContext(),
                         "current is real stream, seek is unSupported !",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
+                Log.d(Constants.LOG_TAG, "shortVideoMediaPlayerView !canSeekBackward() ");
             }
         }
 

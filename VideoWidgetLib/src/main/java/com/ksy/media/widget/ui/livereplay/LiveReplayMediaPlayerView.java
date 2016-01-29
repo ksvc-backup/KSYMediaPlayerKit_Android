@@ -482,7 +482,7 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
     }
 
     public void onResume() {
-        Log.d("Constants.LOG_TAG", "PlayView onResume");
+        Log.d(Constants.LOG_TAG, "PlayView onResume");
         powerStateListener.onPowerState(Constants.APP_SHOWN);
         enableOrientationEventListener();
         mNetReceiver.registNetBroadCast(getContext());
@@ -491,7 +491,7 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
     }
 
     public void onPause() {
-        Log.d("Constants.LOG_TAG", "PlayView OnPause");
+        Log.d(Constants.LOG_TAG, "PlayView OnPause");
         powerStateListener.onPowerState(Constants.APP_HIDDEN);
         mNetReceiver.remoteNetStateChangeListener(mNetChangedListener);
         mNetReceiver.unRegistNetBroadCast(getContext());
@@ -812,9 +812,11 @@ public class LiveReplayMediaPlayerView extends RelativeLayout implements
             if (canSeekBackward() && canSeekForward()) {
                 mLiveReplayMediaPlayerVideoView.seekTo(pos);
             } else {
-                Toast.makeText(getContext(),
+                /*Toast.makeText(getContext(),
                         "current is real stream, seek is unSupported !",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
+
+                Log.d(Constants.LOG_TAG, "LiveReplayMediaPlayerView !canSeekBackward() ");
             }
         }
 

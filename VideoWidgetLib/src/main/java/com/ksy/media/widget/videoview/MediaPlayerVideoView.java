@@ -476,12 +476,12 @@ public class MediaPlayerVideoView extends SurfaceView implements
                     }
                     break;
                 case PlayConfig.INTERRUPT_MODE_FINISH_OR_ERROR:
-                    Log.e(Constants.LOG_TAG, "MediaPlayerVideoView surfaceCreated INTERRUPT_MODE_FINISH_OR_ERROR");
+                    Log.d(Constants.LOG_TAG, "MediaPlayerVideoView surfaceCreated INTERRUPT_MODE_FINISH_OR_ERROR");
                     mMediaPlayer.setSurface(mSurfaceHolder.getSurface());
 
                     switch (playConfig.getVideoMode()) {
                         case PlayConfig.SHORT_VIDEO_MODE:
-                            Log.e(Constants.LOG_TAG, "MediaPlayerVideoView surfaceCreated 11");
+                            Log.d(Constants.LOG_TAG, "MediaPlayerVideoView surfaceCreated 11");
 
 //                            playConfig.setInterruptMode(PlayConfig.INTERRUPT_MODE_PAUSE_RESUME);
                             break;
@@ -817,9 +817,11 @@ public class MediaPlayerVideoView extends SurfaceView implements
                 }
                 break;
             case Constants.APP_SHOWN:
+                Log.d(Constants.LOG_TAG, " MediaPlayVideoView  APP_SHOWN");
                 isAppShowing = true;
                 break;
             case Constants.APP_HIDDEN:
+                Log.d(Constants.LOG_TAG, " MediaPlayVideoView  APP_HIDDEN");
                 isAppShowing = false;
                 break;
             default:

@@ -1079,9 +1079,11 @@ public class VideoMediaPlayerView extends RelativeLayout implements
             if (canSeekBackward() && canSeekForward()) {
                 mMediaPlayerVideoView.seekTo(pos);
             } else {
-                Toast.makeText(getContext(),
+                /*Toast.makeText(getContext(),
                         "current is real stream, seek is unSupported !",
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_SHORT).show();*/
+
+                Log.d(Constants.LOG_TAG, "VideoMediaPlayerView !canSeekBackward() ");
             }
         }
 

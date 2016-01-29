@@ -751,9 +751,11 @@ public class MediaPlayerTextureView extends TextureView implements
                 }
                 break;
             case Constants.APP_SHOWN:
+                Log.d(Constants.LOG_TAG, "textureView  APP_SHOWN");
                 isAppShowing = true;
                 break;
             case Constants.APP_HIDDEN:
+                Log.d(Constants.LOG_TAG, "textureView APP_HIDDEN");
                 isAppShowing = false;
                 break;
             default:
