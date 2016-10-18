@@ -1223,7 +1223,7 @@ public class VideoMediaPlayerView extends RelativeLayout implements
                         mMediaPlayerVideoView.getVideoHeight(),
                         Config.ARGB_8888);
                 if (bitmap != null) {
-                    mMediaPlayerVideoView.getCurrentFrame(bitmap);
+                    bitmap = mMediaPlayerVideoView.getCurrentFrame();
                     compressAndSaveBitmapToSDCard(bitmap, getCurrentTime(),
                             VideoMediaPlayerView.QUALITY_BEST);
                     /*

@@ -483,7 +483,6 @@ public class MediaPlayerTextureView extends TextureView implements
 
     @Override
     public boolean onTouchEvent(MotionEvent ev) {
-
         return false;
     }
 
@@ -891,8 +890,9 @@ public class MediaPlayerTextureView extends TextureView implements
 
     }
 
-    public void getCurrentFrame(Bitmap bitmap) {
-        ksyMediaPlayer.getCurrentFrame(bitmap);
+    public Bitmap getCurrentFrame() {
+        Bitmap bitmap = ksyMediaPlayer.getScreenShot();
+        return bitmap;
     }
 
 }
