@@ -1,4 +1,4 @@
-#KSYMediaPlayer-Android-SDK-LIBRARY-AS
+#KSYMediaPlayerKit_Android
 ---
 ##LIBRARY更新日志
  **V 1.0.0** 版本发布（**2016-01-29** ）
