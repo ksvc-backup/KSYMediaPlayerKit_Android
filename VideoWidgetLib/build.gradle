@@ -23,6 +23,6 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.1.0'
     compile 'com.android.support:design:23.1.0'
     compile 'com.android.support:cardview-v7:23.1.0'
-    compile files('src/main/libs/libksyplayer.jar')
     compile files('src/main/libs/libksystat.jar')
+    compile files('src/main/libs/libksyplayer.jar')
 }

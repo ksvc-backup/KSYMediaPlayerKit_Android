@@ -857,7 +857,8 @@ public class MediaPlayerVideoView extends SurfaceView implements
         }
     }
 
-    public void getCurrentFrame(Bitmap bitmap) {
-        ksyMediaPlayer.getCurrentFrame(bitmap);
+    public Bitmap getCurrentFrame() {
+        Bitmap bitmap = ksyMediaPlayer.getScreenShot();
+        return bitmap;
     }
 }
